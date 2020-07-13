@@ -1,0 +1,359 @@
+$textColor : white;
+$isExpanded : 1;
+
+$bg : rgb(27, 27, 27);
+
+@mixin sideButtonProperty {
+    font-size: 11px;
+    font-family: Arial, Helvetica, sans-serif;
+
+    opacity: 50%;
+
+    background-color: $bg;
+    color: $textColor;
+
+    position: absolute;
+    width: 100%;
+    height: 10%;
+
+    justify-content: center;
+    align-items: start;
+
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+    &:hover{
+        background-color: rgb(75, 75, 75);
+    }
+
+    &:focus{
+        background-color: rgb(75, 75, 75);
+        opacity: 100%;
+    }
+    
+}
+
+
+*{
+    display: flex;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+h1{
+    color: black;
+}
+
+h2{
+    color: $bg;
+}
+
+header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    flex-direction: row;
+    height: 55px;
+    background-color: rgb(27, 27, 27);
+
+    .mainButton{
+        flex-direction: row;
+        margin: 0 20px 0 20px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        width: 29.6px;
+        height: 33px;
+        
+        .img1{
+            background-color: rgb(27, 27, 27);
+            width: 29.6px;
+            height: 33px;
+        }
+
+    }
+    
+    .img2{  
+        width: 100px;
+        height: 50px;
+    }
+
+    .searchPlace{
+        flex-direction: row;
+        input{
+            justify-content: start;
+            color: $textColor;
+            margin-left: 17vw;
+            padding-left: 10px;
+            color: gray;
+            border: 0.06vw solid rgb(48, 48, 48);
+            background-color: black;
+            height: 1.7vw;
+            width: 36vw;
+
+            border-top-left-radius: 0.17vw;
+            border-bottom-left-radius: 0.17vw;
+
+            &:focus{
+                color: white;
+            }
+        }
+
+        .searchIcon{
+            button{
+                justify-content: center;
+                background-color: rgb(44, 44, 44);
+                border: none;
+                border-top-right-radius: 0.17vw;
+                border-bottom-right-radius: 0.17vw;
+                height: 1.75vw;
+                width: 4vw;
+                cursor: pointer;
+                outline: none;
+
+            }
+            img{
+                width: 0.9vw;
+                height: 0.9vw;
+            }
+
+            &:hover{
+                img{
+                    filter: opacity(50%);
+                }
+            }
+            
+        }
+
+    }
+
+    .fourButtonRight{
+        flex-direction: row;
+        justify-content: end;
+
+        .img3{
+            margin-left: 200px;
+            width: 55px;
+            height: 35px;
+        }
+
+        .img4{
+            margin-left: 10px;
+            margin-bottom: 1px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .img5{
+            margin-left: 25px;
+            width: 10px;
+            height: 22px;
+        }
+
+        .signInButton{
+            margin-left: 20px;
+
+            button{
+                flex-direction: row;
+                color: rgb(15, 148, 224);
+                font-weight: bold;
+                height: 2.4vw;
+                width: 6vw;
+                background-color: rgb(27, 27, 27);
+                border: 1px solid rgb(0, 138, 218);
+                border-radius: 0.2vw;
+                cursor: pointer;
+
+                &:focus{
+                    outline: none;
+                    animation: ease-in-out;
+                }
+            }
+            
+            .userLogo{
+                margin-left: 7px;
+                margin-right: 3px;
+                width: 24px;
+                height: 23px;
+            }
+        }
+    }  
+}
+
+.sideBar{
+    position: fixed;
+    left: 0;
+    top: 7.3%;
+    height: 100%;
+
+    width: 4.7%;
+    background-color: $bg;
+
+    flex-direction: column;
+
+    color: $textColor; 
+
+    a{
+        font-size: 0;
+    }
+}
+
+.sideBarExpanded{
+    @extend .sideBar;
+    width: 15.6%;
+
+    overflow: scroll;
+
+    &::-webkit-scrollbar{
+        width: 10px;
+    }
+    &::-webkit-scrollbar-track{
+        background-color: $bg;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: rgb(80, 80, 80);
+    }
+
+    .trendingButton{
+        margin-top: 73px;
+    }
+
+    .subscriptionButton{
+        margin-top: 73px;
+    }
+
+    .collectionButton{
+        margin-top: 73px;
+    }
+
+    .historyButton{
+        margin-top: 73px;
+    }
+
+    li{
+        font-size: 0;
+    }
+
+    .linkSection{
+        margin-top: 100px;
+
+        flex-direction: row;
+
+        a{
+            font-size: 13px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            margin-left: 5px;
+            color: rgb(138, 138, 138);
+            text-decoration: none;
+        }
+    }
+
+    // @import "../trending-page/trending-page.component.scss";
+
+    // @extend .sideBar;
+
+    $m-left : 15.6vw;
+
+
+}
+
+.homeButton{
+    top: 0;
+    
+    button{
+        @include sideButtonProperty();
+    }
+
+    img{
+        width: 1.3vw;
+        height: 1.2vw;
+        margin-left: 27px;
+        margin-bottom: 10px;
+    }
+
+    li{
+        margin-left: 22px;
+    }
+
+}
+
+.trendingButton{
+    margin-top: 75px;
+
+    button{
+        @include sideButtonProperty();
+    }
+
+    img{
+        width: 1.1vw;
+        height: 1.4vw;
+        margin-left: 28px;
+        margin-bottom: 10px;
+    }
+
+    li{
+        margin-left: 15px;
+    }
+}
+
+.subscriptionButton{
+    margin-top: 75px;
+
+    button{
+        @include sideButtonProperty();
+    }
+
+    img{
+        width: 1.6vw;
+        height: 1.6vw;
+        margin-left: 23px;
+    }
+
+    li{
+        margin-left: 6px;
+    }
+}
+
+.collectionButton{
+    margin-top: 75px;
+
+    button{
+        @include sideButtonProperty();
+    }
+
+    img{
+        width: 1.9vw;
+        height: 1.9vw;
+        margin-left: 23px;
+    }
+
+    li{
+        margin-left: 12px;
+    }
+}
+
+.historyButton{
+    margin-top: 75px;
+    
+    button{
+        @include sideButtonProperty();
+    }
+
+    img{
+        width: 2.5vw;
+        height: 1.3vw;
+        margin-left: 17.6px;
+        margin-bottom: 5px;
+    }
+
+    li{
+        margin-left: 19px;
+    }
+}

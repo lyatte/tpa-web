@@ -1,0 +1,125 @@
+<header>
+    <button class="mainButton" (click)="expandButton()">
+        <img class="img1" src="../../assets/three_lines.png" alt="">
+    </button>
+
+    <img class="img2" src="../../assets/logo.png" alt="">
+
+    <div class="searchPlace">
+        <input type="text" name="searchBar" id="" 
+        placeholder="Search">
+        <div class="searchIcon">
+            <button type="submit" name="searchButton">
+                <img src="../../assets/search_logo.png" alt="">
+            </button>
+        </div>
+    </div>
+
+    <div class="fourButtonRight">
+        <img class="img3" src="../../assets/create_channel_logo.png" alt="">
+        <img class="img4" src="../../assets/nine_square_logo.png" alt="">
+        <img class="img5" src="../../assets/three_dots_logo.png" alt="">
+        <div class="signInButton">
+            <button type="submit">
+                <img class="userLogo" src="../../assets/user_logo.png" alt="">
+                SIGN IN
+            </button>
+        </div>
+    </div>
+</header>
+    
+
+<!-- <div style="color: white; font-size: 11px; font-family: Arial, Helvetica, sans-serif;">
+    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor laborum libero dolore doloribus a pariatur suscipit commodi architecto tenetur fugit? Fuga nam perspiciatis reiciendis ex eum asperiores cum saepe dolorem.
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet nobis fugiat, accusantium maiores aperiam dolorum cum corporis perferendis incidunt doloremque ipsum, voluptatibus omnis. Nisi consequatur velit labore reprehenderit quos explicabo.
+        asdasdasdasd
+    </h1>
+    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor laborum libero dolore doloribus a pariatur suscipit commodi architecto tenetur fugit? Fuga nam perspiciatis reiciendis ex eum asperiores cum saepe dolorem.
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet nobis fugiat, accusantium maiores aperiam dolorum cum corporis perferendis incidunt doloremque ipsum, voluptatibus omnis. Nisi consequatur velit labore reprehenderit quos explicabo.
+    </h1>
+    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor laborum libero dolore doloribus a pariatur suscipit commodi architecto tenetur fugit? Fuga nam perspiciatis reiciendis ex eum asperiores cum saepe dolorem.
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet nobis fugiat, accusantium maiores aperiam dolorum cum corporis perferendis incidunt doloremque ipsum, voluptatibus omnis. Nisi consequatur velit labore reprehenderit quos explicabo.
+    </h1>
+    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor laborum libero dolore doloribus a pariatur suscipit commodi architecto tenetur fugit? Fuga nam perspiciatis reiciendis ex eum asperiores cum saepe dolorem.
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet nobis fugiat, accusantium maiores aperiam dolorum cum corporis perferendis incidunt doloremque ipsum, voluptatibus omnis. Nisi consequatur velit labore reprehenderit quos explicabo.
+    </h1>
+    <h1>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
+    </h1>
+    <h1>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
+    </h1>
+    <h1>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
+    </h1>
+    <h1>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
+    </h1>
+    <h1>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
+    </h1>
+    <h1>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
+    </h1>
+    <h1>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
+    </h1>
+</div> -->
+
+<div [ngClass]="isExpanded">
+    <div class="homeButton">
+        <button routerLink="/home">
+            <img src="../../assets/home_icon.png" alt="">
+            <li>
+                Home
+            </li>
+        </button>
+    </div>
+
+    <div class="trendingButton">
+        <button routerLink="/trending">
+            <img src="../../assets/trending_icon.png" alt="">
+            <li>
+                Trending
+            </li>
+        </button>
+    </div>
+
+    <div class="subscriptionButton" >
+        <button>
+            <img src="../../assets/subscription_icon.png" alt="">
+            <li>
+                Subscription
+            </li>
+        </button>
+    </div>
+
+    <div class="collectionButton">
+        <button>
+            <img src="../../assets/collection_logo.png" alt="">
+            <li>
+                Collection
+            </li>
+        </button>
+    </div>
+
+    <div class="historyButton">
+        <button>
+            <img src="../../assets/history_logo.png" alt="">
+            <li>
+                History
+            </li>
+        </button>
+    </div>
+
+    <div class="linkSection">
+        <div>
+            <a href="https://www.youtube.com/about/">About</a>
+            <a href="https://www.youtube.com/howyoutubeworks/policies/copyright/">Copyright</a>
+        </div>
+        <div>
+            <a href="https://www.youtube.com/t/terms">Terms</a>
+            <a href="https://www.youtube.com/t/contact_us">Contact Us</a>
+        </div>
+    </div>
+</div>
