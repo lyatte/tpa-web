@@ -1,0 +1,142 @@
+*{
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    background-color: black;
+
+    overflow: visible;
+}
+
+#container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    
+    color: white;
+
+    margin-top: 3.6vw;
+    margin-left: 4.7vw;
+    
+    width: 95.3%;
+
+    overflow-y: scroll;
+
+    .c_info{
+        margin-left: 4vw;
+    }
+
+    .channelInfo{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        
+        font-family: Arial, Helvetica, sans-serif;
+
+        .ch{
+            flex-direction: column;
+        }
+
+        .leftSide{
+            flex-direction: row;
+            align-items: center;
+
+            .chName{
+                font-size: 1.5vw;
+            }
+
+            .subsCount{
+                opacity: 50%;
+                font-size: 1vw;
+            }
+        }
+
+        
+
+        .rightSide{
+            button{
+                background-color: rgb(202, 0, 0);
+
+                border: none;
+                border-radius: 0.3vw;
+                
+                font-size: 0.9vw;
+
+                align-items: center;
+                justify-content: center;
+                height: 2.4vw;
+                width: 7.4vw;
+                
+                color: white;
+                font-weight: bold;
+
+                cursor: pointer;
+            }
+            margin-right: 5vw;
+        }
+        .alrSubscribe{
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+    
+            button{
+                background-color: rgb(46, 46, 46);
+                color: gray;
+            }
+    
+            img{
+                margin-left: 0.7vw;
+                margin-right: 0.2vw;
+    
+                width: 2vw;
+                height: 2vw;
+    
+                opacity: 50%;
+            }
+        }
+    }
+
+
+    .buttons{
+        flex-direction: row;
+        margin-left: 3vw;
+
+        opacity: 70%;
+
+        
+        button{
+
+            cursor: pointer;
+
+            padding-right: 1.9vw;
+            padding-left: 1.9vw;
+            padding-bottom: 0.5vw;
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 0.9vw;
+        
+            color: white;
+
+            border: none;
+
+            &:hover{
+                opacity: 100%;
+            }
+
+            &:focus{
+                border-bottom: 0.2vw solid white;
+                outline: none;
+
+            }
+            
+        }
+    }
+}

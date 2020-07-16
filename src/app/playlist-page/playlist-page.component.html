@@ -1,0 +1,49 @@
+<div id="container">
+    <div class="playlistInfo">
+        <div class="thumbnail">
+            <img src="../../assets/bp_thumbnail.png" alt="">
+        </div>
+        <div class="title">Playlist title</div>
+        <div class="infos">.. video . .... watched . ... last updated</div>
+        <div class="buttons">
+            <button>
+                <img src="../../assets/share_icon.png" alt="">
+            </button>
+        </div>
+        <div class="playlistDesc">(Desc) Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam reiciendis ipsa dolores quo, cupiditate nulla temporibus explicabo molestiae aliquid nisi asperiores, eum fugit velit aperiam, sit maiores quisquam alias voluptas.</div>
+        <hr>
+        <div class="bottomInfo">
+            <div class="channelInfo">
+                <img src="../../assets/user_logo.png" alt="">
+                <div class="chName">
+                    Channel Name
+                </div>
+            </div>
+
+            <div class="rightSide">
+                <div class="subscribeButton" *ngIf="isSubscribed == false">
+                    <button (click)="subscribe()">
+                        SUBSCRIBE
+                    </button>
+                </div>
+                <div class="alrSubscribe" *ngIf="isSubscribed">
+                    <button (click)="subscribe()">
+                        SUBSCRIBED
+                    </button>
+
+                    <img src="../../assets/subscribed_logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="playlistVids">
+        <div class="videoDetail">
+            <video src="../../assets/vid.mp4"></video>
+            <div class="videoText">
+                <div class="vidName">Video Name</div>
+                <div class="vidCh">Channel Name</div>
+            </div>
+        </div>
+    </div>
+</div>

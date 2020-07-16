@@ -1,0 +1,180 @@
+*{
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    background-color: black;
+
+}
+
+#container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    
+    color: white;
+
+    margin-top: 3.6vw;
+    margin-left: 4.7vw;
+    
+    width: 95.3%;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .categoryInfo{
+        margin-left: 4vw;
+        flex-direction: row;
+        align-items: center;
+
+        font-family: Arial, Helvetica, sans-serif;
+
+        img{
+            width: 10vw;
+            height: 7vw;
+        }
+
+        .text{
+            flex-direction: column;
+        }
+
+        div{
+            font-size: 1.4vw;
+            font-weight: bold;
+        }
+        
+        .subsCount{
+            font-size: 0.9vw;
+            font-weight: normal;
+            color: rgb(163, 163, 163);
+        }
+    }
+
+    .m{
+        margin-top: 1vw;
+        align-items: center;
+        hr{
+            border-width: 0.01vw;
+            opacity: 40%;
+            width: 86.5vw;
+        }
+
+        overflow-x: hidden;
+    }
+
+    .content{
+        align-items: start;
+
+        margin-left: 4vw;
+
+        font-family: Arial, Helvetica, sans-serif;
+        
+        .allTime{
+            margin-top: 1vw;
+            
+            flex-direction: row; 
+
+            div{
+                font-weight: bold;
+            }
+
+        }
+
+        .thisWeek{
+            margin-top: 1vw;
+
+            div{
+                font-weight: bold;
+            }
+        }
+
+        .thisMonth{
+            margin-top: 1vw;
+
+            div{
+                font-weight: bold;
+            }
+        }
+
+        .recent{
+            margin-top: 1vw;
+            margin-bottom: 3vw;
+
+            div{
+                font-weight: bold;
+            }
+        }
+        
+        .videoSection{
+            display: flex;
+            
+            flex-direction: row;
+
+            flex-wrap: wrap;
+
+            
+
+            .videoDetail{
+                width: 11vw;
+                
+                margin-right: 6vw;
+    
+                margin-top: 1vw;
+        
+                &:focus{
+                    outline: none;
+                }
+        
+                video{
+                    width: 15vw;
+                    height: 8.5vw;
+    
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+                
+                .videos{
+                    margin-top: 1vw;
+                    flex-direction: row;
+                    font-size: 1vw;
+    
+                    .channelName{
+                        margin-top: 0.5vw;
+                        font-size: 0.8vw;
+                        color: rgb(180, 180, 180);
+    
+                        &:hover{
+                            cursor: pointer;
+                        }
+    
+                        &:active{
+                            outline: none;
+                        }
+                    }
+                    
+                    .videoText{
+                        flex-direction: column;
+                        margin-left: 0;
+                    }
+        
+                    .details{
+                        font-size: 0.8vw;
+                        color: rgb(180, 180, 180);
+                    }
+                }
+        
+            }
+        }
+        
+
+    }
+
+}

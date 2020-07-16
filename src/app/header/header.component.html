@@ -3,7 +3,7 @@
         <img class="img1" src="../../assets/three_lines.png" alt="">
     </button>
 
-    <img class="img2" src="../../assets/logo.png" alt="">
+    <img class="img2" src="../../assets/logo.png" alt="" routerLink="/home">
 
     <div class="searchPlace">
         <input type="text" name="searchBar" id="" 
@@ -20,55 +20,20 @@
         <img class="img4" src="../../assets/nine_square_logo.png" alt="">
         <img class="img5" src="../../assets/three_dots_logo.png" alt="">
         <div class="signInButton">
-            <button type="submit">
+            <button type="submit" *ngIf="!loggedIn" (click)="signIn()">
                 <img class="userLogo" src="../../assets/user_logo.png" alt="">
                 SIGN IN
             </button>
+
+            <img class="signInLogo" src="{{ user.photoUrl }}" alt="" 
+            *ngIf="loggedIn" (click)="signOut()" routerLink="/">
         </div>
     </div>
 </header>
-    
 
-<!-- <div style="color: white; font-size: 11px; font-family: Arial, Helvetica, sans-serif;">
-    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor laborum libero dolore doloribus a pariatur suscipit commodi architecto tenetur fugit? Fuga nam perspiciatis reiciendis ex eum asperiores cum saepe dolorem.
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet nobis fugiat, accusantium maiores aperiam dolorum cum corporis perferendis incidunt doloremque ipsum, voluptatibus omnis. Nisi consequatur velit labore reprehenderit quos explicabo.
-        asdasdasdasd
-    </h1>
-    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor laborum libero dolore doloribus a pariatur suscipit commodi architecto tenetur fugit? Fuga nam perspiciatis reiciendis ex eum asperiores cum saepe dolorem.
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet nobis fugiat, accusantium maiores aperiam dolorum cum corporis perferendis incidunt doloremque ipsum, voluptatibus omnis. Nisi consequatur velit labore reprehenderit quos explicabo.
-    </h1>
-    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor laborum libero dolore doloribus a pariatur suscipit commodi architecto tenetur fugit? Fuga nam perspiciatis reiciendis ex eum asperiores cum saepe dolorem.
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet nobis fugiat, accusantium maiores aperiam dolorum cum corporis perferendis incidunt doloremque ipsum, voluptatibus omnis. Nisi consequatur velit labore reprehenderit quos explicabo.
-    </h1>
-    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor laborum libero dolore doloribus a pariatur suscipit commodi architecto tenetur fugit? Fuga nam perspiciatis reiciendis ex eum asperiores cum saepe dolorem.
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet nobis fugiat, accusantium maiores aperiam dolorum cum corporis perferendis incidunt doloremque ipsum, voluptatibus omnis. Nisi consequatur velit labore reprehenderit quos explicabo.
-    </h1>
-    <h1>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
-    </h1>
-    <h1>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
-    </h1>
-    <h1>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
-    </h1>
-    <h1>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
-    </h1>
-    <h1>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
-    </h1>
-    <h1>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
-    </h1>
-    <h1>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, dolorem? Explicabo, accusantium ipsa? Eum dolor, nobis hic fugit aliquam eveniet sint ducimus eaque obcaecati excepturi nihil consequuntur! Voluptates, voluptate tempora.
-    </h1>
-</div> -->
-
-<div [ngClass]="isExpanded">
+<div [ngClass]="isExpanded" (click)="expandButton()">
     <div class="homeButton">
-        <button routerLink="/home">
+        <button routerLink="/">
             <img src="../../assets/home_icon.png" alt="">
             <li>
                 Home
@@ -86,7 +51,7 @@
     </div>
 
     <div class="subscriptionButton" >
-        <button>
+        <button routerLink="/subscriptions">
             <img src="../../assets/subscription_icon.png" alt="">
             <li>
                 Subscription
@@ -94,23 +59,92 @@
         </button>
     </div>
 
-    <div class="collectionButton">
-        <button>
-            <img src="../../assets/collection_logo.png" alt="">
+    <div class="playlistButton">
+        <button routerLink="/playlist">
+            <img src="../../assets/add_playlist_icon.png" alt="">
             <li>
-                Collection
+                Playlist
             </li>
         </button>
     </div>
 
-    <div class="historyButton">
-        <button>
-            <img src="../../assets/history_logo.png" alt="">
-            <li>
-                History
-            </li>
-        </button>
+    <div *ngIf="show">
+        <div class="categories">
+            <hr>
+            <div>
+                CATEGORY
+            </div>
+
+            <div class="favMusic" >
+                <button (click)="openCategoryPage(1)">
+                    <img src="../../assets/music_fav_logo.png" alt="">
+                    <li>
+                        Music
+                    </li>
+                </button>
+            </div>
+
+            <div class="favGame">
+                <button (click)="openCategoryPage(2)">
+                    <img src="../../assets/game_fav_logo.png" alt="">
+                    <li>
+                        Game
+                    </li>
+                </button>
+            </div>
+
+            <div class="favNews">
+                <button (click)="openCategoryPage(3)">
+                    <img src="../../assets/news_fav_logo.png" alt="">
+                    <li>
+                        News
+                    </li>
+                </button>
+            </div>
+
+            <div class="favSport">
+                <button (click)="openCategoryPage(4)">
+                    <img src="../../assets/sport_fav_logo.png" alt="">
+                    <li>
+                        Sports
+                    </li>
+                </button>
+            </div>
+
+            <div class="favEnt">
+                <button (click)="openCategoryPage(5)">
+                    <img src="../../assets/entertainment_fav_logo.png" alt="">
+                    <li>
+                        Entertainment
+                    </li>
+                </button>
+            </div>
+
+            <div class="favTrv">
+                <button (click)="openCategoryPage(6)">
+                    <img src="../../assets/travel_fav_logo.png" alt="">
+                    <li>
+                        Travel
+                    </li>
+                </button>
+            </div>
+
+            <div class="m">
+                <hr>
+            </div>
+
+            <div class="membership">
+                <button routerLink="/membership">
+                    <img src="../../assets/yt_premium_logo.png" alt="">
+                    <li>
+                        Membership
+                    </li>
+                </button>
+            </div>
+
+        </div>
     </div>
+
 
     <div class="linkSection">
         <div>

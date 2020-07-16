@@ -1,0 +1,184 @@
+*{
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    background-color: black;
+}
+
+#container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    
+    color: white;
+
+    margin-top: 3.6vw;
+    margin-left: 4.7vw;
+    
+    width: 95.3%;
+    overflow-y: scroll;
+
+    align-items: start;
+
+    flex-direction: row;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    .playlistInfo{
+        width: 23vw;
+        margin-top: 2vw;
+        margin-left: 2vw;
+
+        img{
+            width: 23vw;
+            height: 10vw;
+        }
+        
+        .title{
+            // font-weight: bold;
+            margin-top: 1vw;
+            font-size: 1.5vw;
+        }
+
+        .infos{
+            margin-top: 1vw;
+            color: rgb(173, 173, 173);
+        }
+
+        button{
+            margin-top: 0.8vw;
+            border:none;
+            cursor: pointer;
+
+            img{
+                width: 1vw;
+                height: 1vw;
+                opacity: 50%;
+            }
+
+            &:focus{
+                outline: none;
+            }
+        }
+
+        .playlistDesc{
+            margin-top: 1vw;
+            color: rgb(170, 170, 170);
+        }
+
+        hr{
+            margin-top: 0.5vw;
+            border-width: 0.008vw;
+            opacity: 30%;
+        }
+
+        .bottomInfo{
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .channelInfo{
+            flex-direction: row;
+            align-items: center;
+
+            margin-top: 1vw;
+
+            .chName{
+                font-size: 1vw;
+                margin-left: 0.4vw;
+            }
+            img{
+                width: 2.5vw;
+                height: 2.5vw;
+            }
+        }
+
+        .rightSide{
+            button{
+                background-color: rgb(202, 0, 0);
+
+                border: none;
+                border-radius: 0.3vw;
+                
+                font-size: 0.9vw;
+
+                align-items: center;
+                justify-content: center;
+                height: 2.4vw;
+                width: 7.4vw;
+                
+                color: white;
+                font-weight: bold;
+
+                cursor: pointer;
+            }
+        }
+        .alrSubscribe{
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+    
+            button{
+                background-color: rgb(46, 46, 46);
+                color: gray;
+            }
+    
+            img{
+                margin-left: 0.7vw;
+                margin-right: 0.2vw;
+    
+                width: 2vw;
+                height: 2vw;
+    
+                opacity: 50%;
+            }
+        }
+    }
+
+    .playlistVids{
+        margin-left: 3vw;
+        margin-top: 2vw;
+        video{
+            width: 8vw;
+        }
+
+        .videoDetail{
+            padding: 1vw;
+            flex-direction: row;
+
+            width: 50vw;
+            
+            cursor: pointer;
+
+            &:hover{
+                background-color: rgb(66, 66, 66);
+
+                .videoText, .vidName, .vidCh{
+                    background-color: rgb(66, 66, 66);
+                }
+            }
+
+
+            .videoText{
+                margin-left: 1vw;
+
+                .vidName{
+                    font-weight: bold;
+                }
+
+                .vidCh{
+                    margin-top: 0.5vw;
+                    color: rgb(160, 160, 160);
+                }
+            }
+        }
+    }
+}

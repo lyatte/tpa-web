@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-trending-page',
@@ -7,50 +8,55 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrendingPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  
+  openCategoryPage(num: number){
+    if(num == 1) this.router.navigate(['/category/music']);
+    else if (num == 2) this.router.navigate(['/category/game']);
+    else if (num == 3) this.router.navigate(['/category/news']);
+    else if (num == 4) this.router.navigate(['/category/sport']);
+    else if (num == 5) this.router.navigate(['/category/entertainment']);
+    else this.router.navigate(['/category/travel']);
+  }
 }
-  
-// declare global{
-//   var flag: number;
-// }
-
 var flag = 1;
 
 export function expand(expanded:number){
-  console.log("masuk expand()");
   
   var container : HTMLElement = document.querySelector('#container');
   
+  console.log("here");
+
   if(expanded == 1){
     flag=1;
   }else{
     flag=2;
   }
+
+  console.log(container);
   
   if(flag == 1 && container != null){
     flag = 2;
     container.style.marginLeft = "15.6vw";
     container.style.width = "84.4%";
     
-    console.log(container);
+    console.log("ASd");
 
-    container.style.backgroundColor = "red";
   }
   else if(flag == 2 && container != null){
     flag = 1;
     container.style.marginLeft = "4.7vw";
     container.style.width = "95.3%";
     
-    console.log(container);
+    console.log("wewe");
 
-    container.style.backgroundColor = "blue";
   }
 
-  // console.log(container.style.marginLeft);
+  
+  console.log(container.style.width);
+  console.log("hem");
 
 }

@@ -1,0 +1,64 @@
+<div id="container">
+    <div id="top">
+
+        <img src="../../assets/channel_header.png" alt="">
+        <div class="c_info">
+    
+            <div class="channelInfo">
+                <div class="leftSide">
+                    <img src="../../assets/channel_icon.png" alt="">
+                    <div class="ch">
+                        <div class="chName">
+                            starshipTV
+                        </div>
+                        <div class="subsCount">
+                            4.32m subscriber
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="rightSide">
+                    <div class="subscribeButton" *ngIf="isSubscribed == false">
+                        <button (click)="subscribe()">
+                            SUBSCRIBE
+                        </button>
+                    </div>
+                    <div class="alrSubscribe" *ngIf="isSubscribed">
+                        <button (click)="subscribe()">
+                            SUBSCRIBED
+                        </button>
+
+                        <img src="../../assets/subscribed_logo.png" alt="">
+                    </div>
+                </div>
+            </div>
+        
+            <div class="buttons">
+                 <button class="home" (click)="contentExpand(1)">
+                     HOME
+                 </button>
+                <button class="vids" (click)="contentExpand(2)">
+                    VIDEO
+                </button>
+                <button class="playlist" (click)="contentExpand(3)">
+                    PLAYLIST
+                </button>
+                <button class="community" (click)="contentExpand(4)">
+                    COMMUNITY
+                </button>
+                <button class="about" (click)="contentExpand(6)">
+                    ABOUT
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <a class="homeContent" *ngIf="c">
+        <h1>home</h1>    
+    </a>
+
+    <!-- <div class="videoContent">
+        <h1>Video</h1>
+    </div> -->
+</div>

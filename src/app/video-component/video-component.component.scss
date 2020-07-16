@@ -1,0 +1,288 @@
+*{
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+
+    background-color: rgb(163, 118, 118);
+    background-color: black;
+}
+
+#container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    
+    flex-direction: row;
+
+    color: white;
+
+    margin-top: 3.6vw;
+    margin-left: 4.7vw;
+
+    padding-top: 1.7vw;
+
+    
+    width: 95.3%;
+    overflow-y: scroll;
+
+    .mainVideo{
+
+        width: 66%;
+
+        video{
+            width: 62vw;
+            height: 35vw;
+        }
+
+        .videoDetail{
+            font-family: Arial, Helvetica, sans-serif;
+
+            .tags{
+                margin-top: 2vw;
+                font-size: 0.9vw;
+                color: rgb(75, 148, 245);
+            }
+
+            .videoName{
+                // margin-top: 2vw;
+                font-size: 1.6vw;
+            }
+
+            .anotherDetail{
+                margin-top: 0.6vw;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                div{
+                    flex-direction: row;
+                }
+
+                .views{
+                    opacity: 70%;
+                }
+                
+                .extra{
+                    margin-left: 0.2vw;
+                    margin-right: 0.2vw;
+                    opacity: 70%;
+                }
+
+                .date{
+                    opacity: 70%;
+                }
+
+                .likeButton{
+                    margin-right: 1vw;
+                }
+
+                .dislikeButton{
+                    margin-right: 1vw;
+                }
+
+                .shareButton{
+                    font-weight: bold;
+                    font-size: 0.8vw;
+
+                    margin-right: 1vw;
+
+                    width: 4.7vw;
+                    
+                    img{
+                        height: 1.1vw;
+                        width: 1.1vw;
+                    }
+                }
+
+                .addPlaylistButton{
+                    font-size: 0.8vw;
+                    font-weight: bold;
+                    margin-right: 0.6vw;
+                }
+
+                button{
+                    width: 4vw;
+                    height: 2vw;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+
+                    color: white;
+
+                    border: none;
+
+                    opacity: 70%;
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+
+                    img{
+                        width: 1.3vw;
+                        height: 1.3vw;
+                        margin-right: 0.4vw;
+                    }
+                }
+            }
+
+            hr{
+                margin-top: 0.7vw;
+                border-width: 0.2px;
+                opacity: 20%;
+            }
+
+        }
+
+        .youtubeChannel{
+            margin-top: 1vw;
+
+            flex-direction: row;
+            justify-content: space-between;
+
+            .icon{
+                height: 3vw;
+                width: 3vw;
+            }
+
+            .leftSide{
+                flex-direction: row;
+                align-items: start;
+
+                font-size: 0.9vw;
+                width: 50%;
+
+                .chnName{
+                    font-weight: bold;
+                    margin-top: 0.5vw;
+                }
+
+                .subscriberCount{
+                    color: rgb(155, 155, 155);
+                }
+
+                .vidDesc{
+                    margin-top: 1vw;
+                }
+
+                
+                div{
+                    flex-direction: column;
+                    margin-left: 0.5vw;
+                }
+            }
+
+            .rightSide{
+                button{
+                    background-color: rgb(202, 0, 0);
+
+                    border: none;
+                    border-radius: 3px;
+
+                    align-items: center;
+                    justify-content: center;
+                    height: 2.4vw;
+                    width: 7.4vw;
+                    
+                    color: white;
+                    font-weight: bold;
+
+                    font-size: 0.9vw;
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+
+                .alrSubscribe{
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+
+                    button{
+                        background-color: rgb(46, 46, 46);
+                        color: gray;
+                    }
+
+                    img{
+                        margin-left: 0.7vw;
+                        margin-right: 0.2vw;
+
+                        width: 2vw;
+                        height: 2vw;
+
+                        opacity: 50%;
+                    }
+                }
+            }
+        }
+
+        .commentSection{
+            margin-top: 1vw;
+        }
+
+    }
+
+    .relatedVideo{
+        // background-color: red;
+        width: 27%;
+        margin-left: 1.5vw;
+        font-family: Arial, Helvetica, sans-serif;
+
+        flex-direction: column;
+        justify-content: start;
+
+        align-items: start;
+
+        .videoDetail{
+            flex-direction: row;
+    
+            &:hover{
+                cursor: pointer;
+            }
+    
+            &:focus{
+                outline: none;
+            }
+    
+            video{
+                width: 11vw;
+                height: 7vw;
+            }
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            
+            .videoText{
+                margin-top: 1vw;
+                margin-left: 1vw;
+                flex-direction: column;
+                font-size: 1vw;
+    
+                .channel{
+                    margin-top: 0.5vw;
+                    font-size: 0.9vw;
+                    color: rgb(180, 180, 180);
+                    font-weight: normal;
+                }
+
+                .details{
+                    color: rgb(180, 180, 180);
+                    font-weight: normal;
+                    font-size: 0.9vw;;
+                }
+            }
+    
+        }
+    }
+
+    .bottom{
+        margin-bottom: 20vw;
+    }
+}

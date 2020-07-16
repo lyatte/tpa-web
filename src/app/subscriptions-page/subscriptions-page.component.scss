@@ -1,0 +1,91 @@
+*{
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+
+    background-color: black;
+}
+
+#container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    
+    color: white;
+
+    margin-top: 3.6vw;
+    margin-left: 4.7vw;
+    
+    width: 95.3%;
+    overflow-y: scroll;
+
+    .guest{
+        justify-content: center;
+        align-items: center;
+
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1vw;
+
+        img{
+            width: 10vw;
+            height: 10vw;
+            opacity: 70%;
+        }
+
+        .dontMiss{
+            font-size: 1.5vw;
+        }
+
+        div{
+            margin-top: 1vw;
+        }
+
+        .signInButton{
+
+            justify-content: center;
+            align-items: center;
+
+            button{
+                flex-direction: row;
+                
+                align-items: center;
+                
+                color: rgb(15, 148, 224);
+                font-weight: bold;
+                height: 2.4vw;
+                width: 6vw;
+                background-color: rgb(27, 27, 27);
+                border: 1px solid rgb(0, 138, 218);
+                border-radius: 0.2vw;
+                cursor: pointer;
+
+                &:focus{
+                    outline: none;
+                    animation: ease-in-out;
+                }
+            }
+            
+            .userLogo{
+                margin-left: 7px;
+                margin-right: 3px;
+                width: 24px;
+                height: 23px;
+            }
+        }
+    }
+
+    .user{
+        
+    }
+}

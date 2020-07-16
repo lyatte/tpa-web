@@ -82,6 +82,12 @@ header{
     .img2{  
         width: 100px;
         height: 50px;
+
+        cursor: pointer;
+
+        &:focus{
+            outline: none;
+        }
     }
 
     .searchPlace{
@@ -154,6 +160,14 @@ header{
             margin-left: 25px;
             width: 10px;
             height: 22px;
+
+            &:hover{
+                cursor: pointer;
+            }
+
+            &:active{
+                background-color: white;
+            }
         }
 
         .signInButton{
@@ -182,6 +196,15 @@ header{
                 width: 24px;
                 height: 23px;
             }
+
+            .signInLogo{
+                width: 2vw;
+                height: 2vw;
+
+                border-radius: 1vw;
+
+                cursor: pointer;
+            }
         }
     }  
 }
@@ -202,66 +225,6 @@ header{
     a{
         font-size: 0;
     }
-}
-
-.sideBarExpanded{
-    @extend .sideBar;
-    width: 15.6%;
-
-    overflow: scroll;
-
-    &::-webkit-scrollbar{
-        width: 10px;
-    }
-    &::-webkit-scrollbar-track{
-        background-color: $bg;
-    }
-    &::-webkit-scrollbar-thumb{
-        background: rgb(80, 80, 80);
-    }
-
-    .trendingButton{
-        margin-top: 73px;
-    }
-
-    .subscriptionButton{
-        margin-top: 73px;
-    }
-
-    .collectionButton{
-        margin-top: 73px;
-    }
-
-    .historyButton{
-        margin-top: 73px;
-    }
-
-    li{
-        font-size: 0;
-    }
-
-    .linkSection{
-        margin-top: 100px;
-
-        flex-direction: row;
-
-        a{
-            font-size: 13px;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: bold;
-            margin-left: 5px;
-            color: rgb(138, 138, 138);
-            text-decoration: none;
-        }
-    }
-
-    // @import "../trending-page/trending-page.component.scss";
-
-    // @extend .sideBar;
-
-    $m-left : 15.6vw;
-
-
 }
 
 .homeButton{
@@ -321,7 +284,7 @@ header{
     }
 }
 
-.collectionButton{
+.playlistButton{
     margin-top: 75px;
 
     button{
@@ -335,25 +298,307 @@ header{
     }
 
     li{
-        margin-left: 12px;
+        margin-left: 1.1vw;
     }
 }
 
-.historyButton{
-    margin-top: 75px;
-    
+.sideBarExpanded{
+    @extend .sideBar;
+    width: 15.6%;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar{
+        width: 10px;
+    }
+    &::-webkit-scrollbar-track{
+        min-height: 1000px;
+        background-color: $bg;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: rgb(80, 80, 80);
+    }
+
+    .homeButton{
+        li{
+            margin-left: 1.5vw;
+        }
+        
+        img{
+            opacity: 70%;
+        }
+    }
+
+    .trendingButton{
+        margin-top: 73px;
+        li{
+            margin-left: 1.5vw;
+        }
+
+        img{
+            opacity: 70%;
+        }
+    }
+
+    .subscriptionButton{
+        margin-top: 73px;
+        li{
+            margin-left: 1.3vw;
+        }
+
+        img{
+            opacity: 70%;
+        }
+    }
+
+    .playlistButton{
+        margin-top: 73px;
+        li{
+            margin-left: 1vw;
+        }
+
+        img{
+            opacity: 70%;
+        }
+    }
+
     button{
         @include sideButtonProperty();
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+
+        opacity: 75%;
+
+    }
+    
+    li{
+        font-size: 0.95vw;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+        
+    }
+
+    .linkSection{
+        margin-top: 6vw;
+        margin-bottom: 10vw;
+
+        flex-direction: row;
+
+        a{
+            font-size: 13px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            margin-left: 5px;
+            color: rgb(138, 138, 138);
+            text-decoration: none;
+        }
+    }
+
+
+}
+
+.categories{
+    flex-direction: column;
+    margin-right: 8vw;
+    margin-top: 5vw;
+    color: gray;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 0.9vw;
+    width: 100vw;
+
+    h1{
+        color: white;
+    }
+
+    div{
+        margin-top: 1vw;
+    }
+
+    hr{
+        color: rgb(100, 100, 100);
+        border-width: 0.1px;
+        width: 100%;
+        opacity: 20%;
+    }
+
+    .m{
+        @extend hr;
+        opacity: 100%;
+        margin-top: 24.7vw;
+        margin-bottom: 0;
+    }
+}
+
+.favMusic{
+    button{
+        @include sideButtonProperty();
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        margin-left: 4.3vw;
+        margin-top: 0;
+        opacity: 70%;
     }
 
     img{
-        width: 2.5vw;
-        height: 1.3vw;
-        margin-left: 17.6px;
-        margin-bottom: 5px;
+        width: 3vw;
+        height: 2.2vw;
+        margin-left: 0.5vw;
     }
 
     li{
-        margin-left: 19px;
+        color: white;
+        font-size: 1vw;
+        margin-left: 1vw;
     }
+}
+
+.favGame{
+    button{
+        @include sideButtonProperty();
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        margin-left: 4.3vw;
+        margin-top: 3.9vw;
+        opacity: 70%;
+    }
+
+    img{
+        width: 3vw;
+        height: 2.2vw;
+        margin-left: 0.5vw;
+    }
+
+    li{
+        color: white;
+        font-size: 1vw;
+        margin-left: 1vw;
+    } 
+}
+
+.favNews{
+    button{
+        @include sideButtonProperty();
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        margin-left: 4.3vw;
+        margin-top: 7.8vw;
+        opacity: 70%;
+    }
+
+    img{
+        width: 3vw;
+        height: 2.2vw;
+        margin-left: 0.5vw;
+    }
+
+    li{
+        color: white;
+        font-size: 1vw;
+        margin-left: 1vw;
+    } 
+}
+
+.favSport{
+    button{
+        @include sideButtonProperty();
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        margin-left: 4.3vw;
+        margin-top: 11.7vw;
+        opacity: 70%;
+    }
+
+    img{
+        width: 3vw;
+        height: 2.2vw;
+        margin-left: 0.5vw;
+    }
+
+    li{
+        color: white;
+        font-size: 1vw;
+        margin-left: 1vw;
+    } 
+}
+
+.favEnt{
+    button{
+        @include sideButtonProperty();
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        margin-left: 4.3vw;
+        margin-top: 15.6vw;
+        opacity: 70%;
+    }
+
+    img{
+        width: 3vw;
+        height: 2.2vw;
+        margin-left: 0.5vw;
+    }
+
+    li{
+        color: white;
+        font-size: 1vw;
+        margin-left: 1vw;
+    } 
+}
+
+.favTrv{
+    button{
+        @include sideButtonProperty();
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        margin-left: 4.3vw;
+        margin-top: 19.5vw;
+        opacity: 70%;
+    }
+
+    img{
+        width: 3vw;
+        height: 2.2vw;
+        margin-left: 0.5vw;
+    }
+
+    li{
+        color: white;
+        font-size: 1vw;
+        margin-left: 1vw;
+    } 
+}
+
+
+.membership{
+    button{
+        @include sideButtonProperty();
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        margin-left: 4.3vw;
+        margin-top: 0;
+        opacity: 70%;
+    }
+
+    img{
+        width: 3vw;
+        height: 2.2vw;
+        margin-left: 0.5vw;
+    }
+
+    li{
+        color: white;
+        font-size: 1vw;
+        margin-left: 1vw;
+    } 
 }

@@ -1,0 +1,113 @@
+*{
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    background-color: black;
+}
+
+#container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    
+    color: white;
+
+    margin-top: 3.6vw;
+    margin-left: 4.7vw;
+    
+    width: 95.3%;
+    overflow-y: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    .content{
+        margin-left: 2vw;
+        font-weight: bold;
+        font-size: 1.3vw;
+        flex-direction: column;
+        margin-top: 1vw;
+
+        overflow-y: scroll;
+
+        overflow-x: hidden;
+
+        .videoSection{
+            margin-top: 1vw;
+            flex-direction: row;
+
+            display: flex;
+
+            flex-wrap: wrap;
+        }
+
+        .videoDetail{
+            flex-direction: column;
+            width: 20%;
+            
+            margin-right: 4vw;
+
+            margin-top: 1vw;
+    
+            &:focus{
+                outline: none;
+            }
+    
+            video{
+                width: 300px;
+                height: 160x;
+
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+            
+            .videos{
+                margin-top: 1vw;
+                margin-left: 1vw;
+                flex-direction: row;
+                font-size: 1vw;
+
+
+                img{
+                    width: 2.5vw;
+                    height: 2.5vw;
+                }
+
+                .channelName{
+                    margin-top: 0.5vw;
+                    font-size: 0.8vw;
+                    color: rgb(180, 180, 180);
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+
+                    &:active{
+                        outline: none;
+                    }
+                }
+                
+                .videoText{
+                    flex-direction: column;
+                    margin-left: 1vw;
+                }
+    
+                .details{
+                    font-size: 0.8vw;
+                    color: rgb(180, 180, 180);
+                }
+            }
+    
+        }
+        
+
+    }
+}
