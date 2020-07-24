@@ -42,6 +42,21 @@
                     </li>
                 </button>
             </div>
+
+            <button (click)="createPlaylist()">
+                <img src="../../assets/add_playlist_icon.png" alt="">
+                <li>
+                    Add new playlist
+                </li>
+            </button>
+        </div>
+    </div>
+
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" (click)="close()">&times;</span>
+            <input type="text" id="pName" placeholder="Input playlist name">
+            <button (click) = "create()">Create Playlist</button>
         </div>
     </div>
 </div>

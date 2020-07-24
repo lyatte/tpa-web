@@ -34,7 +34,9 @@ export class TrendingPageComponent implements OnInit {
       }
       `,
     }).valueChanges.subscribe(result => {
-      this.videos = result.data.getVideo
+      var vid = result.data.getVideo
+
+      this.videos = vid.slice(0, 20)
     });
     
     

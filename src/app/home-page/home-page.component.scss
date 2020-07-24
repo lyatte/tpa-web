@@ -162,6 +162,7 @@
         background-color: rgba(0,0,0,0.4);
      
         
+        
         .modal-content{
             background-color: rgb(61, 61, 61);
             margin: 15% auto;
@@ -173,6 +174,10 @@
 
             // opacity: 70%;
 
+            input{
+                color: white;
+            }
+            
 
             button{
                 flex-direction: row;
@@ -217,4 +222,5 @@
             }
         }
     }
+
 }

@@ -160,6 +160,70 @@ export class HomePageComponent implements OnInit {
 
   }
 
+  createPlaylist(){
+    this.closeModalPlaylist();
+
+    var modal = document.getElementById('addModal');
+
+    modal.style.display = "block";
+
+  }
+
+  create(){
+    var title = document.getElementById('pName').value;
+
+    var date = new Date();
+
+    var day = date.getDay();
+    var month = date.getMonth()+1;
+    var year = date.getFullYear();
+    
+    var v = "Public";
+    
+    console.log(title)
+
+    this.user.getUser().subscribe( us => {
+      console.log(us.id)
+      this.apollo.mutate( {
+        mutation: gql`
+          mutation createPlaylist($ch_id: String!, 
+            $title: String!, $day: Int!, $month: Int!, $year: Int!,
+            $visibility: String!){
+            createPlaylist( input : {
+              channel_id: $ch_id
+              playlist_title: $title
+              playlist_day: $day
+              playlist_visibility: $visibility
+              playlist_month: $month
+              playlist_year: $year
+              playlist_views: 0
+              playlist_videos: ""
+              playlist_desc: ""
+            }) { playlist_title }
+          }
+        `,
+        variables: {
+          ch_id: us.id,
+          title: title,
+          day: day,
+          month: month,
+          year: year,
+          visibility: v
+        }
+  
+      } ).subscribe( res => 
+        console.log(res) )
+    } )
+
+  }
+
+  close(){
+    
+    var modal = document.getElementById('addModal');
+
+    modal.style.display = "none";
+  }
+
   getDay(day, month, year): String{
     var date = day + (month*30) + (year*365);
 
