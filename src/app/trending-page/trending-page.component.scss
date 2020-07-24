@@ -95,9 +95,9 @@
             outline: none;
         }
 
-        video{
+        img{
             width: 280px;
-            height: 180px;
+            height: 160px;
         }
         
         .videoText{
@@ -106,15 +106,25 @@
             flex-direction: column;
             font-size: 1.5vw;
 
+            div{
+                &:active{
+                    outline: none;
+                }
+            }
+
             .details{
                 margin-top: 0.5vw;
-                font-size: 1vw;
+                font-size: 0.9vw;
                 color: rgb(180, 180, 180);
+
+                &:active{
+                    outline: none;
+                }
             }
             
             .desc{
                 margin-top: 1vw;
-                font-size: 1vw;
+                font-size: 0.9vw;
                 color: rgb(180, 180, 180);
             }
         }

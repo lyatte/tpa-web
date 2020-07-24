@@ -1,18 +1,18 @@
 <div id="container">
     <div id="top">
 
-        <img src="../../assets/channel_header.png" alt="">
+        <img src="{{ channel.channel_background }}" alt="" id="bg">
         <div class="c_info">
     
             <div class="channelInfo">
                 <div class="leftSide">
-                    <img src="../../assets/channel_icon.png" alt="">
+                    <img src="{{ channel.channel_icon }}" alt="">
                     <div class="ch">
                         <div class="chName">
-                            starshipTV
+                            {{ channel.channel_name }}
                         </div>
                         <div class="subsCount">
-                            4.32m subscriber
+                            {{ getSubs(channel.channel_subscribers) }} subscriber
                         </div>
                     </div>
                 </div>

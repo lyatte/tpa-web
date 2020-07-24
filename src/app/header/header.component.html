@@ -16,7 +16,8 @@
     </div>
 
     <div class="fourButtonRight">
-        <img class="img3" src="../../assets/create_channel_logo.png" alt="">
+        <img class="img3" src="../../assets/create_channel_logo.png" alt="" 
+        routerLink="/upload">
         <img class="img4" src="../../assets/nine_square_logo.png" alt="">
         <img class="img5" src="../../assets/three_dots_logo.png" alt="">
         <div class="signInButton">
@@ -25,7 +26,7 @@
                 SIGN IN
             </button>
 
-            <img class="signInLogo" src="{{ user.photoUrl }}" alt="" 
+            <img class="signInLogo" src="{{ photoUrl }}" alt="" 
             *ngIf="loggedIn" (click)="signOut()" routerLink="/">
         </div>
     </div>

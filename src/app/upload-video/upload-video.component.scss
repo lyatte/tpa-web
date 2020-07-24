@@ -1,0 +1,401 @@
+*{
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    background-color: black;
+}
+
+#container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    
+    color: white;
+
+    margin-top: 3.6vw;
+    margin-left: 4.7vw;
+    
+    width: 95.3%;
+    overflow-y: hidden;
+
+    
+    .content{
+        margin: 1vw;
+        margin-right: 0;
+        align-items: start;
+        flex-direction: row;
+        overflow-y: scroll;
+
+        .leftSide{
+            position: absolute;
+
+            .sideInfo{
+                margin-top: 1vw;
+                flex-direction: column;
+
+                .label{
+                    color: rgb(187, 187, 187);
+                }
+            }
+
+            .dropzone { 
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column; 
+                width: 40vw;
+                height: 20vw;
+                border: 2px dashed white;
+                border-radius: 5px;
+                background: black;
+              
+                &.hovering {
+                    border: 2px solid white;
+                    color: #dadada;
+                }
+        
+                input{
+                    width: 11.5vw;
+                }
+        
+            }
+
+            img{
+                width: 40vw;
+                height: 20vw;
+            }
+
+            .uploadProgress{
+                margin-top: 1vw;
+            }
+            
+            progress{
+              width: 40vw;
+            }
+      
+            progress::-webkit-progress-bar {
+                background-color:white;
+            }
+      
+            progress::-webkit-progress-value {
+              transition: width 0.1s ease;
+              background-color: red;
+            }
+        }
+        
+        .rightSide{
+            // overflow-y: scroll;
+            // background-color: white;
+            margin-left: 45vw;
+            width: 40vw;
+            height: 100vw;
+            // background-color: red;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+
+            h3{
+                width: 35vw;
+                margin: 0;
+                font-weight: bold;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1.3vw;
+                align-items: start;
+            }
+
+            .videoTitle{
+                margin: 0;
+                margin-top: 1.7vw;
+                padding: 0;
+                
+                background-color: white;
+                border: 1px solid gray;
+                border-radius: 0.3vw;
+                width: 35vw;
+                height: 6vw;
+                font-family: Arial, Helvetica, sans-serif;
+
+                p{
+                    margin-top: 0.2vw;
+                    margin-left: 0.2vw;
+                    padding-left: 0.5vw;
+                    width: 10vw;
+                    background-color: white;
+                    color: rgb(121, 121, 121);
+                    font-size: 0.8vw;
+                }
+
+                input{
+                    background-color: white;
+                    border: none;
+                    color: black;
+                    padding-left: 0.7vw;
+
+                    &:focus{
+                        outline: none;
+                    }
+                }
+            }
+
+            .videoDesc{
+                margin: 0;
+                margin-top: 1.5vw;
+                padding: 0;
+                
+                background-color: white;
+                border: 1px solid gray;
+                border-radius: 0.3vw;
+                width: 35vw;
+                height: 10vw;
+                font-family: Arial, Helvetica, sans-serif;
+
+                p{
+                    margin-top: 0.2vw;
+                    margin-left: 0.2vw;
+                    padding-left: 0.5vw;
+                    width: 10vw;
+                    background-color: white;
+                    color: rgb(121, 121, 121);
+                    font-size: 0.8vw;
+                }
+
+                input{
+                    background-color: white;
+                    border: none;
+                    color: black;
+                    padding-left: 0.7vw;
+
+                    &:focus{
+                        outline: none;
+                    }
+                }
+            }
+
+            .thumbnail{
+                @extend h3;
+                margin-top: 2vw;
+                font-size: 1vw;
+
+                div{
+                    width: 20vw;
+                    flex-direction: row;
+                    justify-content: start;
+                    input{
+                        margin-top: 1.7vw;
+
+                        &:active{
+                            outline: none;
+                        }
+                    }
+                    img{
+                        width: 10vw;
+                        height: 5vw;
+                    }
+                }
+            }
+
+            .addToPlaylist{
+                @extend h3;
+                margin-top: 2vw;
+                font-size: 1vw;
+            }
+            
+            .playList{
+                height: 10vw;
+            }
+
+            .ageRestriction{
+                @extend h3;
+                margin-top: 2vw;
+                font-size: 1vw;
+
+                div{
+                    font-size: 0.9vw;
+
+                    flex-direction: row;
+                    align-items: center;
+
+                    margin-bottom: 1vw;
+                }
+
+                .yesButton{
+                    margin-bottom: 0.7vw;
+                }
+
+                .yesButton, .noButton{
+                    font-weight: normal;
+                    
+                    input, label{
+                        cursor: pointer;
+                    }
+                }
+
+                input{
+                    width: 1.2vw;
+                    height: 1.2vw;
+                    margin-right: 1vw;
+                }
+
+            }
+            
+            .category{
+                @extend h3;
+                margin-top: 2vw;
+                font-size: 1vw;
+
+                div{
+                    font-size: 0.9vw;
+
+                    flex-direction: row;
+                    align-items: center;
+
+                    margin-bottom: 1vw;
+                }
+
+                .buttons{
+                    font-weight: normal;
+                    
+                    input, label{
+                        cursor: pointer;
+                    }
+                }
+
+                input{
+                    width: 1.2vw;
+                    height: 1.2vw;
+                    margin-right: 1vw;
+                }
+            }
+
+            hr{
+                margin-top: 2vw;
+                width: 100%;
+                opacity: 30%;
+                border-width: 0.05vw;
+            }
+
+            .v{
+                margin-top: 2vw;
+            }
+
+            .visibility{
+                align-items: start;
+                // background-color: red;
+                width: 35vw;
+                margin-top: 2vw;
+
+                input{
+                    width: 1.2vw;
+                    height: 1.2vw;
+                    margin-right: 1vw;
+                }
+
+                .notScheduled, .videoScheduled{
+                    input, label{
+                        cursor: pointer;
+                    }
+
+                    label{
+                        font-weight: 500;
+                    }
+                }
+
+                .videoScheduled{
+                    margin-top: 1vw;
+                }
+
+                div{
+                    flex-direction: row;
+                }
+
+                .scheduling{
+                    margin-left: 2.3vw;
+                }
+
+                .privacy{
+                    @extend h3;
+                    flex-direction: column;
+                    margin-left: 2.3vw;
+                    margin-top: 0.5vw;
+    
+                    p{
+                        font-size: 1vw;
+                    }
+    
+                    div{
+                        font-size: 0.9vw;
+    
+                        flex-direction: row;
+                        align-items: center;
+    
+                        margin-bottom: 1vw;
+                    }
+    
+                    .privateButton{
+                        margin-bottom: 0.7vw;
+                    }
+    
+                    .publicButton, .privateButton{
+                        font-weight: normal;
+                        
+                        input, label{
+                            cursor: pointer;
+                        }
+                    }
+    
+                    input{
+                        width: 1.2vw;
+                        height: 1.2vw;
+                        margin-right: 1vw;
+                    }
+                }
+
+                .premiereButton{
+                    margin-top: 5vw;
+                    input, label{
+                        cursor: pointer;
+                    }
+                }
+
+            }
+
+            .scheduleButton, .publishButton{
+                margin-top: 2vw;
+
+                button{
+                    border: none;
+
+                    width: 6vw;
+                    height: 2vw;
+
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+
+                    border-radius: 0.2vw;
+                    font-weight: bold;
+                    font-family: Arial, Helvetica, sans-serif;
+
+                    padding-left: 0.3vw;
+                    padding-right: 0.3vw;
+
+                    cursor: pointer;
+
+                    background-color: rgb(52, 89, 255);
+
+                }
+            }
+            
+
+            
+        }
+    }
+}

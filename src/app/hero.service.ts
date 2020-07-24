@@ -1,7 +1,25 @@
 import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 
-@Injectable();
+import { SocialUser } from "angularx-social-login";
+
+@Injectable()
 export class HeroService {
 
-  constructor() { }
+  private user = new BehaviorSubject<any>(null);
+
+  constructor() {  }
+
+  setUser(user: SocialUser){
+    this.user.next(user);
+    this.getUser().subscribe( res => console.log(res) )
+  }
+
+  clearUser(){
+    this.user.next(null);
+  }
+
+  getUser(): Observable<any>{
+    return this.user.asObservable();
+  }
 }

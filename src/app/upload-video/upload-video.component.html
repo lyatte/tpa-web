@@ -1,0 +1,164 @@
+<div id="container">
+    <div class="content">
+        <div class="leftSide">
+            <div class="dropzone" 
+             dropzone
+             (hovered)="toggleHover($event)"
+             (dropped)="onDrop($event)"
+             [class.hovering]="isHovering" 
+             *ngIf = "!isUploaded">
+        
+        
+             <h3>Drop your video here!</h3>
+             <p>or</p>
+             <input type="file" id="file" (change)="chooseFile($event)" accept="video/*">
+            </div>
+
+            <img src="../../assets/no_image.png" id="sideImage" *ngIf = "isUploaded">
+            
+            <div class="sideInfo" *ngIf=isUploaded>
+                <p class="label">File Name</p>
+                <p> {{ file.name }} </p>
+                <p class="label">Video Duration</p>
+                <p> {{ videoDuration }}</p>
+            </div>
+
+    
+            <div class="uploadProgress">
+                <div *ngIf="percentage | async as pct">
+                    <p>Upload progress</p>
+                    <progress [value]="pct" max="100" id="progress"></progress>
+                    {{ pct | number }}%
+                </div>
+            
+            </div>
+            <!-- <button (click)="getLink()"></button> -->
+        </div>
+
+        
+        <div class="rightSide" *ngIf="isUploaded" >
+            <h3>Detail</h3>
+
+            <div class="videoTitle">
+                <p>Video title (required)</p>
+                <input type="text" placeholder="Input your video title" id="v_title">
+            </div>
+
+            <div class="videoDesc">
+                <p>Description</p>
+                <input type="text" placeholder="Tell viewers about your video" id="v_desc">
+            </div>
+
+            <div class="thumbnail">
+                <p>Thumbnail</p>
+                <div>
+                    <input type="file" id="file" (change)="chooseThumbnail($event)" accept="image/*">
+                    <img src="../../assets/no_image.png" id="thumbnailImg">
+                </div>
+            </div>
+
+            <div class="addToPlaylist">
+                <p>Playlist</p>
+                <div class="playList"></div>
+            </div>
+
+            <div class="ageRestriction">
+                <p>Viewers</p>
+                <div>
+                    Is this video can be viewed by everyone? (required)
+                </div>
+
+                <div class="yesButton">
+                    <input type="radio" name="age" id="yes" value="Yes" checked="true">
+                    <label for="yes">Yes, anyone can see this video</label>
+                </div>
+                <div class="noButton">
+                    <input type="radio" name="age" id="no" value="No">
+                    <label for="no">No, only age 18 and above can see this video</label>
+                </div>
+
+            </div>
+
+            <div class="category">
+                <p>Video Category</p>
+                <div class="buttons">
+                    <input type="radio" name="category" id="music" checked="true">
+                    <label for="music">Music</label>
+                </div>
+                <div class="buttons">
+                    <input type="radio" name="category" id="sport" value="No">
+                    <label for="sport">Sport</label>
+                </div>
+                <div class="buttons">
+                    <input type="radio" name="category" id="game" value="No">
+                    <label for="game">Game</label>
+                </div>
+                <div class="buttons">
+                    <input type="radio" name="category" id="news" value="No">
+                    <label for="news">News</label>
+                </div>
+                <div class="buttons">
+                    <input type="radio" name="category" id="ent" value="No">
+                    <label for="ent">Entertainment</label>
+                </div>
+                <div class="buttons">
+                    <input type="radio" name="category" id="travel" value="No">
+                    <label for="travel">Travel</label>
+                </div>
+            </div>
+
+            <hr>
+
+            <h3 class="v">Visibility</h3>
+
+
+            <div class="visibility">
+                <div class="notScheduled">
+                    <input type="radio" name="scheduled" id="not-scheduled" value="false" checked="true"
+                    (click)="scheduledChecked(1)">
+                    <label for="not-scheduled">Save or Publish</label>
+                </div>
+                <div class="privacy" *ngIf="!scheduled">
+    
+                    <div class="privateButton">
+                        <input type="radio" name="priv" id="private" value="Private" checked="true">
+                        <label for="private">Private</label>
+                    </div>
+                    <div class="publicButton">
+                        <input type="radio" name="priv" id="public" value="Public">
+                        <label for="public">Public</label>
+                    </div>
+    
+                </div>
+                <div class="videoScheduled">
+                    <input type="radio" name="scheduled" id="scheduled" value="true"
+                    (click)="scheduledChecked(2)">
+                    <label for="scheduled">Schedule Video</label>
+                </div>
+                
+                <div class="scheduling" *ngIf="scheduled">JADWAL</div>
+
+                <div class="premiereButton">
+                    <input type="checkbox" name="pr" id="premiere" (change)="premiumVid(1)">
+                    <label for="premiere">Youtube Premium</label>
+                </div>
+
+            </div>
+
+            <div class="publishButton" *ngIf="!scheduled" (click)="finalizeButton()">
+                <button>
+                    PUBLISH
+                </button>
+            </div>
+
+            <div class="scheduleButton" *ngIf="scheduled" (click)="finalizeButton()">
+                <button>
+                    SCHEDULE
+                </button>
+            </div>
+
+
+        </div>
+    
+    </div>
+</div>

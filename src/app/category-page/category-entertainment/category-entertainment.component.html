@@ -5,7 +5,6 @@
         <img src="../../../assets/entertainment_fav_logo.png" alt="">
         <div class="text">
             <div>Entertainment</div>
-            <div class="subsCount">...M subscribers</div>
         </div>
     </div>
     
@@ -18,67 +17,14 @@
             <div>
                 All-time Popular
                 <div class="videoSection">
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
+                    <div class="videoDetail" *ngFor="let video of videos">
+                        <img src="{{ video.video_thumbnail }}" alt="" 
+                        routerLink="/video/{{ video.video_id }}">
                         <div class="videos">
                             <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
+                                <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
                             </div>
                         </div>
                     </div>
@@ -95,67 +41,14 @@
             <div>
                 Popular This Week
                 <div class="videoSection">
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
+                    <div class="videoDetail" *ngFor="let video of videos">
+                        <img src="{{ video.video_thumbnail }}" alt="" 
+                        routerLink="/video/{{ video.video_id }}">
                         <div class="videos">
                             <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
+                                <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
                             </div>
                         </div>
                     </div>
@@ -171,67 +64,14 @@
             <div>
                 Popular Of The Month
                 <div class="videoSection">
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
+                    <div class="videoDetail" *ngFor="let video of videos">
+                        <img src="{{ video.video_thumbnail }}" alt="" 
+                        routerLink="/video/{{ video.video_id }}">
                         <div class="videos">
                             <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
+                                <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
                             </div>
                         </div>
                     </div>
@@ -247,67 +87,14 @@
             <div>
                 Recently Uploaded
                 <div class="videoSection">
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
+                    <div class="videoDetail" *ngFor="let video of videos">
+                        <img src="{{ video.video_thumbnail }}" alt="" 
+                        routerLink="/video/{{ video.video_id }}">
                         <div class="videos">
                             <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="videoDetail">
-                        <video routerLink="/video">
-                        <source src="../../../assets/vid.mp4" type="video/mp4">
-                        </video>
-                        <div class="videos">
-                            <div class="videoText">
-                                <div>CRAVITY 크래비티 'Cloud 9' MV</div>
-                                <div class="channelName" routerLink="/channel">starshipTV</div>
-                                <div class="details">11m . 3 weeks ago</div>
+                                <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
                             </div>
                         </div>
                     </div>

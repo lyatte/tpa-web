@@ -1,37 +1,35 @@
 <div id="container">
-    <div class="mainVideo">
-        <mat-video class="video" src="../../assets/vid.mp4">
+    <div class="mainVideo" *ngIf="video">
+        <mat-video class="video" [src]="video.video" 
+        [preload]="true" [keyboard]="true" autoplay="true">
 
         </mat-video>
 
         <div class="videoDetail">
-            <div class="tags">
-                #Tags #Ehe:D
-            </div>
             <div class="videoName">
-                Video Name
+                {{ video.video_title }}
             </div>
 
             <div class="anotherDetail">
                 <div>
                     <div class="views">
-                        views
+                        {{ getViewInFormat(video.video_views) }} views
                     </div>
                     <div class="extra">.</div>
                     <div class="date">
-                        date
+                        {{ video.day }} {{ getMonth(video.month) }} {{ video.year }}
                     </div>
                 </div>
 
                 <div>
-                    <button class="likeButton">
-                        <img src="../../assets/like_icon.png" alt="">
-                        ... k
+                    <button id="likeButton" (click)="likeVideo()">
+                        <img src="../../assets/like_icon.png" alt="" id="likeImg">
+                        {{ getLike(video.video_like) }}
                     </button>
 
-                    <button class="dislikeButton">
-                        <img src="../../assets/dislike_icon.png" alt="">
-                        ... k
+                    <button id="dislikeButton" (click)="dislikeVideo()">
+                        <img src="../../assets/dislike_icon.png" alt="" id="dislikeImg">
+                        {{ getLike(video.video_dislike) }}
                     </button>
 
                     <button class="shareButton">
@@ -52,17 +50,17 @@
 
                 
                 <div class="leftSide">
-                    <img class="icon" src="../../assets/user_logo.png" alt="">
+                    <img class="icon" src="{{ channel.channel_icon }}" alt="">
 
                     <div>
                         <div class="chnName">
-                            Channel Name
+                            {{ channel.channel_name }}
                         </div>
                         <div class="subscriberCount">
-                            .... k subscriber
+                            {{ getViews(channel.channel_subscribers) }} subscriber
                         </div>
                         <div class="vidDesc">
-                            (Video Desc) Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores quis similique beatae, sed culpa est, vitae, incidunt dolorem voluptatibus ratione quo quisquam! Voluptatem, magnam impedit molestias distinctio quae quisquam in!
+                            {{ video.video_description }}
                         </div>
                     </div>
                 </div>
@@ -73,14 +71,6 @@
                             SUBSCRIBE
                         </button>
                     </div>
-                    
-                    <!-- <div class="alrSubscribe">
-                        <button>
-                            SUBSCRIBED
-                        </button>
-
-                        <img src="../../assets/subscribed_logo.png" alt="">
-                    </div> -->
                 </div>
             </div>
 
@@ -95,104 +85,14 @@
 
     <div class="relatedVideo">
         Related Video
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
+        <a href="/video/{{ v.video_id }}" class="videoDetail" *ngFor="let v of videos">
+            <img src="{{ v.video_thumbnail }}" alt="">
             <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
+                <div>{{ v.video_title }}</div>
+                <div class="channel">{{ v.channel_name }}</div>
+                <div class="details">{{ getViews(v.video_views) }} views . Date</div>
             </div>
-        </div>
-
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
-            <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
-            </div>
-        </div>
-
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
-            <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
-            </div>
-        </div>
-
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
-            <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
-            </div>
-        </div>
-
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
-            <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
-            </div>
-        </div>
-
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
-            <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
-            </div>
-        </div>
-
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
-            <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
-            </div>
-        </div>
-
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
-            <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
-            </div>
-        </div>
-
-        <div class="videoDetail" routerLink="/video">
-            <video >
-            <source src="../../assets/vid.mp4" type="video/mp4">
-            </video>
-            <div class="videoText">
-                <div>Video Name</div>
-                <div class="channel">Channel</div>
-                <div class="details">Views . Date</div>
-            </div>
-        </div>
+        </a>
     </div>
     
 </div>

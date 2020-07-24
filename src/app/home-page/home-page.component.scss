@@ -28,6 +28,11 @@
 
     font-family: Arial, Helvetica, sans-serif;
 
+    a{
+        text-decoration: none;
+        color: white;
+    }
+
     .content{
         margin-left: 2vw;
         font-weight: bold;
@@ -35,15 +40,15 @@
         flex-direction: column;
         margin-top: 1vw;
 
-        overflow-y: scroll;
+        // overflow-y: scroll;
 
         overflow-x: hidden;
 
         .videoSection{
             margin-top: 1vw;
+            display: flex;
             flex-direction: row;
 
-            display: flex;
 
             flex-wrap: wrap;
         }
@@ -55,14 +60,30 @@
             margin-right: 4vw;
 
             margin-top: 1vw;
+
+            .image{
+                position: relative;
+                text-align: center;
+
+                font-weight: normal;
+                font-size: 1vw;
+
+                .duration{
+                    position: absolute;
+                    bottom: 0vw;
+                    left: 17.8vw;
+
+                    background-color: transparent;
+                }
+            }
     
             &:focus{
                 outline: none;
             }
     
-            video{
-                width: 300px;
-                height: 160x;
+            img{
+                width: 20vw;
+                height: 11vw;
 
                 &:hover{
                     cursor: pointer;
@@ -70,15 +91,18 @@
             }
             
             .videos{
-                margin-top: 1vw;
-                margin-left: 1vw;
+                margin-top: 0.7vw;
                 flex-direction: row;
                 font-size: 1vw;
+
+                align-items: start;
+                justify-content: start;
 
 
                 img{
                     width: 2.5vw;
                     height: 2.5vw;
+                    border-radius: 1.7vw;
                 }
 
                 .channelName{

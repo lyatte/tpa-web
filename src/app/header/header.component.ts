@@ -3,10 +3,15 @@ import { expand } from '../trending-page/trending-page.component';
 
 import { SocialAuthService } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
-import { SocialUser } from "angularx-social-login";
 import { Router } from '@angular/router';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
+import { HeroService } from '../hero.service';
+import { Subscription } from 'rxjs';
 
 @Component({
+  moduleId: module.id,
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
@@ -16,14 +21,21 @@ export class HeaderComponent implements OnInit {
 
   show: boolean;
 
-  user: SocialUser;
   loggedIn: boolean;
 
-  constructor(private authService: SocialAuthService, private router: Router) { 
+  photoUrl;
+
+  dummy;
+
+  subscription: Subscription;
+
+  constructor(private authService: SocialAuthService, 
+    private router: Router,
+    private apollo: Apollo,
+    private user: HeroService) { 
     console.log("test");
     this.show = false;
     expanded = 'sideBar';
-    console.log(expanded);
     this.isExpanded = expanded;
   }
 
@@ -32,7 +44,7 @@ export class HeaderComponent implements OnInit {
     expanded = 'sideBar';
 
     if(localStorage.getItem('user') == null){
-      this.user = null;
+      this.user.setUser(null);
     }
     else{
       this.getUser();
@@ -40,22 +52,88 @@ export class HeaderComponent implements OnInit {
   }
 
   getUser(){
-    this.user = JSON.parse(localStorage.getItem('user'));
+    this.dummy = JSON.parse(localStorage.getItem('user'));
+    this.user.setUser(this.dummy);
+
+    this.user.getUser().subscribe( asd => 
+      console.log(asd))
+
+
+    this.photoUrl = this.dummy.photoUrl;
+    
+
     this.loggedIn = true;
-    console.log(this.user);
   }
 
   signIn(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
     
-    this.authService.authState.subscribe((user) => {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+
+    this.authService.authState.subscribe((res) => {
       this.loggedIn = true;
-      this.user = user;
-      this.loggedIn = (user != null);
 
-      localStorage.setItem('user', JSON.stringify(user));
+      this.photoUrl = res.photoUrl;
+      
+      this.user.setUser(res);
+
+      this.loggedIn = (res != null);
+
+      localStorage.setItem('user', JSON.stringify(res));
+
+
+      var date = new Date();
+
+      var day = date.getDate();
+      var month = date.getMonth()+1;
+      var year = date.getFullYear();
+
+      console.log(day, month, year);
+
+      this.user.getUser().subscribe( data => {
+        console.log("asdasdads");
+        console.log(data.id);
+        this.apollo.mutate({
+          mutation: gql`
+            mutation createChannel($channel_id: String!, $channel_name: String!,
+              $channel_icon: String!, $channel_join_date_day: Int!, 
+              $channel_join_date_month: Int!, $channel_join_date_year: Int!){
+                createChannel(channel_id: $channel_id,input:{
+                  channel_id: $channel_id
+                  channel_name: $channel_name
+                  channel_background: "https://firebasestorage.googleapis.com/v0/b/y-jube.appspot.com/o/null.jpg?alt=media&token=91c13f5d-4a43-4d17-a6fe-0c334d7b0982"
+                  channel_icon: $channel_icon
+                  channel_subscribers: 0
+                  channel_description: ""
+                  channel_join_date_day: $channel_join_date_day
+                  channel_join_date_month: $channel_join_date_month
+                  channel_join_date_year: $channel_join_date_year
+                  channel_liked_video: ""
+                  channel_disliked_video: ""
+                  channel_liked_post: ""
+                  channel_disliked_post: ""
+                  channel_liked_comment: ""
+                  channel_disliked_comment: ""
+                  channel_premium: "None"
+                }){ channel_name }
+            }
+          `,
+          variables: {
+            channel_id: data.id,
+            channel_name: data.name,
+            channel_icon: data.photoUrl,
+            channel_join_date_day: day,
+            channel_join_date_month: month,
+            channel_join_date_year: year
+          }
+        }).subscribe(({ data }) => {
+          console.log("data : ", data);
+        })
+        // window.location.reload();
+      })
+
+
+      
     });
-
 
 
     
@@ -65,6 +143,8 @@ export class HeaderComponent implements OnInit {
     this.authService.signOut(true);
     sessionStorage.clear()
     this.loggedIn = false;
+
+    this.user.clearUser();
 
     window.localStorage.clear();
     window.location.reload();
@@ -86,7 +166,6 @@ export class HeaderComponent implements OnInit {
       this.show=false;
       expand(2);
     } 
-    console.log(this.isExpanded);
   }
 
   openCategoryPage(num: number){

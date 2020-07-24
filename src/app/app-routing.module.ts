@@ -13,23 +13,25 @@ import { CategorySportComponent } from './category-page/category-sport/category-
 import { CategoryEntertainmentComponent } from './category-page/category-entertainment/category-entertainment.component';
 import { CategoryTravelComponent } from './category-page/category-travel/category-travel.component';
 import { PlaylistPageComponent } from './playlist-page/playlist-page.component';
+import { UploadVideoComponent } from './upload-video/upload-video.component';
 
 
 
 const routes: Routes = [
   { path: '', component: HomePageComponent},
   { path: 'trending', component: TrendingPageComponent},
-  { path: 'video', component: VideoComponentComponent },
+  { path: 'video/:id', component: VideoComponentComponent },
   { path: 'subscriptions', component: SubscriptionsPageComponent},
   { path: 'membership', component: MembershipPageComponent },
-  { path: 'channel', component: ChannelsPageComponent },
+  { path: 'channel/:id', component: ChannelsPageComponent },
   { path: 'category/game', component: CategoryGameComponent },
   { path: 'category/music', component: CategoryMusicComponent },
   { path: 'category/news', component: CategoryNewsComponent },
   { path: 'category/sport', component: CategorySportComponent },
   { path: 'category/entertainment', component: CategoryEntertainmentComponent },
   { path: 'category/travel', component: CategoryTravelComponent },
-  { path: 'playlist', component: PlaylistPageComponent }
+  { path: 'playlist', component: PlaylistPageComponent },
+  { path: 'upload', component: UploadVideoComponent }
 ];
 
 @NgModule({
@@ -51,4 +53,5 @@ export const routingComponents =
   CategorySportComponent,
   CategoryEntertainmentComponent,
   CategoryTravelComponent,
-  PlaylistPageComponent]
+  PlaylistPageComponent,
+  UploadVideoComponent]

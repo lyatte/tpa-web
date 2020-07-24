@@ -1,14 +1,8 @@
 <div id="container">
-    <div class="guest">
+    <div class="guest" *ngIf = "isGuest == true">
         <img src="../../assets/subscription_icon.png" alt="">
         <div class="dontMiss">Don't miss new videos</div>
         <div>Sign in to see updates from your favorite YouTube channels</div>
-        <div class="signInButton">
-            <button type="submit">
-                <img class="userLogo" src="../../assets/user_logo.png" alt="">
-                SIGN IN
-            </button>
-        </div>
     </div>
 
     <!-- <div class="user">
