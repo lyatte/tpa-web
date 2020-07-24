@@ -27,6 +27,8 @@ export class HeaderComponent implements OnInit {
 
   dummy;
 
+  playlists;
+
   subscription: Subscription;
 
   constructor(private authService: SocialAuthService, 
@@ -55,14 +57,35 @@ export class HeaderComponent implements OnInit {
     this.dummy = JSON.parse(localStorage.getItem('user'));
     this.user.setUser(this.dummy);
 
-    this.user.getUser().subscribe( asd => 
-      console.log(asd))
+    this.user.getUser().subscribe( us => {
+      console.log(us.id)
+
+      this.apollo.watchQuery({
+        query: gql`
+          query getChannelPlaylist($id: String!){
+            getChannelPlaylist(channel_id: $id){
+              playlist_title,
+              playlist_id
+            }
+          }
+        `,
+        variables: {
+          id: us.id
+        }
+      }).valueChanges.subscribe( res => {
+        this.playlists = res.data.getChannelPlaylist
+
+        console.log(this.playlists)
+      } )
+
+    })
 
 
     this.photoUrl = this.dummy.photoUrl;
     
 
     this.loggedIn = true;
+    
   }
 
   signIn(): void {
@@ -128,7 +151,8 @@ export class HeaderComponent implements OnInit {
         }).subscribe(({ data }) => {
           console.log("data : ", data);
         })
-        // window.location.reload();
+        
+
       })
 
 

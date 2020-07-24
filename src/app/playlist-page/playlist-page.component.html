@@ -1,22 +1,22 @@
 <div id="container">
     <div class="playlistInfo">
         <div class="thumbnail">
-            <img src="../../assets/bp_thumbnail.png" alt="">
+            <img src="{{ thumbnail }}" alt="">
         </div>
-        <div class="title">Playlist title</div>
-        <div class="infos">.. video . .... watched . ... last updated</div>
+        <div class="title">{{ playlist.playlist_title }}</div>
+        <div class="infos">{{ videoCount }} video . {{ playlist.playlist_views }}x watched . Last updated {{ playlist.playlist_day }} {{ getMonth(playlist.playlist_month) }} {{ playlist.playlist_year }}</div>
         <div class="buttons">
             <button>
                 <img src="../../assets/share_icon.png" alt="">
             </button>
         </div>
-        <div class="playlistDesc">(Desc) Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam reiciendis ipsa dolores quo, cupiditate nulla temporibus explicabo molestiae aliquid nisi asperiores, eum fugit velit aperiam, sit maiores quisquam alias voluptas.</div>
+        <div class="playlistDesc">{{ playlist.playlist_desc }}</div>
         <hr>
         <div class="bottomInfo">
             <div class="channelInfo">
-                <img src="../../assets/user_logo.png" alt="">
+                <img src="{{ playlistChannel.channel_icon }}" alt="">
                 <div class="chName">
-                    Channel Name
+                    {{ playlistChannel.channel_name }}
                 </div>
             </div>
 
@@ -38,12 +38,12 @@
     </div>
 
     <div class="playlistVids">
-        <div class="videoDetail">
-            <video src="../../assets/vid.mp4"></video>
+        <a href="/video/{{ v.video_id }}" class="videoDetail" *ngFor="let v of videos" (click)="addViews()">
+            <img src="{{ v.video_thumbnail }}" alt="">
             <div class="videoText">
-                <div class="vidName">Video Name</div>
-                <div class="vidCh">Channel Name</div>
-            </div>
-        </div>
+                <div class="vidName">{{ v.video_title }}</div>
+                <div class="vidCh">{{ v.channel_name }}</div>
+                </div>
+        </a>
     </div>
 </div>

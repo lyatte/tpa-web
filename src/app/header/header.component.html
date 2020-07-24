@@ -60,16 +60,19 @@
         </button>
     </div>
 
-    <div class="playlistButton">
-        <button routerLink="/playlist">
-            <img src="../../assets/add_playlist_icon.png" alt="">
-            <li>
-                Playlist
-            </li>
-        </button>
-    </div>
-
+    
     <div *ngIf="show">
+        <div class="playlist" *ngFor="let p of playlists">
+            <a href="/playlist/{{ p.playlist_id }}">
+                <button>
+                    <img src="../../assets/add_playlist_icon.png" alt="">
+                    <li>
+                        {{ p.playlist_title }}
+                    </li>
+                </button>
+            </a>
+        </div>
+
         <div class="categories">
             <hr>
             <div>

@@ -98,6 +98,7 @@
             img{
                 width: 2.5vw;
                 height: 2.5vw;
+                border-radius: 2vw;
             }
         }
 
@@ -146,8 +147,12 @@
     .playlistVids{
         margin-left: 3vw;
         margin-top: 2vw;
-        video{
-            width: 8vw;
+
+        a{
+            img{
+                width: 8vw;
+                height: 4vw;
+            }
         }
 
         .videoDetail{
@@ -155,6 +160,8 @@
             flex-direction: row;
 
             width: 50vw;
+
+            text-decoration: none;
             
             cursor: pointer;
 
@@ -168,13 +175,17 @@
 
 
             .videoText{
+                text-decoration: none;
+                color: white;
                 margin-left: 1vw;
 
                 .vidName{
                     font-weight: bold;
+                    text-decoration: none;
                 }
 
                 .vidCh{
+                    text-decoration: none;
                     margin-top: 0.5vw;
                     color: rgb(160, 160, 160);
                 }

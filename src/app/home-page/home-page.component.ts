@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { expanded } from '../header/header.component';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
-import { Router } from '@angular/router';
-import { rejects } from 'assert';
-import { INT_TYPE } from '@angular/compiler/src/output/output_ast';
+
+import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-home-page',
@@ -13,13 +11,16 @@ import { INT_TYPE } from '@angular/compiler/src/output/output_ast';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo,
+    private user: HeroService) { }
 
   isExpanded: string;
 
   videos: any;
 
   videoDuration;
+
+  playlist;
 
   ngOnInit(): void {
 
@@ -77,6 +78,25 @@ export class HomePageComponent implements OnInit {
       
     });
 
+    this.user.getUser().subscribe( us => {
+      this.apollo.watchQuery( { 
+        query: gql`
+          query getChannelPlaylist($id: String!){
+            getChannelPlaylist(channel_id: $id){
+              playlist_id,
+              playlist_title,
+              playlist_videos
+            }
+          }
+        `,
+        variables: {
+          id: us.id
+        }
+      } ).valueChanges.subscribe( r => {
+        this.playlist = r.data.getChannelPlaylist
+      } )
+    } )
+
     
   }
 
@@ -97,6 +117,46 @@ export class HomePageComponent implements OnInit {
     }else{
       return minute + ":" + second;
     }
+
+  }
+
+  chosenVid;
+
+
+  openModalPlaylist(video_id){
+    var modal = document.getElementById('playlistModal');
+
+    modal.style.display = "block";
+
+    this.chosenVid = video_id;
+
+
+    console.log(this.chosenVid)
+  }
+
+  closeModalPlaylist(){
+    var modal = document.getElementById('playlistModal');
+
+    modal.style.display = "none";
+  }
+
+  addToPlaylist(id){
+
+    console.log(this.chosenVid, id);
+
+    this.apollo.mutate( {
+      mutation: gql`
+        mutation addVideoToPlaylist($playlist_id: ID!, $video_id: ID!){
+          addVideoToPlaylist(playlist_id: $playlist_id, video_id: $video_id)
+        }
+      `,variables:{
+        video_id: this.chosenVid,
+        playlist_id: id,
+      }
+    } ).subscribe( res => {
+      console.log(res)
+    } )
+
 
   }
 

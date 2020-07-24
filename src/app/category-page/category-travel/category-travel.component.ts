@@ -18,6 +18,7 @@ export class CategoryTravelComponent implements OnInit {
       query: gql`
         query getVideoByCategory($video_category: String!){
           getVideoByCategory(video_category: $video_category){
+            video_id,
             video_title,
             video_thumbnail,
             channel_name,

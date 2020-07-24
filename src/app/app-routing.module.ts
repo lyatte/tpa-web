@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'category/sport', component: CategorySportComponent },
   { path: 'category/entertainment', component: CategoryEntertainmentComponent },
   { path: 'category/travel', component: CategoryTravelComponent },
-  { path: 'playlist', component: PlaylistPageComponent },
+  { path: 'playlist/:id', component: PlaylistPageComponent },
   { path: 'upload', component: UploadVideoComponent }
 ];
 
