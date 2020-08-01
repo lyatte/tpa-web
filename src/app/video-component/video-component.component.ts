@@ -27,6 +27,8 @@ export class VideoComponentComponent implements OnInit {
 
   userLog;
 
+  userThumbnail;
+
 
   ngOnInit(): void {
     
@@ -85,12 +87,17 @@ export class VideoComponentComponent implements OnInit {
 
         });
 
-        var usId;
-
-      this.user.getUser().subscribe( u => 
-        { usId = u.id } )
+      // this.user.getUser().subscribe( u => 
+      //   { usId = u.id } )
 
       this.user.getUser().subscribe( res => {
+
+        console.log(res)
+
+        this.userThumbnail = res.photoUrl
+
+        console.log("asd", this.userThumbnail)
+
         this.apollo.watchQuery({
           query: gql`
             query getChannelById($id: String!){
@@ -103,7 +110,7 @@ export class VideoComponentComponent implements OnInit {
               }
             }
           `, 
-          variables: { id: usId }
+          variables: { id: res.id }
         }).valueChanges.subscribe( r => {
 
           this.userLog = r.data.getChannelById

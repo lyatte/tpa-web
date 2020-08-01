@@ -4,7 +4,7 @@ $isExpanded : 1;
 $bg : rgb(27, 27, 27);
 
 @mixin sideButtonProperty {
-    font-size: 11px;
+    font-size: 0.7vw;
     font-family: Arial, Helvetica, sans-serif;
 
     opacity: 50%;
@@ -14,7 +14,7 @@ $bg : rgb(27, 27, 27);
 
     position: absolute;
     width: 100%;
-    height: 10%;
+    height: 4.9vw;
 
     justify-content: center;
     align-items: start;
@@ -59,29 +59,40 @@ header{
     top: 0;
     left: 0;
     flex-direction: row;
-    height: 55px;
+    // height: 55px;
+    height: 3.6vw;
     background-color: rgb(27, 27, 27);
+    // background-color: red;
 
     .mainButton{
         flex-direction: row;
-        margin: 0 20px 0 20px;
+        
+        margin-left: 1.4vw;
+        margin-right: 1.4vw;
         border: none;
         outline: none;
         cursor: pointer;
-        width: 29.6px;
-        height: 33px;
+        
+        width: 2vw;
+        
+        height: 2.2vw;
+        // background-color: blue;
+
         
         .img1{
             background-color: rgb(27, 27, 27);
-            width: 29.6px;
-            height: 33px;
+            // background-color: red;
+            width: 100%;
+            height: 100%;
         }
 
     }
     
     .img2{  
-        width: 100px;
-        height: 50px;
+        // width: 100px;
+        width: 6.5vw;
+        // height: 50px;
+        height: 3vw;
 
         cursor: pointer;
 
@@ -96,7 +107,7 @@ header{
             justify-content: start;
             color: $textColor;
             margin-left: 17vw;
-            padding-left: 10px;
+            padding-left: 0.7vw;
             color: gray;
             border: 0.06vw solid rgb(48, 48, 48);
             background-color: black;
@@ -105,6 +116,8 @@ header{
 
             border-top-left-radius: 0.17vw;
             border-bottom-left-radius: 0.17vw;
+
+            font-size: 1vw;
 
             &:focus{
                 color: white;
@@ -144,9 +157,9 @@ header{
         justify-content: end;
 
         .img3{
-            margin-left: 200px;
-            width: 55px;
-            height: 35px;
+            margin-left: 13vw;
+            width: 4vw;
+            height: 2.3vw;
 
             cursor: pointer;
 
@@ -156,16 +169,16 @@ header{
         }
 
         .img4{
-            margin-left: 10px;
-            margin-bottom: 1px;
-            width: 18px;
-            height: 18px;
+            margin-left: 0.6vw;
+            
+            width: 1.2vw;
+            height: 1.2vw;
         }
 
         .img5{
-            margin-left: 25px;
-            width: 10px;
-            height: 22px;
+            margin-left: 1.6vw;
+            width: 0.65vw;
+            height: 1.4vw;
 
             &:hover{
                 cursor: pointer;
@@ -173,16 +186,19 @@ header{
         }
 
         .signInButton{
-            margin-left: 20px;
+            margin-left: 1.3vw;
 
             button{
                 flex-direction: row;
                 color: rgb(15, 148, 224);
+
+                font-size: 0.9vw;
+
                 font-weight: bold;
                 height: 2.4vw;
                 width: 6vw;
                 background-color: rgb(27, 27, 27);
-                border: 1px solid rgb(0, 138, 218);
+                border: 0.01vw solid rgb(0, 138, 218);
                 border-radius: 0.2vw;
                 cursor: pointer;
 
@@ -193,13 +209,15 @@ header{
             }
             
             .userLogo{
-                margin-left: 7px;
-                margin-right: 3px;
-                width: 24px;
-                height: 23px;
+                margin-left: 0.4vw;
+                margin-right: 0.2vw;
+                width: 1.55vw;
+                height: 1.5vw;
             }
 
             .signInLogo{
+
+
                 width: 2vw;
                 height: 2vw;
 
@@ -214,11 +232,15 @@ header{
 .sideBar{
     position: fixed;
     left: 0;
-    top: 7.3%;
+    top: 3.6vw;
+    // height: 100vw;
     height: 100%;
 
-    width: 4.7%;
+    width: 4.7vw;
     background-color: $bg;
+
+
+    // background-color: red;
 
     flex-direction: column;
 
@@ -239,18 +261,18 @@ header{
     img{
         width: 1.3vw;
         height: 1.2vw;
-        margin-left: 27px;
-        margin-bottom: 10px;
+        margin-left: 1.7vw;
+        margin-bottom: 0.7vw;
     }
 
     li{
-        margin-left: 22px;
+        margin-left: 1.4vw;
     }
 
 }
 
 .trendingButton{
-    margin-top: 75px;
+    margin-top: 4.9vw;
 
     button{
         @include sideButtonProperty();
@@ -259,17 +281,18 @@ header{
     img{
         width: 1.1vw;
         height: 1.4vw;
-        margin-left: 28px;
-        margin-bottom: 10px;
+        margin-left: 1.8vw;
+        margin-bottom: 0.7vw;
     }
 
     li{
-        margin-left: 15px;
+        margin-left: 1vw;
     }
 }
 
 .subscriptionButton{
-    margin-top: 75px;
+    
+    margin-top: 4.9vw;
 
     button{
         @include sideButtonProperty();
@@ -278,26 +301,25 @@ header{
     img{
         width: 1.6vw;
         height: 1.6vw;
-        margin-left: 23px;
+        margin-left: 1.5vw;
     }
 
     li{
-        margin-left: 6px;
+        margin-left: 0.4vw;
     }
 }
 
 .playlist{
-
-    margin-top: 75px;
+    margin-top: 4.9vw;
 
     button{
         @include sideButtonProperty();
     }
 
     img{
-        width: 1.9vw;
-        height: 1.9vw;
-        margin-left: 23px;
+        width: 1.6vw;
+        height: 1.6vw;
+        margin-left: 1.6vw;
     }
 
     li{
@@ -307,16 +329,15 @@ header{
 
 .sideBarExpanded{
     @extend .sideBar;
-    width: 15.6%;
+    width: 15.6vw;
 
     overflow-y: scroll;
     overflow-x: hidden;
 
     &::-webkit-scrollbar{
-        width: 10px;
+        width: 0.6vw;
     }
     &::-webkit-scrollbar-track{
-        min-height: 1000px;
         background-color: $bg;
     }
     &::-webkit-scrollbar-thumb{
@@ -334,7 +355,7 @@ header{
     }
 
     .trendingButton{
-        margin-top: 73px;
+        margin-top: 4.9vw;
         li{
             margin-left: 1.5vw;
         }
@@ -345,7 +366,8 @@ header{
     }
 
     .subscriptionButton{
-        margin-top: 73px;
+        
+        margin-top: 4.9vw;
         li{
             margin-left: 1.3vw;
         }
@@ -356,7 +378,8 @@ header{
     }
 
     .playlistButton{
-        margin-top: 73px;
+        
+        margin-top: 4.9vw;
         li{
             margin-left: 1vw;
         }
@@ -392,10 +415,11 @@ header{
         flex-direction: row;
 
         a{
-            font-size: 13px;
+            font-size: 0.8vw;
             font-family: Arial, Helvetica, sans-serif;
             font-weight: bold;
-            margin-left: 5px;
+            
+            margin-left: 0.7vw;
             color: rgb(138, 138, 138);
             text-decoration: none;
         }

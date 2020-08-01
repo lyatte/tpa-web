@@ -222,6 +222,15 @@
 
         .commentSection{
             margin-top: 1vw;
+
+            .userComment{
+                img{
+                    width: 2.5vw;
+                    height: 2.5vw;
+
+                    border-radius: 2vw;
+                }
+            }
         }
 
     }
@@ -234,6 +243,8 @@
 
         flex-direction: column;
         justify-content: start;
+
+        // flex-wrap: wrap;
 
         align-items: start;
 

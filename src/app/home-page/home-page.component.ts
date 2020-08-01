@@ -24,6 +24,8 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log("welcome")
+
     this.apollo.watchQuery({
       query: gql`
       {
@@ -44,7 +46,11 @@ export class HomePageComponent implements OnInit {
       }
       `,
     }).valueChanges.subscribe(result => {
+      console.log("asd")
       this.videos = result.data.getVideo
+      console.log(this.videos)
+
+      
 
       // let self = this;
       // for(let i = 0; i<this.videos.length; i++){
