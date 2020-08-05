@@ -59,8 +59,8 @@ header{
     top: 0;
     left: 0;
     flex-direction: row;
-    // height: 55px;
-    height: 3.6vw;
+    height: 55px;
+    // height: 3.6vw;
     background-color: rgb(27, 27, 27);
     // background-color: red;
 
@@ -227,6 +227,172 @@ header{
             }
         }
     }  
+
+    
+}
+
+.modal {
+    align-items: center;
+    justify-content: center;
+    display: block;
+    // display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(22, 22, 22, 0.4);
+ 
+    overflow-y: none;
+    
+    .modal-content{
+        background-color: black;
+        margin: 15% auto;
+        padding: 20px;
+        width: 40%;
+
+        align-items: center;
+        justify-content: start;
+
+        border-radius: 1vw;
+
+        // opacity: 70%;
+
+        font-family: Arial, Helvetica, sans-serif;
+
+        h1{
+            color: white;
+            font-weight: bold;
+        }
+
+        div{
+            width: 60%;
+            justify-content: space-between;
+            color: white;
+            flex-direction: row;
+
+            margin-bottom: 1vw;
+        }
+
+        input{
+            width: 15vw;
+            height: 2vw;
+
+            padding: 0.3vw;
+
+            border-radius: 0.2vw;
+            border-style: none;
+        }
+        
+
+        button{
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(61, 61, 61); 
+            color: white;
+
+            margin-top: 1vw;
+
+            border: none;
+
+            width: 15vw;
+            height: 3vw;
+
+            cursor: pointer;
+
+            border-radius: 0.17vw;
+
+            &:hover{
+                background-color: rgb(43, 43, 43); 
+
+                img, li{
+                    background-color: rgb(43, 43, 43); 
+                }
+            }
+
+            img{
+                width: 3vw;
+                height: 3vw;
+                background-color: rgb(61, 61, 61);
+            }
+
+            li{
+                background-color: rgb(61, 61, 61);
+            }
+        }
+
+        .close{
+            // position: fixed;
+            color: white;
+            background-color: black;
+            font-size: 28px;
+            font-weight: bold;
+            margin-left: 30vw;
+            cursor: pointer;
+        }
+
+        .register{
+            margin-top: 0.4vw;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+
+            font-size: 0.87vw;
+
+            a{
+                margin-left: 0.4vw;
+                text-decoration: none;
+
+                cursor: pointer;
+
+                &:hover{
+                    text-decoration: underline;
+                }
+
+                color: rgb(56, 117, 250);
+                // margin-top: 0.08vw;
+            }
+        }
+
+        hr{
+            width: 50%;
+            border-width: 0.002vw;
+            border-color: gray;
+        }
+
+        .signInWithGoogle{
+            flex-direction: column;
+
+            button{
+                box-shadow: 0.2vw;
+                background-color: white;
+                color: gray;
+                font-weight: bold;
+
+
+                &:hover{
+                    background-color: rgb(46, 112, 255);
+                    color: white;
+
+                    img{
+                        background-color: rgb(46, 112, 255);
+                    }
+                }
+
+                img{
+                    background-color: white;
+
+                    margin-right: 1vw;
+
+                    width: 2vw;
+                    height: 2vw;
+                }
+            }
+        }
+    }
 }
 
 .sideBar{

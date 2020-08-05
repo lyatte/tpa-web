@@ -88,7 +88,19 @@ export class HeaderComponent implements OnInit {
     
   }
 
-  signIn(): void {
+  signIn(): void{
+    var modal = document.getElementById('loginModal');
+
+    modal.style.display = "block";
+  }
+
+  closeLoginModal(){
+    var modal = document.getElementById('loginModal');
+
+    modal.style.display = "none";
+  }
+
+  signInWithGoogle(): void {
     
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
 

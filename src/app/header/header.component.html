@@ -32,6 +32,36 @@
     </div>
 </header>
 
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="closeLoginModal()">&times;</span>
+        <h1>Sign in to your account</h1>
+        <div>
+            Email
+            <input type="email" id="email" placeholder="Input your email">
+        </div>
+        <div>
+            Password
+            <input type="password" id="password" placeholder="Input your password">
+        </div>
+        <button >Login</button>
+
+        <div class="register">
+            Don't have any account? 
+            <a>Register Now</a>
+        </div>
+
+        <hr>
+
+        <div class="signInWithGoogle">
+            <button (click)="signInWithGoogle()">
+                <img src="../../assets/google_logo.png" alt="">
+                Sign In With Google
+            </button>
+        </div>
+    </div>
+</div>
+
 <div [ngClass]="isExpanded" (click)="expandButton()">
     <div class="homeButton">
         <button routerLink="/">
@@ -160,4 +190,6 @@
             <a href="https://www.youtube.com/t/contact_us">Contact Us</a>
         </div>
     </div>
+
+    
 </div>
