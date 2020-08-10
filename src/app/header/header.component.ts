@@ -31,6 +31,17 @@ export class HeaderComponent implements OnInit {
 
   subscription: Subscription;
 
+  isClicked: boolean;
+
+  location = "Indonesia";
+
+  restrict = "Off";
+
+  isDefault = true;
+
+  isRestrict = false;
+  
+
   constructor(private authService: SocialAuthService, 
     private router: Router,
     private apollo: Apollo,
@@ -51,6 +62,29 @@ export class HeaderComponent implements OnInit {
     else{
       this.getUser();
     }
+
+    this.isClicked = false;
+    console.log(this.isClicked)
+
+    var temp = JSON.parse(localStorage.getItem('restrict'));
+
+    if(temp == "On"){
+      this.restrict = "On"
+      this.isRestrict = true;
+    }else{
+      this.restrict = "Off"
+      this.isRestrict = false;
+
+      localStorage.setItem('restrict', JSON.stringify("Off"))
+    }
+
+    temp = JSON.parse(localStorage.getItem('location'));
+
+    if(temp == null){
+      this.location = "Indonesia"
+      localStorage.setItem('location', JSON.stringify("Indonesia"))
+    }else
+      this.location = temp;
   }
 
   getUser(){
@@ -86,6 +120,72 @@ export class HeaderComponent implements OnInit {
 
     this.loggedIn = true;
     
+  }
+
+  settingToggle(){
+    if(this.isClicked) this.isClicked = false;
+    else this.isClicked = true;
+
+    this.isDefault = true;
+
+    this.flag=0;
+  }
+
+  flag;
+
+  choose(num){
+    this.isDefault = !this.isDefault
+
+    if(num==0) this.flag=0;
+
+    else if(num==1){
+      this.flag=1;
+    }else if(num==2){
+      this.flag=2;
+    }
+    else{
+      this.flag=3;
+    }
+  }
+
+  setLocation(num){
+    if(num == 1) {
+      localStorage.setItem('location', JSON.stringify("Indonesia"))
+    }else if(num==2){
+      localStorage.setItem('location', JSON.stringify("Japan"))
+    }else{
+      localStorage.setItem('location', JSON.stringify("Korea"))
+    }
+
+    window.location.reload();
+  }
+
+  res(){
+    console.log("satuu")
+    if(this.restrict == "On"){
+      this.restrict = "Off"
+    }else{
+      this.restrict = "On"
+    }
+    
+    let self=this;
+
+    async function getRData(){
+      try{
+        await localStorage.setItem('restrict', JSON.stringify(self.restrict));
+        
+        window.location.reload();
+        return;
+      }catch (error){
+        console.log(error)
+        console.log("error");
+      }
+    }
+
+    getRData();
+
+    console.log(this.restrict)
+
   }
 
   signIn(): void{
@@ -168,10 +268,11 @@ export class HeaderComponent implements OnInit {
       })
 
 
-      
+      this.closeLoginModal();
+
+      window.location.reload();
+
     });
-
-
     
   }
 
@@ -184,7 +285,7 @@ export class HeaderComponent implements OnInit {
 
     window.localStorage.clear();
     window.location.reload();
-  
+
   }
 
 

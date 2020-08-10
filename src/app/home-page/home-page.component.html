@@ -2,34 +2,40 @@
     <div class="content">
         Recommended
         <div class="videoSection">
-            <div class="videoDetail"  *ngFor="let video of videos">
-                <a href="/video/{{ video.video_id }}">
-                    <div class="image">
-                        <img src="{{ video.video_thumbnail }}" alt="">
-                        <!-- <div class="duration">{{ videoDuration }}</div> -->
-                    </div>
-                </a>
-                <div class="videos">
-                    <a href="/channel/{{ video.channel_id }}" class="ch">
-                        <img src="{{ video.channel_icon }}" alt="">
-                    </a>
-                    <div class="videoText">
-                        <div class="topText">
-                            <a href="/video/{{ video.video_id }}">
-                                <div>{{ video.video_title }}</div>
-                            </a>
-                            <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
+            <div *ngFor="let video of videos, let i = index">
+                <div class="videoDetail" *ngIf="i<(lastKey)">
+                    <a href="/video/{{ video.video_id }}">
+                        <div class="image">
+                            <img src="{{ video.video_thumbnail }}" alt="">
+                            <!-- <div class="duration">{{ videoDuration }}</div> -->
                         </div>
-                        <a href="/channel/{{ video.channel_id }}">
-                            <div class="channelName">{{ video.channel_name }}</div>
+                    </a>
+                    <div class="videos">
+                        <a href="/channel/{{ video.channel_id }}" class="ch">
+                            <img src="{{ video.channel_icon }}" alt="">
                         </a>
-                        <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                        <div class="videoText">
+                            <div class="topText">
+                                <a href="/video/{{ video.video_id }}">
+                                    <div>{{ video.video_title }}</div>
+                                </a>
+                                <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
+                            </div>
+                            <a href="/channel/{{ video.channel_id }}">
+                                <div class="channelName">{{ video.channel_name }}</div>
+                            </a>
+                            <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
+        
+        <div class="footer"></div>
+
     </div>
+
 
     <div id="playlistModal" class="modal">
         <div class="modal-content">

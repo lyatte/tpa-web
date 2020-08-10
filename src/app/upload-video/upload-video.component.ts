@@ -35,12 +35,39 @@ export class UploadVideoComponent implements OnInit {
 
   scheduled = false;
 
+  us_er;
+
+  playlist;
+
   constructor(private storage: AngularFireStorage, 
     private db: AngularFirestore,
     private apollo: Apollo,
     private user: HeroService) { }
 
   ngOnInit(): void {
+
+
+    this.user.getUser().subscribe( r => {
+      this.us_er = r;
+
+      this.apollo.watchQuery({
+        query: gql`
+          query getChannelPlaylist($channel_id: String!){
+            getChannelPlaylist(channel_id: $channel_id){
+              playlist_id,
+              playlist_title
+            }
+          }
+        `, variables: {
+          channel_id: this.us_er.id
+        }
+      }).valueChanges.subscribe( res => {
+        this.playlist = res.data.getChannelPlaylist
+
+        console.log(this.playlist)
+      } )
+    } )
+
   }
 
   toggleHover(event: boolean) {
@@ -150,6 +177,12 @@ export class UploadVideoComponent implements OnInit {
     console.log(this.isPremium)
   }
 
+  chosenPlaylist;
+
+  choosePlaylist(num){
+    this.chosenPlaylist = num;
+  }
+
   isPremium = false;
 
   finalizeButton(){
@@ -172,9 +205,9 @@ export class UploadVideoComponent implements OnInit {
     
 
     if(restriction.checked == true){
-      isRestricted = false;
+      isRestricted = "Yes";
     }else{
-      isRestricted = true;
+      isRestricted = "No";
     }
 
     privacy = document.getElementById('private');
@@ -251,7 +284,7 @@ export class UploadVideoComponent implements OnInit {
                       channel_id: $channel_id
                       channel_name: $channel_name
                       channel_icon: $channel_icon
-                    }){ video_title }
+                    }){ video_id }
                 }
               `,
               variables: {
@@ -273,6 +306,23 @@ export class UploadVideoComponent implements OnInit {
               }
             }).subscribe(({ data }) => {
               console.log("data : ", data);
+
+              console.log(data.createVideo)
+              // console.log(data.result.createVideo)
+
+              this.apollo.mutate({
+                mutation: gql`
+                  mutation addVideoToPlaylist($playlist_id: ID!, $video_id: ID!){
+                    addVideoToPlaylist(playlist_id: $playlist_id, video_id: $video_id)
+                  }
+                `,
+                variables: {
+                  playlist_id: this.chosenPlaylist,
+                  video_id: data.createVideo.video_id
+                }
+              }).subscribe( (res) => {
+                console.log(res)
+              } )
             },
             (error) => {
               console.log("error" + error)

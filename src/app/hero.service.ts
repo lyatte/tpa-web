@@ -10,9 +10,9 @@ export class HeroService {
 
   constructor() {  }
 
+
   setUser(user: SocialUser){
     this.user.next(user);
-    this.getUser().subscribe( res => console.log(res) )
   }
 
   clearUser(){

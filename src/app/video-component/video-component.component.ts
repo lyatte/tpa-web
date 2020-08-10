@@ -29,6 +29,8 @@ export class VideoComponentComponent implements OnInit {
 
   userThumbnail;
 
+  comment_count;
+
 
   ngOnInit(): void {
     
@@ -68,6 +70,8 @@ export class VideoComponentComponent implements OnInit {
       }).valueChanges.subscribe(result => {
         this.video = result.data.getVideoById
         this.channelId = this.video.channel_id
+
+        
   
         this.apollo.watchQuery({
           query: gql`

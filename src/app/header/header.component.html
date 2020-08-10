@@ -17,9 +17,10 @@
 
     <div class="fourButtonRight">
         <img class="img3" src="../../assets/create_channel_logo.png" alt="" 
-        routerLink="/upload">
-        <img class="img4" src="../../assets/nine_square_logo.png" alt="">
-        <img class="img5" src="../../assets/three_dots_logo.png" alt="">
+        routerLink="/upload" *ngIf="loggedIn">
+        <img class="img4" src="../../assets/notification_logo.png" alt="" *ngIf="loggedIn">
+        <img class="img5" src="../../assets/three_dots_logo.png" alt="" *ngIf="!loggedIn"
+        (click)="settingToggle()">
         <div class="signInButton">
             <button type="submit" *ngIf="!loggedIn" (click)="signIn()">
                 <img class="userLogo" src="../../assets/user_logo.png" alt="">
@@ -58,6 +59,82 @@
                 <img src="../../assets/google_logo.png" alt="">
                 Sign In With Google
             </button>
+        </div>
+    </div>
+</div>
+
+<div id="settingModal" *ngIf="isClicked">
+    <div id="modal-content2" [style.height]="flag==3 ? '192px' : '162px'">
+        <div *ngIf="isDefault" class="def">
+            <div class="location" (click)="choose(1)">
+                <img src="../../assets/website_logo.png" alt="">
+                <div>
+                    Location: {{location}}
+                </div>
+            </div>
+            <div class="keyboard" (click)="choose(2)">
+                <img src="../../assets/keyboard_icon.png" alt="">
+                <div>
+                    Keyboard shortcuts
+                </div>
+            </div>
+    
+            <hr>
+    
+            <div class="restrict" (click)="choose(3)">
+                Restricted Mode: {{restrict}}
+            </div>
+        </div>
+
+        <div *ngIf="flag==1" class="loc">
+            <div class="topR">
+                <img src="../../assets/arrow_left.png" alt="" (click)="choose(0)">
+                <div>
+                    Choose your location
+                </div>
+            </div>
+            
+            <hr>
+            
+            <div class="indo" (click)="setLocation(1)">
+                Indonesia
+            </div>
+            <div class="jpn" (click)="setLocation(2)">
+                Japan
+            </div>
+            <div class="kor" (click)="setLocation(3)">
+                South Korea
+            </div>
+        </div>
+
+
+        <div *ngIf="flag==3" class="res">
+            <div class="topR">
+                <img src="../../assets/arrow_left.png" alt="" (click)="choose(0)">
+                <div>
+                    Restricted Mode
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="short-desc">This helps hide potentially mature videos. 
+                No filter is 100% accurate.
+            </div>
+
+            <div class="additional-desc">
+                This setting only applies to this browser.
+            </div>
+
+            <div class="togs">
+                <div>
+                    ACTIVATE RESTRICTED MODE
+                </div>
+                <label class="switch">
+                    <input type="checkbox" [checked]="isRestrict">
+                    <span class="slider round" (click)="res()"></span>
+                </label>
+            </div>
         </div>
     </div>
 </div>

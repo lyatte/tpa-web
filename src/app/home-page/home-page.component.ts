@@ -22,67 +22,119 @@ export class HomePageComponent implements OnInit {
 
   playlist;
 
+  lastKey = 0;
+
+  observer: any;
+
   ngOnInit(): void {
 
-    console.log("welcome")
 
-    this.apollo.watchQuery({
-      query: gql`
-      {
-        getVideo{
-          video_id,
-          video_title,
-          video,
-          video_thumbnail,
-          video_description,
-          video_views,
-          channel_name,
-          channel_icon,
-          day,
-          month,
-          year,
-          channel_id,
+    this.lastKey = 12;
+
+    var location = JSON.parse(localStorage.getItem('location'))
+
+    console.log(location)
+
+    if(JSON.parse(localStorage.getItem('restrict')) == "Off"){
+      var temp = "No"
+      this.apollo.watchQuery( { 
+        query: gql`
+          query getVideoHomePage($restriction: String!, $location: String!){
+            getVideoHomePage(restriction: $restriction, location: $location){
+              video_id,
+              video_title,
+              video,
+              video_thumbnail,
+              video_description,
+              video_views,
+              channel_name,
+              channel_icon,
+              day,
+              month,
+              year,
+              channel_id,
+            }
+          }
+        `,
+        variables: {
+          restriction: "No",
+          location: location
         }
-      }
-      `,
-    }).valueChanges.subscribe(result => {
-      console.log("asd")
-      this.videos = result.data.getVideo
-      console.log(this.videos)
+      } ).valueChanges.subscribe( r => {
+        console.log(r.data.getVideoHomePage)
+        this.videos = r.data.getVideoHomePage
 
-      
+        console.log(this.videos)
 
-      // let self = this;
-      // for(let i = 0; i<this.videos.length; i++){
-      //   console.log(this.videos[i]);
-      //   var video = document.createElement('video');
-
-      //   video.src = this.videos[i].video;
-
-      //   console.log(video.src)
-
-      //   console.log(video.duration)
-
-      //   // video.preload = 'metadata';
-
-
-      //   // console.log(this.videos[i].video)
-  
-      //   // video.onloadedmetadata = function() {
-      //   //   window.URL.revokeObjectURL(video.src);
-      //   //   var duration = video.duration;
-
-      //   //   console.log(duration)
-  
-      //   //   self.videoDuration = self.setDuration(duration);
-      //   // }
+        this.observer = new IntersectionObserver((entry) => {
+          if(entry[0].isIntersecting){
+            let card = document.querySelector(".videoSection");
+            for(let i = 0; i<4; i++){
+              if(this.lastKey < this.videos.length){
+                let div = document.createElement("div")
+                let video = document.createElement("div")
+                div.appendChild(video)
+                card.appendChild(div)
+                this.lastKey++;
+              }
+            }
+          }
+        }
+        )
     
+        this.observer.observe(document.querySelector(".footer"))
+      } )
+    }else{
 
-      //   // video.src = URL.createObjectURL(this.videos[i].video);
-      // }
+      console.log(temp)
+      this.apollo.watchQuery( { 
+        query: gql`
+          query getVideoHomePage($restriction: String!, $location: String!){
+            getVideoHomePage(restriction: $restriction, location: $location){
+              video_id,
+              video_title,
+              video,
+              video_thumbnail,
+              video_description,
+              video_views,
+              channel_name,
+              channel_icon,
+              day,
+              month,
+              year,
+              channel_id,
+            }
+          }
+        `,
+        variables: {
+          restriction: "Yes",
+          location: location
+        }
+      } ).valueChanges.subscribe( r => {
+        console.log(r.data.getVideoHomePage)
+        this.videos = r.data.getVideoHomePage
 
-      
-    });
+        console.log(this.videos)
+
+        this.observer = new IntersectionObserver((entry) => {
+          if(entry[0].isIntersecting){
+            let card = document.querySelector(".videoSection");
+            for(let i = 0; i<4; i++){
+              if(this.lastKey < this.videos.length){
+                let div = document.createElement("div")
+                let video = document.createElement("div")
+                div.appendChild(video)
+                card.appendChild(div)
+                this.lastKey++;
+              }
+            }
+          }
+        }
+        )
+    
+        this.observer.observe(document.querySelector(".footer"))
+      } )
+    }
 
     this.user.getUser().subscribe( us => {
       this.apollo.watchQuery( { 
@@ -238,15 +290,6 @@ export class HomePageComponent implements OnInit {
     var today_day = todayDate.getDate();
     var today_month = (todayDate.getMonth()+1) * 30;
     var today_year = todayDate.getFullYear() * 365;
-
-    // console.log(todayDate)
-
-    // console.log(todayDate.getMonth())
-
-    // console.log(day, month, year)
-    // console.log(today_day, todayDate.getMonth(), todayDate.getFullYear())
-
-    // console.log((today_day + today_month + today_year), date);
 
     var differences = (today_day + today_month + today_year) - date;
 

@@ -35,8 +35,8 @@
             <!-- <button (click)="getLink()"></button> -->
         </div>
 
-        
-        <div class="rightSide" *ngIf="isUploaded" >
+        <!-- *ngIf="isUploaded"  -->
+        <div class="rightSide" >
             <h3>Detail</h3>
 
             <div class="videoTitle">
@@ -59,7 +59,19 @@
 
             <div class="addToPlaylist">
                 <p>Playlist</p>
-                <div class="playList"></div>
+                <div class="playlist">
+                    <div *ngFor="let p of playlist">
+                        <button (click)="choosePlaylist( p.playlist_id  )">
+                            <img src="../../assets/add_playlist_icon.png" alt="">
+                            {{ p.playlist_title }}
+                        </button>
+                    </div>
+
+                    <button>
+                        <img src="../../assets/add_playlist_icon.png" alt="">
+                        Add new playlist
+                    </button>
+                </div>
             </div>
 
             <div class="ageRestriction">

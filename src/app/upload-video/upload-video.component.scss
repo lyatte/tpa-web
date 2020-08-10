@@ -206,6 +206,50 @@
                 @extend h3;
                 margin-top: 2vw;
                 font-size: 1vw;
+                
+
+                .playlist{
+                    width: 80%;
+
+
+                    // background-color: white;
+
+                    button{
+                        flex-direction: row;
+                        font-weight: bold;
+                        font-size: 0.91em;
+
+                        img{
+                            width: 30px;
+                            margin-right: 10px;
+                        }
+
+                        align-items: center;
+                        border: none;
+                        color: white;
+                        width: 94.5%;
+                        height: 40px;
+                        
+                        cursor: pointer;
+
+                        &:hover{
+                            background-color: rgb(92, 92, 92);
+
+                            img{
+                                background-color: rgb(92, 92, 92);
+                            }
+                        }
+
+                        &:focus{
+                            outline: none;
+                            background-color: rgb(59, 59, 59);
+
+                            img{
+                                background-color: rgb(59, 59, 59);
+                            }
+                        }
+                    }
+                }
             }
             
             .playList{

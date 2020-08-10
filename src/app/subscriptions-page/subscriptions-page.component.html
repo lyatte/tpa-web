@@ -5,7 +5,80 @@
         <div>Sign in to see updates from your favorite YouTube channels</div>
     </div>
 
-    <!-- <div class="user">
+    <div class="user" *ngIf = "isGuest == false">
 
-    </div> -->
+        <div class="today-section">
+            Today
+            <div class="video-section">
+                <div *ngFor="let video of today_vid, let i = index">
+                    <div class="videoDetail" *ngIf="i<(lastKey1)">
+                        <img src="{{ video.video_thumbnail }}" alt="" 
+                        routerLink="/video/{{ video.video_id }}">
+                        <div class="videos">
+                            <div class="videoText">
+                                <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div *ngIf="isEmpty1 == true" class="empty-msg">There's no video.</div>
+        </div>
+
+        <hr>
+
+        <div class="this-week-section">
+            This Week
+            <div class="video-section">
+                <div *ngFor="let video of week_vid, let i = index">
+                    <div class="videoDetail" *ngIf="i<(lastKey2)">
+                        <img src="{{ video.video_thumbnail }}" alt="" 
+                        routerLink="/video/{{ video.video_id }}">
+                        <div class="videos">
+                            <div class="videoText">
+                                <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="isEmpty2 == true" class="empty-msg">There's no video.</div>
+        </div>
+
+        <hr>
+
+        <div class="this-month-section">
+            This Month
+            <div class="video-section">
+                <div *ngFor="let video of month_vid, let i = index">
+                    <div class="videoDetail" *ngIf="i<(lastKey3)">
+                        <img src="{{ video.video_thumbnail }}" alt="" 
+                        routerLink="/video/{{ video.video_id }}">
+                        <div class="videos">
+                            <div class="videoText">
+                                <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div *ngIf="isEmpty3 == true" class="empty-msg">There's no video.</div>
+        </div>
+
+        <div class="footer">
+            
+        </div>
+        
+    </div>
+
 </div>
