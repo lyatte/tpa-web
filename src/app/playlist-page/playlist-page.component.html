@@ -13,7 +13,7 @@
         <div class="playlistDesc">{{ playlist.playlist_desc }}</div>
         <hr>
         <div class="bottomInfo">
-            <div class="channelInfo">
+            <div class="channelInfo" routerLink="/channel/{{ playlistChannel.channel_id }}">
                 <img src="{{ playlistChannel.channel_icon }}" alt="">
                 <div class="chName">
                     {{ playlistChannel.channel_name }}
@@ -38,12 +38,21 @@
     </div>
 
     <div class="playlistVids">
-        <a href="/video/{{ v.video_id }}" class="videoDetail" *ngFor="let v of videos" (click)="addViews()">
+        <div class="videoDetail" routerLink="/video/{{ video.video_id }}" *ngFor="let video of videos" (click)="addViews()">
+            <img src="{{ video.video_thumbnail }}" alt="" 
+            routerLink="/video/{{ video.video_id }}" (click)="addViews()">
+            <div class="videoText">
+                <div routerLink="/video/{{ video.video_id }}" (click)="addViews()">{{ video.video_title }}</div>
+                <div class="details" routerLink="/channel/{{ video.channel_id }}"> {{ video.channel_name }} . {{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }} </div>
+                <div class="desc">{{ video.video_description }}</div>
+            </div>
+        </div>
+        <!-- <a href="/video/{{ v.video_id }}" class="videoDetail" *ngFor="let v of videos" (click)="addViews()">
             <img src="{{ v.video_thumbnail }}" alt="">
             <div class="videoText">
                 <div class="vidName">{{ v.video_title }}</div>
                 <div class="vidCh">{{ v.channel_name }}</div>
-                </div>
-        </a>
+            </div>
+        </a> -->
     </div>
 </div>

@@ -89,6 +89,12 @@
             flex-direction: row;
             align-items: center;
 
+            cursor: pointer;
+
+            &:active{
+                outline: none;
+            }
+
             margin-top: 1vw;
 
             .chName{
@@ -148,6 +154,8 @@
         margin-left: 3vw;
         margin-top: 2vw;
 
+        width: 80%;
+
         a{
             img{
                 width: 8vw;
@@ -156,40 +164,74 @@
         }
 
         .videoDetail{
-            padding: 1vw;
+            // background-color: blue;
             flex-direction: row;
+            align-items: start;
+            justify-content: start;
+            width: 100%;
 
-            width: 50vw;
-
-            text-decoration: none;
-            
-            cursor: pointer;
+            padding: 10px;
 
             &:hover{
-                background-color: rgb(66, 66, 66);
+                cursor: pointer;
+                background-color: rgb(32, 32, 32);
 
-                .videoText, .vidName, .vidCh{
-                    background-color: rgb(66, 66, 66);
+                .videoText{
+                    background-color: rgb(32, 32, 32); 
+                }
+
+                div{
+                    background-color: rgb(32, 32, 32);
+                }
+
+                .details{
+                    background-color: rgb(32, 32, 32);
+                }
+
+                .desc{
+                    background-color: rgb(32, 32, 32);
                 }
             }
 
-
+            // margin-bottom: 1.5vw;
+    
+            &:focus{
+                outline: none;
+            }
+    
+            img{
+                width: 200px;
+                height: 100px;
+            }
+            
             .videoText{
-                text-decoration: none;
-                color: white;
-                margin-left: 1vw;
-
-                .vidName{
-                    font-weight: bold;
-                    text-decoration: none;
+                margin-left: 20px;
+                flex-direction: column;
+                font-size: 1.1vw;
+    
+                div{
+                    &:active{
+                        outline: none;
+                    }
                 }
-
-                .vidCh{
-                    text-decoration: none;
-                    margin-top: 0.5vw;
-                    color: rgb(160, 160, 160);
+    
+                .details{
+                    margin-top: 5px;
+                    font-size: 0.9vw;
+                    color: rgb(180, 180, 180);
+    
+                    &:active{
+                        outline: none;
+                    }
+                }
+                
+                .desc{
+                    margin-top: 15px;
+                    font-size: 0.9vw;
+                    color: rgb(180, 180, 180);
                 }
             }
+    
         }
     }
 }

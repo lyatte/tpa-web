@@ -122,9 +122,10 @@
             
 
             .videoDetail{
-                width: 11vw;
+                width: 14vw;
+                // background-color: white;
                 
-                margin-right: 6vw;
+                margin-right: 3vw;
     
                 margin-top: 1vw;
         
@@ -133,8 +134,8 @@
                 }
         
                 img{
-                    width: 15vw;
-                    height: 8.5vw;
+                    width: 14vw;
+                    height: 7.5vw;
     
                     &:hover{
                         cursor: pointer;
@@ -145,6 +146,15 @@
                     margin-top: 1vw;
                     flex-direction: row;
                     font-size: 1vw;
+                    // background-color: red;
+                    width: 100%;
+
+                    img{
+                        width: 2.5vw;
+                        height: 2.5vw;
+                        border-radius: 1.7vw;
+                        margin-right: 0.5vw;
+                    }
     
                     .channelName{
                         margin-top: 0.5vw;
@@ -163,6 +173,8 @@
                     .videoText{
                         flex-direction: column;
                         margin-left: 0;
+                        width: 100%;
+                        // background-color: blue;
                     }
         
                     .details{
