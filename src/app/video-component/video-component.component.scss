@@ -20,7 +20,7 @@
     bottom: 0;
     padding-left: 2vw;
     
-    flex-direction: row;
+    flex-direction: column;
 
     color: white;
 
@@ -32,6 +32,13 @@
     
     width: 95.3%;
     overflow-y: scroll;
+
+    .s{
+        // width: 100%;
+        display: flex;
+        flex-direction: row;
+        // background-color: blue;
+    }
 
     .mainVideo{
 
@@ -156,6 +163,10 @@
                 font-size: 0.9vw;
                 width: 50%;
 
+                img{
+                    cursor: pointer;
+                }
+
                 .chnName{
                     font-weight: bold;
                     margin-top: 0.5vw;
@@ -173,6 +184,10 @@
                 div{
                     flex-direction: column;
                     margin-left: 0.5vw;
+
+                    .chnName{
+                        cursor: pointer;
+                    }
                 }
             }
 
@@ -223,13 +238,128 @@
 
         .commentSection{
             margin-top: 1vw;
-
+            
             .userComment{
+                // background-color: red;
+               
+                flex-direction: row;
+
+                margin-top: 10px;
                 img{
                     width: 2.5vw;
                     height: 2.5vw;
 
                     border-radius: 2vw;
+                }
+
+                textarea{
+                    font-family: arial;
+                    border: none;
+                    border-bottom: 1px solid rgb(153, 153, 153);
+                    color: white;
+                    margin-left: 10px;
+                    text-overflow: clip;
+                    resize: none;
+                    width: 85%;
+                    height: 20px;
+
+                    overflow: hidden;
+
+                    &:focus{
+                        outline: none;
+
+                    }
+                }
+
+                button{
+                    border: none;
+                    border-radius: 2px;
+                    margin-left: 10px;
+                    height: 30px;
+                    width: 8%;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    background-color: rgb(57, 136, 255);
+                }
+            }
+
+            .videoComment, .commentReply{
+                flex-direction: row;
+                // justify-content: start;
+                align-items: start;
+
+                // background-color: red;
+
+                margin-top: 40px;
+
+                .replies{
+                    margin-left: 85px;
+                }
+
+                .anotherDetail{
+                    width: 100%;
+
+                    // background-color: blue;
+
+                    .rep{
+                        // background-color: red;
+                        width: 100%;
+
+                        .userComment{
+                            width: 100%;
+                        }
+                    }
+
+                    flex-direction: column;
+
+                    margin-left: 15px;
+
+                    font-family: arial;
+
+                    div{
+                        margin-top: 5px;
+                        .chn{
+                            cursor: pointer;
+                        }
+
+                        flex-direction: row;
+
+                        .date{
+                            margin-left: 10px;
+                            color: rgb(158, 158, 158);
+                            font-size: 0.88em;
+                        }
+
+                        .chn, .date{
+                            margin-top: 0;
+                        }
+
+                        button{
+                            margin-top: 5px;
+                            border: none;
+                            margin-right: 15px;
+
+                            flex-direction: row;
+                            color: white;
+
+                            cursor: pointer;
+
+                            img{
+                                width: 1vw;
+                                height: 1vw;
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+
+                img{
+                    width: 2.5vw;
+                    height: 2.5vw;
+
+                    border-radius: 2vw;
+                    cursor: pointer;
                 }
             }
         }
@@ -240,6 +370,7 @@
         // background-color: red;
         width: 27%;
         margin-left: 1.5vw;
+        // margin-bottom: 5vw;
         font-family: Arial, Helvetica, sans-serif;
 
         flex-direction: column;
@@ -298,7 +429,85 @@
         }
     }
 
+    .modal {
+        align-items: center;
+        justify-content: center;
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+     
+        
+        
+        .modal-content{
+            background-color: rgb(61, 61, 61);
+            margin: 15% auto;
+            padding: 20px;
+            width: 50%;
+
+            align-items: center;
+            justify-content: center;
+
+            // opacity: 70%;
+
+            input{
+                color: white;
+            }
+            
+
+            button{
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(61, 61, 61); 
+                color: white;
+
+                border: none;
+
+                width: 15vw;
+                height: 3vw;
+
+                cursor: pointer;
+
+                &:hover{
+                    background-color: rgb(43, 43, 43); 
+
+                    img, li{
+                        background-color: rgb(43, 43, 43); 
+                    }
+                }
+
+                img{
+                    width: 3vw;
+                    height: 3vw;
+                    background-color: rgb(61, 61, 61);
+                }
+
+                li{
+                    background-color: rgb(61, 61, 61);
+                }
+            }
+
+            .close{
+                color: white;
+                background-color: rgb(61, 61, 61);
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+    }
+
     .bottom{
-        margin-bottom: 20vw;
+        // background-color: red;
+        width: 100%;
+        height: 50px;
+        // margin-top: 5vw;
     }
 }

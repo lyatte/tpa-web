@@ -1,102 +1,219 @@
+
 <div id="container">
-    <div class="mainVideo" *ngIf="video">
-        <mat-video class="video" [src]="video.video" 
-        [preload]="true" [keyboard]="true" autoplay="true">
 
-        </mat-video>
-
-        <div class="videoDetail">
-            <div class="videoName">
-                {{ video.video_title }}
-            </div>
-
-            <div class="anotherDetail">
-                <div>
-                    <div class="views">
-                        {{ getViewInFormat(video.video_views) }} views
-                    </div>
-                    <div class="extra">.</div>
-                    <div class="date">
-                        {{ video.day }} {{ getMonth(video.month) }} {{ video.year }}
-                    </div>
+    <div class="s">
+        <div class="mainVideo" *ngIf="video">
+            <mat-video class="video" [src]="video.video" 
+            [preload]="true" [keyboard]="true" autoplay="true">
+    
+            </mat-video>
+    
+            <div class="videoDetail">
+                <div class="videoName">
+                    {{ video.video_title }}
                 </div>
-
-                <div>
-                    <button id="likeButton" (click)="likeVideo()">
-                        <img src="../../assets/like_icon.png" alt="" id="likeImg">
-                        {{ getLike(video.video_like) }}
-                    </button>
-
-                    <button id="dislikeButton" (click)="dislikeVideo()">
-                        <img src="../../assets/dislike_icon.png" alt="" id="dislikeImg">
-                        {{ getLike(video.video_dislike) }}
-                    </button>
-
-                    <button class="shareButton">
-                        <img src="../../assets/share_icon.png" alt="">
-                        SHARE
-                    </button>
-
-                    <button class="addPlaylistButton">
-                        <img src="../../assets/add_playlist_icon.png" alt="">
-                        SAVE
-                    </button>
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="youtubeChannel">
-
-                
-                <div class="leftSide">
-                    <img class="icon" src="{{ channel.channel_icon }}" alt="">
-
+    
+                <div class="anotherDetail">
                     <div>
-                        <div class="chnName">
-                            {{ channel.channel_name }}
+                        <div class="views">
+                            {{ getViewInFormat(video.video_views) }} views
                         </div>
-                        <div class="subscriberCount">
-                            {{ getViews(channel.channel_subscribers) }} subscriber
-                        </div>
-                        <div class="vidDesc">
-                            {{ video.video_description }}
+                        <div class="extra">.</div>
+                        <div class="date">
+                            {{ video.day }} {{ getMonth(video.month) }} {{ video.year }}
                         </div>
                     </div>
-                </div>
-
-                <div class="rightSide">
-                    <div class="subscribeButton">
-                        <button>
-                            SUBSCRIBE
+    
+                    <div>
+                        <button id="likeButton" (click)="likeVideo()">
+                            <img src="../../assets/like_icon.png" alt="" id="likeImg">
+                            {{ getLike(video.video_like) }}
+                        </button>
+    
+                        <button id="dislikeButton" (click)="dislikeVideo()">
+                            <img src="../../assets/dislike_icon.png" alt="" id="dislikeImg">
+                            {{ getLike(video.video_dislike) }}
+                        </button>
+    
+                        <button class="shareButton">
+                            <img src="../../assets/share_icon.png" alt="">
+                            SHARE
+                        </button>
+    
+                        <button class="addPlaylistButton" (click)="openModalPlaylist()">
+                            <img src="../../assets/add_playlist_icon.png" alt="">
+                            SAVE
                         </button>
                     </div>
                 </div>
+    
+                <hr>
+    
+                <div class="youtubeChannel">
+    
+                    
+                    <div class="leftSide">
+                        <img class="icon" src="{{ channel.channel_icon }}" alt="" routerLink="/channel/{{channel.channel_id}}">
+    
+                        <div>
+                            <div class="chnName" routerLink="/channel/{{channel.channel_id}}">
+                                {{ channel.channel_name }}
+                            </div>
+                            <div class="subscriberCount">
+                                {{ getViews(channel.channel_subscribers) }} subscriber
+                            </div>
+                            <div class="vidDesc">
+                                {{ video.video_description }}
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="rightSide" *ngIf="isNotSame">
+                        <div class="subscribeButton" *ngIf="isSubscribed == false">
+                            <button (click)="subscribe()">
+                                SUBSCRIBE
+                            </button>
+                        </div>
+                        <div class="alrSubscribe" *ngIf="isSubscribed">
+                            <button (click)="subscribe()">
+                                SUBSCRIBED
+                            </button>
+    
+                            <img src="../../assets/subscribed_logo.png" alt="">
+                        </div>
+                    </div>
+                </div>
+    
+                <hr>
+            </div>
+    
+            <div class="commentSection">
+                {{ comment_count }} comments
+                <div class="userComment">
+                    <img [src]="userThumbnail" alt="">
+                    <textarea name="" id="commentBox" placeholder="Insert your comment here"></textarea>
+                    <button (click)="commenting(1)">Comment</button>
+                </div>
+
+                <div class="c-section">
+                    <div *ngFor="let c of comment; index as i">
+                        <div class="videoComment" *ngIf="i<(lastKey2)">
+                            <img [src]="cthumbnail[i]" alt="" routerLink="/channel/{{c.channel_id}}">
+                            <div class="anotherDetail">
+                                <div>
+                                    <div class="chn" routerLink="/channel/{{c.channel_id}}">{{ ccname[i] }}</div>
+                                    <div class="date">{{ c.day }} {{ getMonth(c.month) }} {{ c.year }} </div>
+                                </div>
+                                <div> {{ c.content }} </div>
+                                <div>
+                                    <button id="likeButton" (click)="likeDislike(1, c.comment_id)" > 
+                                        <img src="../../assets/like_icon.png" alt="" id="likeImg">
+                                        {{ getLike(c.like) }}
+                                    </button>
+                
+                                    <button id="dislikeButton" (click)="likeDislike(2, c.comment_id)">
+                                        <img src="../../assets/dislike_icon.png" alt="" id="dislikeImg">
+                                        {{ getLike(c.dislike) }}
+                                    </button>
+            
+                                    <button (click)="setreplyc(i)">
+                                        REPLY
+                                    </button>
+                                </div>
+            
+                                <div *ngIf="replyc[i] == true" class="rep">
+
+                                    <div class="userComment">
+                                        <img [src]="userThumbnail" alt="">
+                                        <!-- @{{ ccname[i] }}  -->
+                                        <textarea name="" id="replyBox" placeholder="Insert your comment here"></textarea>
+                                        <button (click)="replying(comment[i].comment_id, i)">Comment</button>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="commentReply" *ngFor="let r of reply[comment[i].comment_id]; index as j">
+                            <div class="replies">
+                                <div class="anotherDetail">
+                                    <div>
+                                        <div class="chn" routerLink="/channel/{{r.channel_id}}">{{ ccname[j] }}</div>
+                                        <div class="date">{{ r.day }} {{ getMonth(r.month) }} {{ r.year }} </div>
+                                    </div>
+                                    <div> {{ r.content }} </div>
+                                    <div>
+                                        <button id="likeButton" (click)="likeDislike(1, r.comment_id)" > 
+                                            <img src="../../assets/like_icon.png" alt="" id="likeImg">
+                                            {{ getLike(r.like) }}
+                                        </button>
+                    
+                                        <button id="dislikeButton" (click)="likeDislike(2, r.comment_id)">
+                                            <img src="../../assets/dislike_icon.png" alt="" id="dislikeImg">
+                                            {{ getLike(r.dislike) }}
+                                        </button>
+                
+                                        <button (click)="setreplyc(j)">
+                                            REPLY
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+    
+            </div>
+        </div>
+    
+        <div class="relatedVideo">
+            Related Video
+            <div *ngFor="let v of videos, let i = index">
+                <div routerLink="/video/{{ v.video_id }}" class="videoDetail" *ngIf="i<(lastKey)">
+                    <img src="{{ v.video_thumbnail }}" alt="">
+                    <div class="videoText">
+                        <div>{{ v.video_title }}</div>
+                        <a href="/channel/{{ v.channel_id }}" class="channel"> {{ v.channel_name }} </a>
+                        <div class="details">{{ getViews(v.video_views) }} views . {{ v.day }} {{ getMonth(v.month) }} {{ v.year }}</div>
+                    </div>
+                </div>
             </div>
 
-            <hr>
+            <div class="bottom"></div>
         </div>
-
-        <div class="commentSection">
-            Comment Section
-            <div class="userComment">
-                <img [src]="userThumbnail" alt="">
-                asd
-            </div>
-        </div>
-        <div class="bottom"></div>
     </div>
 
-    <div class="relatedVideo">
-        Related Video
-        <a href="/video/{{ v.video_id }}" class="videoDetail" *ngFor="let v of videos">
-            <img src="{{ v.video_thumbnail }}" alt="">
-            <div class="videoText">
-                <div>{{ v.video_title }}</div>
-                <a href="/channel/{{ v.channel_id }}" class="channel"> {{ v.channel_name }} </a>
-                <div class="details">{{ getViews(v.video_views) }} views . {{ v.day }} {{ getMonth(v.month) }} {{ v.year }}</div>
+    
+    
+
+    <div id="playlistModal" class="modal">
+        <div class="modal-content">
+            <span class="close" (click) = "closeModalPlaylist()">&times;</span>
+            <div class="playlist" *ngFor="let p of playlist">
+                <button (click)="addToPlaylist( p.playlist_id )">
+                    <img src="../../assets/add_playlist_icon.png" alt="">
+                    <li>
+                        {{ p.playlist_title }}
+                    </li>
+                </button>
             </div>
-        </a>
+
+            <button (click)="createPlaylist()">
+                <img src="../../assets/add_playlist_icon.png" alt="">
+                <li>
+                    Add new playlist
+                </li>
+            </button>
+        </div>
+    </div>
+
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" (click)="close()">&times;</span>
+            <input type="text" id="pName" placeholder="Input playlist name">
+            <button (click) = "create()">Create Playlist</button>
+        </div>
     </div>
     
+    
+
 </div>
