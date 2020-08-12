@@ -37,22 +37,10 @@ export class TrendingPageComponent implements OnInit {
       `,
     }).valueChanges.subscribe(result => {
       var vid = result.data.getVideoOrderedByViews
-
-      var temp: Object[] = []; 
-
-      let j=0;
-
-      for(let i=vid.length-1 ; i >= 0; i--){
-        if( vid[i].video_views != 0 ){
-          console.log(j, vid[i])
-          temp[j] = vid[i]
-          j++;
-        }
-      }
       
 
 
-      this.videos = temp.slice(0,20);
+      this.videos = vid.slice(0,20);
     });
     
     

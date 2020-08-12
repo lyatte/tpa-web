@@ -46,7 +46,10 @@
 
             <div class="videoDesc">
                 <p>Description</p>
-                <input type="text" placeholder="Tell viewers about your video" id="v_desc">
+                <div class="inp">
+                    <textarea name="" id="v_desc" placeholder="Tell viewers about your video" ></textarea>
+                    <!-- <input type="text" placeholder="Tell viewers about your video" id="v_desc"> -->
+                </div>
             </div>
 
             <div class="thumbnail">
@@ -67,7 +70,7 @@
                         </button>
                     </div>
 
-                    <button>
+                    <button (click)="createPlaylist()">
                         <img src="../../assets/add_playlist_icon.png" alt="">
                         Add new playlist
                     </button>
@@ -151,7 +154,7 @@
                 <div class="scheduling" *ngIf="scheduled">JADWAL</div>
 
                 <div class="premiereButton">
-                    <input type="checkbox" name="pr" id="premiere" (change)="premiumVid(1)">
+                    <input type="checkbox" name="pr" id="premiere" (change)="premiumVid()">
                     <label for="premiere">Youtube Premium</label>
                 </div>
 
@@ -170,6 +173,14 @@
             </div>
 
 
+        </div>
+
+        <div id="addModal" class="modal">
+            <div class="modal-content">
+                <span class="close" (click)="close()">&times;</span>
+                <input type="text" id="pName" placeholder="Input playlist name">
+                <button (click) = "create()">Create Playlist</button>
+            </div>
         </div>
     
     </div>

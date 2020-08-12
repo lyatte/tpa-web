@@ -93,8 +93,8 @@
             <img src="{{ v.video_thumbnail }}" alt="">
             <div class="videoText">
                 <div>{{ v.video_title }}</div>
-                <div class="channel">{{ v.channel_name }}</div>
-                <div class="details">{{ getViews(v.video_views) }} views . Date</div>
+                <a href="/channel/{{ v.channel_id }}" class="channel"> {{ v.channel_name }} </a>
+                <div class="details">{{ getViews(v.video_views) }} views . {{ v.day }} {{ getMonth(v.month) }} {{ v.year }}</div>
             </div>
         </a>
     </div>

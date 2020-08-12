@@ -36,6 +36,8 @@ export class VideoComponentComponent implements OnInit {
     
     this.videoId = +this.route.snapshot.paramMap.get('id');
 
+    console.log(this.videoId)
+
 
     this.apollo.mutate({
       mutation: gql`
@@ -60,6 +62,8 @@ export class VideoComponentComponent implements OnInit {
               video_like,
               video_dislike,
               channel_id,
+              video_category,
+              video_region,
               day,
               month,
               year,
@@ -71,8 +75,6 @@ export class VideoComponentComponent implements OnInit {
         this.video = result.data.getVideoById
         this.channelId = this.video.channel_id
 
-        
-  
         this.apollo.watchQuery({
           query: gql`
             query getChannelById($id: String!){
@@ -81,91 +83,179 @@ export class VideoComponentComponent implements OnInit {
                 channel_icon,
                 channel_subscribers,
                 channel_liked_video,
-                channel_disliked_video
+                channel_disliked_video,
+                channel_premium
               }
             }
           `, 
           variables: { id: this.channelId }
-        }).valueChanges.subscribe(result => {
-          this.channel = result.data.getChannelById
+        }).valueChanges.subscribe( r => { 
+          this.channel = r.data.getChannelById
 
-        });
-
-      // this.user.getUser().subscribe( u => 
-      //   { usId = u.id } )
-
-      this.user.getUser().subscribe( res => {
-
-        console.log(res)
-
-        this.userThumbnail = res.photoUrl
-
-        console.log("asd", this.userThumbnail)
-
-        this.apollo.watchQuery({
-          query: gql`
-            query getChannelById($id: String!){
-              getChannelById(channel_id: $id){
-                channel_name,
-                channel_icon,
-                channel_subscribers,
-                channel_liked_video,
-                channel_disliked_video
-              }
-            }
-          `, 
-          variables: { id: res.id }
-        }).valueChanges.subscribe( r => {
-
-          this.userLog = r.data.getChannelById
-          var like = this.userLog.channel_liked_video.split(',');
-    
-          var dislike = this.userLog.channel_disliked_video.split(',');
-    
-          console.log(like)
-    
-          for(let i=0;i<like.length;i++){
-            if(like[i] == this.videoId){
-    
-              document.getElementById('likeButton').style.color = "rgb(0,191,255)"
-              document.getElementById('likeImg').src = "../../assets/liked_icon.png"
-            }
-    
-          }
-    
-          console.log(dislike)
-          
-          for(let i=0;i<dislike.length;i++){
-            if(dislike[i] == this.videoId){
-    
-              document.getElementById('dislikeButton').style.color = "rgb(0,191,255)"
-              document.getElementById('dislikeImg').src = "../../assets/disliked_icon.png"
-            }
-          }
         } )
-      })
+
+        if(localStorage.getItem('user') == null){
+          console.log("s")
+    
+          var loc = this.video.video_region
+          var t = JSON.parse(localStorage.getItem('restrict'));
+
+
+          var rest;
+          if (t == "Off"){
+            rest = "No"
+          }else rest = "Yes"
+            
+          console.log(rest, loc, this.video.video_category)
+
+          this.userThumbnail = "../../assets/user_logo.png";          
+
+
+          this.apollo.watchQuery({
+            query: gql`
+            
+              query getRelatedVideo($restriction: String!, $premium_id: String!,
+                $location: String!, $category: String!){
+                  getRelatedVideo(restriction: $restriction, premium_id: $premium_id, 
+                    location: $location, category: $category){
+                    video_id,
+                    video_title,
+                    video,
+                    video_thumbnail,
+                    video_description,
+                    video_views,
+                    channel_name,
+                    channel_id,
+                    day,
+                    month,
+                    year
+                  }
+                }
+            
+            `,
+            variables: {
+              restriction: rest,
+              premium_id: "",
+              location: loc,
+              category: this.video.video_category
+            }
+            ,
+          }).valueChanges.subscribe(result => {
+            this.videos = result.data.getRelatedVideo
+
+            
+          });
+        }
+
+        else{
+          this.user.getUser().subscribe( r => {
+
+            console.log(r)
+    
+            this.userThumbnail = r.photoUrl
+    
+            console.log("asd", this.userThumbnail)
+    
+              this.apollo.watchQuery({
+                query: gql`
+                  query getChannelById($id: String!){
+                    getChannelById(channel_id: $id){
+                      channel_name,
+                      channel_icon,
+                      channel_subscribers,
+                      channel_liked_video,
+                      channel_disliked_video,
+                      channel_premium
+                    }
+                  }
+                `, 
+                variables: { id: r.id }
+              }).valueChanges.subscribe( r => {
+      
+                this.userLog = r.data.getChannelById
+      
+                console.log(r.data.getChannelById)
+      
+                var loc = this.video.video_region;
+                var t = JSON.parse(localStorage.getItem('restrict'));
+
+                var rest;
+                if (t == "Off"){
+                  rest = "No"
+                }else rest = "Yes"
+                
+                console.log(rest, this.userLog.channel_premium, loc, this.video.video_category)
+      
+                this.apollo.watchQuery({
+                  query: gql`
+                  
+                    query getRelatedVideo($restriction: String!, $premium_id: String!,
+                      $location: String!, $category: String!){
+                        getRelatedVideo(restriction: $restriction, premium_id: $premium_id, 
+                          location: $location, category: $category){
+                          video_id,
+                          video_title,
+                          video,
+                          video_thumbnail,
+                          video_description,
+                          video_views,
+                          channel_name,
+                          channel_id,
+                          day,
+                          month,
+                          year
+                        }
+                      }
+                  
+                  `,
+                  variables: {
+                    restriction: rest,
+                    premium_id: this.userLog.channel_premium,
+                    location: loc,
+                    category: this.video.video_category
+                  }
+                  ,
+                }).valueChanges.subscribe(result => {
+                  this.videos = result.data.getRelatedVideo
+                });
+              })
+              
+            
+    
+              var like = this.userLog.channel_liked_video.split(',');
+        
+              var dislike = this.userLog.channel_disliked_video.split(',');
+        
+              console.log(like)
+        
+              for(let i=0;i<like.length;i++){
+                if(like[i] == this.videoId){
+        
+                  document.getElementById('likeButton').style.color = "rgb(0,191,255)"
+                  document.getElementById('likeImg').src = "../../assets/liked_icon.png"
+                }
+        
+              }
+        
+              console.log(dislike)
+              
+              for(let i=0;i<dislike.length;i++){
+                if(dislike[i] == this.videoId){
+        
+                  document.getElementById('dislikeButton').style.color = "rgb(0,191,255)"
+                  document.getElementById('dislikeImg').src = "../../assets/disliked_icon.png"
+                }
+              }
+            
+          })
+        }
+
+
+      
       })
     })
 
     
-
-    this.apollo.watchQuery({
-      query: gql`
-      {
-        getVideo{
-          video_id,
-          video_title,
-          video,
-          video_thumbnail,
-          video_description,
-          video_views,
-          channel_name
-        }
-      }
-      `,
-    }).valueChanges.subscribe(result => {
-      this.videos = result.data.getVideo
-    });
 
 
   }

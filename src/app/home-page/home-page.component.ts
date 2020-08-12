@@ -26,6 +26,8 @@ export class HomePageComponent implements OnInit {
 
   observer: any;
 
+  us;
+
   ngOnInit(): void {
 
 
@@ -35,108 +37,236 @@ export class HomePageComponent implements OnInit {
 
     console.log(location)
 
-    if(JSON.parse(localStorage.getItem('restrict')) == "Off"){
-      var temp = "No"
-      this.apollo.watchQuery( { 
-        query: gql`
-          query getVideoHomePage($restriction: String!, $location: String!){
-            getVideoHomePage(restriction: $restriction, location: $location){
-              video_id,
-              video_title,
-              video,
-              video_thumbnail,
-              video_description,
-              video_views,
-              channel_name,
-              channel_icon,
-              day,
-              month,
-              year,
-              channel_id,
-            }
-          }
-        `,
-        variables: {
-          restriction: "No",
-          location: location
-        }
-      } ).valueChanges.subscribe( r => {
-        console.log(r.data.getVideoHomePage)
-        this.videos = r.data.getVideoHomePage
-
-        console.log(this.videos)
-
-        this.observer = new IntersectionObserver((entry) => {
-          if(entry[0].isIntersecting){
-            let card = document.querySelector(".videoSection");
-            for(let i = 0; i<4; i++){
-              if(this.lastKey < this.videos.length){
-                let div = document.createElement("div")
-                let video = document.createElement("div")
-                div.appendChild(video)
-                card.appendChild(div)
-                this.lastKey++;
-              }
-            }
-          }
-        }
-        )
-    
-        this.observer.observe(document.querySelector(".footer"))
-      } )
-    }else{
-
-      console.log(temp)
-      this.apollo.watchQuery( { 
-        query: gql`
-          query getVideoHomePage($restriction: String!, $location: String!){
-            getVideoHomePage(restriction: $restriction, location: $location){
-              video_id,
-              video_title,
-              video,
-              video_thumbnail,
-              video_description,
-              video_views,
-              channel_name,
-              channel_icon,
-              day,
-              month,
-              year,
-              channel_id,
-            }
-          }
-        `,
-        variables: {
-          restriction: "Yes",
-          location: location
-        }
-      } ).valueChanges.subscribe( r => {
-        console.log(r.data.getVideoHomePage)
-        this.videos = r.data.getVideoHomePage
-
-        console.log(this.videos)
-
-        this.observer = new IntersectionObserver((entry) => {
-          if(entry[0].isIntersecting){
-            let card = document.querySelector(".videoSection");
-            for(let i = 0; i<4; i++){
-              if(this.lastKey < this.videos.length){
-                let div = document.createElement("div")
-                let video = document.createElement("div")
-                div.appendChild(video)
-                card.appendChild(div)
-                this.lastKey++;
-              }
-            }
-          }
-        }
-        )
-    
-        this.observer.observe(document.querySelector(".footer"))
-      } )
-    }
 
     this.user.getUser().subscribe( us => {
+      console.log(us)
+
+      if(us != null){
+        this.apollo.watchQuery( {
+          query: gql`
+            query getChannelById($channel_id: String!){
+              getChannelById(channel_id: $channel_id){
+                channel_premium
+              }
+            }
+          `,
+          variables: {
+            channel_id: us.id
+          }
+        } ).valueChanges.subscribe( r => {
+          var ch = r.data.getChannelById
+  
+          console.log(ch.channel_premium)
+  
+          if(JSON.parse(localStorage.getItem('restrict')) == "Off"){
+            this.apollo.watchQuery( { 
+              query: gql`
+                query getVideoHomePage($restriction: String!, $location: String!, $premium_id: String!){
+                  getVideoHomePage(restriction: $restriction, location: $location, premium_id: $premium_id){
+                    video_id,
+                    video_title,
+                    video,
+                    video_thumbnail,
+                    video_description,
+                    video_views,
+                    channel_name,
+                    channel_icon,
+                    day,
+                    month,
+                    year,
+                    channel_id,
+                  }
+                }
+              `,
+              variables: {
+                restriction: "No",
+                location: location,
+                premium_id: ch.channel_premium
+                
+              }
+            } ).valueChanges.subscribe( r => {
+              console.log(r.data.getVideoHomePage)
+              this.videos = r.data.getVideoHomePage
+      
+              console.log(this.videos)
+      
+              this.observer = new IntersectionObserver((entry) => {
+                if(entry[0].isIntersecting){
+                  let card = document.querySelector(".videoSection");
+                  for(let i = 0; i<4; i++){
+                    if(this.lastKey < this.videos.length){
+                      let div = document.createElement("div")
+                      let video = document.createElement("div")
+                      div.appendChild(video)
+                      card.appendChild(div)
+                      this.lastKey++;
+                    }
+                  }
+                }
+              }
+              )
+          
+              this.observer.observe(document.querySelector(".footer"))
+            } )
+          }else{
+    
+            this.apollo.watchQuery( { 
+              query: gql`
+                query getVideoHomePage($restriction: String!, $location: String!, $premium_id: String!){
+                  getVideoHomePage(restriction: $restriction, location: $location, premium_id: $premium_id){
+                    video_id,
+                    video_title,
+                    video,
+                    video_thumbnail,
+                    video_description,
+                    video_views,
+                    channel_name,
+                    channel_icon,
+                    day,
+                    month,
+                    year,
+                    channel_id,
+                  }
+                }
+              `,
+              variables: {
+                restriction: "Yes",
+                location: location,
+                premium_id: ch.channel_premium
+              }
+            } ).valueChanges.subscribe( r => {
+              console.log(r.data.getVideoHomePage)
+              this.videos = r.data.getVideoHomePage
+      
+              this.observer = new IntersectionObserver((entry) => {
+                if(entry[0].isIntersecting){
+                  let card = document.querySelector(".videoSection");
+                  for(let i = 0; i<4; i++){
+                    if(this.lastKey < this.videos.length){
+                      let div = document.createElement("div")
+                      let video = document.createElement("div")
+                      div.appendChild(video)
+                      card.appendChild(div)
+                      this.lastKey++;
+                    }
+                  }
+                }
+              }
+              )
+          
+              this.observer.observe(document.querySelector(".footer"))
+            } )
+          }
+        } )
+      }else{
+
+        if(JSON.parse(localStorage.getItem('restrict')) == "Off"){
+          this.apollo.watchQuery( { 
+            query: gql`
+              query getVideoHomePage($restriction: String!, $location: String!, $premium_id: String!){
+                getVideoHomePage(restriction: $restriction, location: $location, premium_id: $premium_id){
+                  video_id,
+                  video_title,
+                  video,
+                  video_thumbnail,
+                  video_description,
+                  video_views,
+                  channel_name,
+                  channel_icon,
+                  day,
+                  month,
+                  year,
+                  channel_id,
+                }
+              }
+            `,
+            variables: {
+              restriction: "No",
+              location: location,
+              premium_id: ""
+              
+            }
+          } ).valueChanges.subscribe( r => {
+            console.log(r.data.getVideoHomePage)
+            this.videos = r.data.getVideoHomePage
+    
+            console.log(this.videos)
+    
+            this.observer = new IntersectionObserver((entry) => {
+              if(entry[0].isIntersecting){
+                let card = document.querySelector(".videoSection");
+                for(let i = 0; i<4; i++){
+                  if(this.lastKey < this.videos.length){
+                    let div = document.createElement("div")
+                    let video = document.createElement("div")
+                    div.appendChild(video)
+                    card.appendChild(div)
+                    this.lastKey++;
+                  }
+                }
+              }
+            }
+            )
+        
+            this.observer.observe(document.querySelector(".footer"))
+          } )
+        }else{
+  
+          this.apollo.watchQuery( { 
+            query: gql`
+              query getVideoHomePage($restriction: String!, $location: String!, $premium_id: String!){
+                getVideoHomePage(restriction: $restriction, location: $location, premium_id: $premium_id){
+                  video_id,
+                  video_title,
+                  video,
+                  video_thumbnail,
+                  video_description,
+                  video_views,
+                  channel_name,
+                  channel_icon,
+                  day,
+                  month,
+                  year,
+                  channel_id,
+                }
+              }
+            `,
+            variables: {
+              restriction: "Yes",
+              location: location,
+              premium_id: ""
+            }
+          } ).valueChanges.subscribe( r => {
+            console.log(r.data.getVideoHomePage)
+            this.videos = r.data.getVideoHomePage
+    
+            this.observer = new IntersectionObserver((entry) => {
+              if(entry[0].isIntersecting){
+                let card = document.querySelector(".videoSection");
+                for(let i = 0; i<4; i++){
+                  if(this.lastKey < this.videos.length){
+                    let div = document.createElement("div")
+                    let video = document.createElement("div")
+                    div.appendChild(video)
+                    card.appendChild(div)
+                    this.lastKey++;
+                  }
+                }
+              }
+            }
+            )
+        
+            this.observer.observe(document.querySelector(".footer"))
+          } )
+        }
+      }
+      
+
+      
+
+      
+
+
       this.apollo.watchQuery( { 
         query: gql`
           query getChannelPlaylist($id: String!){

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { HeroService } from 'src/app/hero.service';
+import { CategoryVidsService } from 'src/app/category-vids.service';
 
 @Component({
   selector: 'app-category-sport',
@@ -9,30 +11,66 @@ import gql from 'graphql-tag';
 })
 export class CategorySportComponent implements OnInit {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private vids: CategoryVidsService, 
+    private user: HeroService) { }
 
-  videos: any;
-
+  videos1: any;
+  videos2: any;
+  videos3: any;
+  videos4: any;
+  
   ngOnInit(): void {
-    this.apollo.watchQuery({
-      query: gql`
-        query getVideoByCategory($video_category: String!){
-          getVideoByCategory(video_category: $video_category){
-            video_id,
-            video_title,
-            video_thumbnail,
-            channel_name,
-            video_views,
-            day,
-            month,
-            year,
+    var temp = JSON.parse(localStorage.getItem('restrict'))
+
+    var rest;
+
+    if (temp == "Off"){
+      rest = "No"
+    }else {
+      rest = "Yes"
+    }
+    this.user.getUser().subscribe( us => {
+      console.log(us)
+      console.log(rest)
+
+      this.apollo.watchQuery( {
+        query: gql`
+          query getChannelById($id: String!){
+            getChannelById(channel_id: $id){
+              channel_premium
+            }
           }
+        `,variables: {
+          id: us.id
         }
-      `,
-      variables: { video_category: "Sport" }
-    }).valueChanges.subscribe(result => {
-      this.videos = result.data.getVideoByCategory
-    });
+      } ).valueChanges.subscribe( user => {
+        console.log(user.data.getChannelById.channel_premium)
+
+        this.vids.getAllTimePopular(rest, user.data.getChannelById.channel_premium, "Sport").subscribe( r => {
+          console.log(r)
+          this.videos1 = r;
+        } )
+    
+        this.vids.getVideoWeek(rest, user.data.getChannelById.channel_premium, "Sport").subscribe( r => {
+          console.log(r)
+          this.videos2 = r;
+        } )
+    
+        this.vids.getVideoMonth(rest, user.data.getChannelById.channel_premium, "Sport").subscribe( r => {
+          console.log(r)
+          this.videos3 = r;
+        } )
+
+        this.vids.getVideoRecent(rest, user.data.getChannelById.channel_premium, "Sport").subscribe( r => {
+          console.log(r)
+          this.videos4 = r;
+        } )
+
+      } )
+
+
+    } )
+
   }
 
   getViews(number): String{

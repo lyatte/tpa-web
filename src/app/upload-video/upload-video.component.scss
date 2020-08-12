@@ -93,7 +93,7 @@
         
         .rightSide{
             // overflow-y: scroll;
-            // background-color: white;
+            // background-color: red;
             margin-left: 45vw;
             width: 40vw;
             height: 100vw;
@@ -112,6 +112,7 @@
             }
 
             .videoTitle{
+                // background-color: blue;
                 margin: 0;
                 margin-top: 1.7vw;
                 padding: 0;
@@ -119,8 +120,8 @@
                 background-color: white;
                 border: 1px solid gray;
                 border-radius: 0.3vw;
-                width: 35vw;
-                height: 6vw;
+                width: 88%;
+                height: 5vw;
                 font-family: Arial, Helvetica, sans-serif;
 
                 p{
@@ -133,11 +134,16 @@
                     font-size: 0.8vw;
                 }
 
+                justify-content: start;
+                align-items: start;
+
                 input{
                     background-color: white;
                     border: none;
                     color: black;
                     padding-left: 0.7vw;
+                    height: 3vw;
+                    width: 100%;
 
                     &:focus{
                         outline: none;
@@ -149,6 +155,8 @@
                 margin: 0;
                 margin-top: 1.5vw;
                 padding: 0;
+
+                // background-color: blue;
                 
                 background-color: white;
                 border: 1px solid gray;
@@ -167,16 +175,37 @@
                     font-size: 0.8vw;
                 }
 
-                input{
-                    background-color: white;
-                    border: none;
-                    color: black;
-                    padding-left: 0.7vw;
+                justify-content: start;
+                align-items: start;
 
-                    &:focus{
-                        outline: none;
+                .inp{
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    align-items: flex-start;
+
+                    
+                    textarea{
+                        background-color: white;
+                        // background-color: blue;
+                        font-family: Arial, Helvetica, sans-serif;
+                        border: none;
+                        color: black;
+                        padding-left: 0.7vw;
+                        height: 100%;
+                        resize: none;
+                        width: 100%;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        
+    
+                        &:focus{
+                            outline: none;
+                        }
                     }
                 }
+
             }
 
             .thumbnail{
@@ -440,6 +469,81 @@
             
 
             
+        }
+
+        .modal {
+            align-items: center;
+            justify-content: center;
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+         
+            
+            
+            .modal-content{
+                background-color: rgb(61, 61, 61);
+                margin: 15% auto;
+                padding: 20px;
+                width: 50%;
+    
+                align-items: center;
+                justify-content: center;
+    
+                // opacity: 70%;
+    
+                input{
+                    color: white;
+                }
+                
+    
+                button{
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: rgb(61, 61, 61); 
+                    color: white;
+    
+                    border: none;
+    
+                    width: 15vw;
+                    height: 3vw;
+    
+                    cursor: pointer;
+    
+                    &:hover{
+                        background-color: rgb(43, 43, 43); 
+    
+                        img, li{
+                            background-color: rgb(43, 43, 43); 
+                        }
+                    }
+    
+                    img{
+                        width: 3vw;
+                        height: 3vw;
+                        background-color: rgb(61, 61, 61);
+                    }
+    
+                    li{
+                        background-color: rgb(61, 61, 61);
+                    }
+                }
+    
+                .close{
+                    color: white;
+                    background-color: rgb(61, 61, 61);
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+            }
         }
     }
 }

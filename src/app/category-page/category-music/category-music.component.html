@@ -17,13 +17,13 @@
             <div>
                 All-time Popular
                 <div class="videoSection">
-                    <div class="videoDetail" *ngFor="let video of videos">
+                    <div class="videoDetail" *ngFor="let video of videos1">
                         <img src="{{ video.video_thumbnail }}" alt="" 
                         routerLink="/video/{{ video.video_id }}">
                         <div class="videos">
                             <div class="videoText">
                                 <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
-                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="channelName" routerLink="/channel/{{ video.channel_id }}">{{ video.channel_name }}</div>
                                 <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
                             </div>
                         </div>
@@ -41,13 +41,13 @@
             <div>
                 Popular This Week
                 <div class="videoSection">
-                    <div class="videoDetail" *ngFor="let video of videos">
+                    <div class="videoDetail" *ngFor="let video of videos2">
                         <img src="{{ video.video_thumbnail }}" alt="" 
                         routerLink="/video/{{ video.video_id }}">
                         <div class="videos">
                             <div class="videoText">
                                 <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
-                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="channelName" routerLink="/channel/{{ video.channel_id }}">{{ video.channel_name }}</div>
                                 <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
                             </div>
                         </div>
@@ -64,13 +64,13 @@
             <div>
                 Popular Of The Month
                 <div class="videoSection">
-                    <div class="videoDetail" *ngFor="let video of videos">
+                    <div class="videoDetail" *ngFor="let video of videos3">
                         <img src="{{ video.video_thumbnail }}" alt="" 
                         routerLink="/video/{{ video.video_id }}">
                         <div class="videos">
                             <div class="videoText">
                                 <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
-                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="channelName" routerLink="/channel/{{ video.channel_id }}">{{ video.channel_name }}</div>
                                 <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
                             </div>
                         </div>
@@ -87,13 +87,13 @@
             <div>
                 Recently Uploaded
                 <div class="videoSection">
-                    <div class="videoDetail" *ngFor="let video of videos">
+                    <div class="videoDetail" *ngFor="let video of videos4">
                         <img src="{{ video.video_thumbnail }}" alt="" 
                         routerLink="/video/{{ video.video_id }}">
                         <div class="videos">
                             <div class="videoText">
                                 <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
-                                <div class="channelName" routerLink="/channel">{{ video.channel_name }}</div>
+                                <div class="channelName" routerLink="/channel/{{ video.channel_id }}">{{ video.channel_name }}</div>
                                 <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
                             </div>
                         </div>
