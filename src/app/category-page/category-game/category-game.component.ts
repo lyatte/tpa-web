@@ -32,47 +32,69 @@ export class CategoryGameComponent implements OnInit {
     }else {
       rest = "Yes"
     }
-    this.user.getUser().subscribe( us => {
-      console.log(us)
-      console.log(rest)
-
-      this.apollo.watchQuery( {
-        query: gql`
-          query getChannelById($id: String!){
-            getChannelById(channel_id: $id){
-              channel_premium
-            }
-          }
-        `,variables: {
-          id: us.id
-        }
-      } ).valueChanges.subscribe( user => {
-        console.log(user.data.getChannelById.channel_premium)
-
-        this.vids.getAllTimePopular(rest, user.data.getChannelById.channel_premium, "Game").subscribe( r => {
-          console.log(r)
-          this.videos1 = r;
-        } )
-    
-        this.vids.getVideoWeek(rest, user.data.getChannelById.channel_premium, "Game").subscribe( r => {
-          console.log(r)
-          this.videos2 = r;
-        } )
-    
-        this.vids.getVideoMonth(rest, user.data.getChannelById.channel_premium, "Game").subscribe( r => {
-          console.log(r)
-          this.videos3 = r;
-        } )
-
-        this.vids.getVideoRecent(rest, user.data.getChannelById.channel_premium, "Game").subscribe( r => {
-          console.log(r)
-          this.videos4 = r;
-        } )
-
+    if(localStorage.getItem('user') == null){
+      this.vids.getAllTimePopular(rest, "3", "Game").subscribe( r => {
+        console.log(r)
+        this.videos1 = r;
+      } )
+  
+      this.vids.getVideoWeek(rest, "3", "Game").subscribe( r => {
+        console.log(r)
+        this.videos2 = r;
+      } )
+  
+      this.vids.getVideoMonth(rest, "3", "Game").subscribe( r => {
+        console.log(r)
+        this.videos3 = r;
       } )
 
-
-    } )
+      this.vids.getVideoRecent(rest, "3", "Game").subscribe( r => {
+        console.log(r)
+        this.videos4 = r;
+      } )
+    }else{
+      this.user.getUser().subscribe( us => {
+        console.log(us)
+        console.log(rest)
+  
+        this.apollo.watchQuery( {
+          query: gql`
+            query getChannelById($id: String!){
+              getChannelById(channel_id: $id){
+                channel_premium
+              }
+            }
+          `,variables: {
+            id: us.id
+          }
+        } ).valueChanges.subscribe( user => {
+          console.log(user.data.getChannelById.channel_premium)
+  
+          this.vids.getAllTimePopular(rest, user.data.getChannelById.channel_premium, "Game").subscribe( r => {
+            console.log(r)
+            this.videos1 = r;
+          } )
+      
+          this.vids.getVideoWeek(rest, user.data.getChannelById.channel_premium, "Game").subscribe( r => {
+            console.log(r)
+            this.videos2 = r;
+          } )
+      
+          this.vids.getVideoMonth(rest, user.data.getChannelById.channel_premium, "Game").subscribe( r => {
+            console.log(r)
+            this.videos3 = r;
+          } )
+  
+          this.vids.getVideoRecent(rest, user.data.getChannelById.channel_premium, "Game").subscribe( r => {
+            console.log(r)
+            this.videos4 = r;
+          } )
+  
+        } )
+  
+  
+      } )
+    }
 
   }
 

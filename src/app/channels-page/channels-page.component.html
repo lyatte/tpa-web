@@ -16,29 +16,32 @@
                         </div>
                     </div>
                 </div>
+
+                <div *ngIf="isUser">
+                    <div class="rightSide" *ngIf="isSame==false">
+                        <div class="subscribeButton" *ngIf="isSubscribed == false">
+                            <button (click)="subscribe()">
+                                SUBSCRIBE
+                            </button>
+                        </div>
+                        <div class="alrSubscribe" *ngIf="isSubscribed">
+                            <button (click)="subscribe()">
+                                SUBSCRIBED
+                            </button>
+    
+                            <img src="../../assets/subscribed_logo.png" alt="">
+                        </div>
+                    </div>
+    
+                    <div class="rightSide" *ngIf="isSame">
+                        <div class="alrSubscribe">
+                            <button (click)="openEditModal()">
+                                EDIT PROFILE
+                            </button>
+                        </div>
+                    </div>
+                </div>
         
-                <div class="rightSide" *ngIf="isSame==false">
-                    <div class="subscribeButton" *ngIf="isSubscribed == false">
-                        <button (click)="subscribe()">
-                            SUBSCRIBE
-                        </button>
-                    </div>
-                    <div class="alrSubscribe" *ngIf="isSubscribed">
-                        <button (click)="subscribe()">
-                            SUBSCRIBED
-                        </button>
-
-                        <img src="../../assets/subscribed_logo.png" alt="">
-                    </div>
-                </div>
-
-                <div class="rightSide" *ngIf="isSame">
-                    <div class="alrSubscribe">
-                        <button (click)="openEditModal()">
-                            EDIT PROFILE
-                        </button>
-                    </div>
-                </div>
             </div>
         
             <div class="buttons">
@@ -152,10 +155,24 @@
             </div>
             <img src="../../assets/next_arrow.png" alt="" class="next" (click)="contentExpand(3)">
         </div>
-        
     </a>
 
     <div class="videoSection" *ngIf="c[2]">
+        <div class="filtering">
+            <div>
+                <img src="../../assets/filter_search.png" alt="">
+                FILTER
+            </div>
+            <div class="f">
+                <div class="filterDate">
+                    <hr>
+                    <button (click)="filter(1)">Most Popular</button>
+                    <button (click)="filter(3)">Oldest</button>
+                    <button (click)="filter(2)">Newest</button>
+                </div>
+            </div>
+        </div>
+
         <div *ngFor="let video of videos, let i = index">
             <div class="videoDetail" *ngIf="i<(lastKey)">
                 <a href="/video/{{ video.video_id }}">

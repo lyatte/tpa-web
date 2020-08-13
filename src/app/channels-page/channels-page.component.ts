@@ -26,6 +26,8 @@ export class ChannelsPageComponent implements OnInit {
 
   isSame = false;
 
+  isUser;
+
   bg;
   icon;
 
@@ -60,6 +62,7 @@ export class ChannelsPageComponent implements OnInit {
       channelId = params.get('id');
       this.id = channelId.toString();
 
+
       console.log(this.id)
 
       this.apollo.watchQuery({
@@ -85,10 +88,6 @@ export class ChannelsPageComponent implements OnInit {
 
         this.bg = this.channel.channel_background
         this.icon = this.channel.channel_icon
-
-        this.getRPlaylist();
-        this.getRVid();
-        this.getRecentVid();
 
         if(this.channel.channel_description == ""){
           this.channel.channel_description = "There's no description"
@@ -118,50 +117,159 @@ export class ChannelsPageComponent implements OnInit {
             }
           }
         } )
+
+        if(localStorage.getItem('user') == null){
+          this.userLog = this.channel
+    
+          this.userLog.channel_premium = "3"
+          console.log("chpremm", this.userLog.channel_premium)
+          this.isUser = false;
+
+          this.contentExpand(1)
+        }else{
+          this.isUser = true;
+          this.us.getUser().subscribe( user => {
+            this.apollo.watchQuery({
+              query: gql`
+                query getChannelById($channel_id: String!){
+                  getChannelById(channel_id: $channel_id){
+                    channel_id,
+                    channel_name,
+                    channel_background,
+                    channel_icon,
+                    channel_subscribe,
+                    channel_description,
+                    channel_join_date_day,
+                    channel_join_date_month,
+                    channel_join_date_year,
+                    channel_premium
+                  }
+                }
+              `, 
+              variables: { channel_id: user.id }
+            }).valueChanges.subscribe(result => {
+              this.userLog = result.data.getChannelById
+              
+              var temp2 = this.userLog.channel_subscribe.split(",")
+      
+              if(this.userLog.channel_id == this.channel.channel_id){
+                this.isSame = true;
+              }else{
+                for(let i =0; i< temp2.length;i++){
+                  // console.log(temp2[i], this.channel.channel_id)
+                  if (temp2[i] == this.channel.channel_id){
+                    this.isSubscribed = true;
+                    break;
+                  }
+                }
+              }
+
+              this.contentExpand(1)
+      
+            })
+          } )
+        }
       })
     })
 
-    this.us.getUser().subscribe( user => {
-      this.apollo.watchQuery({
-        query: gql`
-          query getChannelById($channel_id: String!){
-            getChannelById(channel_id: $channel_id){
-              channel_id,
-              channel_name,
-              channel_background,
-              channel_icon,
-              channel_subscribe,
-              channel_description,
-              channel_join_date_day,
-              channel_join_date_month,
-              channel_join_date_year,
-              channel_premium
-            }
-          }
-        `, 
-        variables: { channel_id: user.id }
-      }).valueChanges.subscribe(result => {
-        this.userLog = result.data.getChannelById
-
-        var temp2 = this.userLog.channel_subscribe.split(",")
-
-        if(this.userLog.channel_id == this.channel.channel_id){
-          this.isSame = true;
-        }else{
-          for(let i =0; i< temp2.length;i++){
-            // console.log(temp2[i], this.channel.channel_id)
-            if (temp2[i] == this.channel.channel_id){
-              this.isSubscribed = true;
-              break;
-            }
-          }
-        }
-
-
-      })
-    } )
     
 
+    
+    
+
+  }
+
+  filter(num){
+    this.videos = [];
+
+    if(num == 1){
+      this.apollo.watchQuery( {
+        query: gql`
+          query getChannelVideoMostPopular($channel_id: String!, $flag: String!){
+              getChannelVideoMostPopular(channel_id: $channel_id, flag: $flag){
+                  video_id,
+                  video_title,
+                  video,
+                  video_thumbnail,
+                  video_description,
+                  video_views,
+                  channel_name,
+                  channel_icon,
+                  day,
+                  month,
+                  year,
+                  channel_id,
+                }
+            }
+        `,
+        variables: {
+          channel_id: this.channel.channel_id,
+          flag: this.userLog.channel_premium,
+        }
+      } ).valueChanges.subscribe( r => {
+        this.videos = r.data.getChannelVideoMostPopular
+      } )
+    }else if(num == 2){
+      this.apollo.watchQuery( {
+        query: gql`
+          query getChannelVideoDate($channel_id: String!, $prem: String!, 
+            $flag: String!){
+            getChannelVideoDate(channel_id: $channel_id, prem: $prem, 
+              flag: $flag){
+                  video_id,
+                  video_title,
+                  video,
+                  video_thumbnail,
+                  video_description,
+                  video_views,
+                  channel_name,
+                  channel_icon,
+                  day,
+                  month,
+                  year,
+                  channel_id,
+                }
+            }
+        `,
+        variables: {
+          channel_id: this.channel.channel_id,
+          prem: this.userLog.channel_premium,
+          flag: "1"
+        }
+      } ).valueChanges.subscribe( r => {
+        this.videos = r.data.getChannelVideoDate
+      } )
+    }else{
+      this.apollo.watchQuery( {
+        query: gql`
+          query getChannelVideoDate($channel_id: String!, $prem: String!, 
+            $flag: String!){
+            getChannelVideoDate(channel_id: $channel_id, prem: $prem, 
+              flag: $flag){
+                  video_id,
+                  video_title,
+                  video,
+                  video_thumbnail,
+                  video_description,
+                  video_views,
+                  channel_name,
+                  channel_icon,
+                  day,
+                  month,
+                  year,
+                  channel_id,
+                }
+            }
+        `,
+        variables: {
+          channel_id: this.channel.channel_id,
+          prem: this.userLog.channel_premium,
+          flag: "2"
+        }
+      } ).valueChanges.subscribe( r => {
+        this.videos = r.data.getChannelVideoDate
+      } )
+    }
   }
 
   getViews(number): String{

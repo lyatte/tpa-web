@@ -35,6 +35,8 @@ export class SearchPageComponent implements OnInit {
   isNotSame = {};
   isSubscribed = {};
 
+  isGuest;
+
   
 
   ngOnInit(): void {
@@ -42,30 +44,40 @@ export class SearchPageComponent implements OnInit {
       this.keyword = params.get('keyword')
       console.log(this.keyword)
 
-      this.usr.getUser().subscribe( user => {
-        this.apollo.watchQuery( {
-          query: gql`
-            query getChannelById($channel_id: String!){
-              getChannelById(channel_id : $channel_id){
-                channel_id,
-                channel_premium,
-                channel_subscribe
+      if(localStorage.getItem('user') == null){
+        this.getVids("3", "3")
+        this.getPlaylist()
+        this.getChannel()
+
+        this.isGuest = 1;
+      }else{
+        this.isGuest = 0;
+        this.usr.getUser().subscribe( user => {
+          this.apollo.watchQuery( {
+            query: gql`
+              query getChannelById($channel_id: String!){
+                getChannelById(channel_id : $channel_id){
+                  channel_id,
+                  channel_premium,
+                  channel_subscribe
+                }
               }
+            `,
+            variables: {
+              channel_id: user.id
             }
-          `,
-          variables: {
-            channel_id: user.id
-          }
-        } ).valueChanges.subscribe( r => {
-          this.userLog = r.data.getChannelById
-
-          console.log("User : ", this.userLog)
-
-          this.getVids("3", this.userLog.channel_premium)
-          this.getPlaylist()
-          this.getChannel()
+          } ).valueChanges.subscribe( r => {
+            this.userLog = r.data.getChannelById
+  
+            console.log("User : ", this.userLog)
+  
+            this.getVids("3", this.userLog.channel_premium)
+            this.getPlaylist()
+            this.getChannel()
+          } )
         } )
-      } )
+      }
+
       
       
     })
@@ -135,6 +147,13 @@ export class SearchPageComponent implements OnInit {
 
 
   getVids(date, premium){
+    if(this.isGuest == 1){
+      var temp = 3;
+      premium = temp.toString();
+      
+    }
+    console.log("prem", premium)
+    
     this.apollo.watchQuery( {
       query: gql`
         query getSearchVideo($keyword: String!, $uploadDate: String!, $premium: String!){
@@ -156,7 +175,7 @@ export class SearchPageComponent implements OnInit {
       variables: {
         keyword: this.keyword,
         uploadDate: date,
-        premium: premium
+        premium: premium.toString()
       }
     } ).valueChanges.subscribe( r=> {
       this.videos = r.data.getSearchVideo
@@ -327,7 +346,10 @@ export class SearchPageComponent implements OnInit {
     this.channel= [];
     this.playlist = [];
     this.videos = [];
-    this.getVids(this.upDate, this.userLog.channel_premium);
+    if(this.isGuest != 1)
+      this.getVids(this.upDate, this.userLog.channel_premium);
+    else
+      this.getVids(this.upDate, "3");
   }
 
   filterPlaylist(){
