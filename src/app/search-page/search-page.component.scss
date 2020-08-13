@@ -102,11 +102,25 @@
                 width: 250px;
                 height: 130px;
             }
+
+            width: 100%;
             
             .videoText{
                 margin-left: 1vw;
                 flex-direction: column;
                 font-size: 1.5vw;
+
+                width: 100%;
+                
+                .top{
+                    flex-direction: row;
+                    justify-content: space-between;
+    
+                    img{
+                        width: 10px;
+                        height: 20px;
+                    }
+                }
     
                 div{
                     &:active{
@@ -256,6 +270,81 @@
 
     img{
         cursor: pointer;
+    }
+
+    .modal {
+        align-items: center;
+        justify-content: center;
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+     
+        
+        
+        .modal-content{
+            background-color: rgb(61, 61, 61);
+            margin: 15% auto;
+            padding: 20px;
+            width: 50%;
+
+            align-items: center;
+            justify-content: center;
+
+            // opacity: 70%;
+
+            input{
+                color: white;
+            }
+            
+
+            button{
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(61, 61, 61); 
+                color: white;
+
+                border: none;
+
+                width: 15vw;
+                height: 3vw;
+
+                cursor: pointer;
+
+                &:hover{
+                    background-color: rgb(43, 43, 43); 
+
+                    img, li{
+                        background-color: rgb(43, 43, 43); 
+                    }
+                }
+
+                img{
+                    width: 3vw;
+                    height: 3vw;
+                    background-color: rgb(61, 61, 61);
+                }
+
+                li{
+                    background-color: rgb(61, 61, 61);
+                }
+            }
+
+            .close{
+                color: white;
+                background-color: rgb(61, 61, 61);
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
     }
 
 }

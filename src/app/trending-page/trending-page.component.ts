@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
+import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-trending-page',
@@ -10,11 +11,15 @@ import { Apollo } from 'apollo-angular';
 })
 export class TrendingPageComponent implements OnInit {
 
-  constructor(private router: Router, private apollo: Apollo) { }
+  constructor(private router: Router, private apollo: Apollo, 
+    private user: HeroService) { }
 
   views;
 
   videos;
+
+
+  playlist;
 
   ngOnInit(): void {
     this.apollo.watchQuery({
@@ -42,8 +47,145 @@ export class TrendingPageComponent implements OnInit {
 
       this.videos = vid.slice(0,20);
     });
+
+    this.user.getUser().subscribe( us => {
+      this.apollo.watchQuery( { 
+        query: gql`
+          query getChannelPlaylist($id: String!){
+            getChannelPlaylist(channel_id: $id){
+              playlist_id,
+              playlist_title,
+              playlist_videos
+            }
+          }
+        `,
+        variables: {
+          id: us.id
+        }
+      } ).valueChanges.subscribe( r => {
+        this.playlist = r.data.getChannelPlaylist
+      } )
+    } )
+
     
     
+  }
+
+  chosenVid;
+
+  openModalPlaylist(video_id){
+    var modal = document.getElementById('playlistModal');
+
+    modal.style.display = "block";
+
+    this.chosenVid = video_id;
+
+
+    console.log(this.chosenVid)
+  }
+
+  closeModalPlaylist(){
+    var modal = document.getElementById('playlistModal');
+
+    modal.style.display = "none";
+  }
+
+  addToPlaylist(id){
+
+    console.log(this.chosenVid, id);
+
+    this.apollo.mutate( {
+      mutation: gql`
+        mutation addVideoToPlaylist($playlist_id: ID!, $video_id: ID!){
+          addVideoToPlaylist(playlist_id: $playlist_id, video_id: $video_id)
+        }
+      `,variables:{
+        video_id: this.chosenVid,
+        playlist_id: id,
+      }
+    } ).subscribe( res => {
+      console.log(res)
+    } )
+
+
+  }
+
+  createPlaylist(){
+    this.closeModalPlaylist();
+
+    var modal = document.getElementById('addModal');
+
+    modal.style.display = "block";
+
+  }
+
+  create(){
+    var title = document.getElementById('pName').value;
+
+    var date = new Date();
+
+    var day = date.getDay();
+    var month = date.getMonth()+1;
+    var year = date.getFullYear();
+    
+    var v = "Public";
+    
+    console.log(title)
+
+    this.user.getUser().subscribe( us => {
+      console.log(us.id)
+      this.apollo.mutate( {
+        mutation: gql`
+          mutation createPlaylist($ch_id: String!, 
+            $title: String!, $day: Int!, $month: Int!, $year: Int!,
+            $visibility: String!){
+            createPlaylist( input : {
+              channel_id: $ch_id
+              playlist_title: $title
+              playlist_day: $day
+              playlist_visibility: $visibility
+              playlist_month: $month
+              playlist_year: $year
+              playlist_views: 0
+              playlist_videos: ""
+              playlist_desc: ""
+            }) { playlist_title }
+          }
+        `,
+        variables: {
+          ch_id: us.id,
+          title: title,
+          day: day,
+          month: month,
+          year: year,
+          visibility: v
+        },
+        refetchQueries: [ {
+          query: gql`
+          query getChannelPlaylist($id: String!){
+            getChannelPlaylist(channel_id: $id){
+              playlist_id,
+              playlist_title,
+              playlist_videos
+            }
+          }
+        `,
+        variables: {
+          id: us.id
+        }
+        } ]
+  
+      } ).subscribe( res => 
+        console.log(res) )
+    } )
+
+  }
+
+  close(){
+    
+    var modal = document.getElementById('addModal');
+
+    modal.style.display = "none";
   }
 
 

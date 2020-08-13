@@ -705,10 +705,6 @@ export class VideoComponentComponent implements OnInit {
 
   }
 
-  
-
-  
-
 
   dislikeVideo(){
     this.user.getUser().subscribe( res => {

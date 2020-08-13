@@ -40,7 +40,12 @@ export class HeaderComponent implements OnInit {
   isDefault = true;
 
   isRestrict = false;
+
+  isExpand= false;
   
+  temp;
+
+  closed;
 
   constructor(private authService: SocialAuthService, 
     private router: Router,
@@ -87,6 +92,15 @@ export class HeaderComponent implements OnInit {
       this.location = temp;
   }
 
+  expand(){
+    this.isExpand = !this.isExpand
+    if(this.isExpand == true){
+      this.playlists = this.temp
+    }else{
+      this.playlists = this.closed
+    }
+  }
+
   getUser(){
     this.dummy = JSON.parse(localStorage.getItem('user'));
     this.user.setUser(this.dummy);
@@ -107,7 +121,10 @@ export class HeaderComponent implements OnInit {
           id: us.id
         }
       }).valueChanges.subscribe( res => {
-        this.playlists = res.data.getChannelPlaylist
+        this.temp = res.data.getChannelPlaylist
+
+        this.closed = this.temp.slice(0,5)
+        this.playlists = this.closed
 
         console.log(this.playlists)
       } )

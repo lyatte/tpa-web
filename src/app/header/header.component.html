@@ -178,8 +178,21 @@
                     </li>
                 </button>
             </a>
-        </div>
 
+        </div>
+        <div class="playlist">
+            <a (click)="expand()">
+                <button>
+                    <li *ngIf="isExpand == false">
+                        Show All Playlists
+                    </li>
+                    <li *ngIf="isExpand == true">
+                        Hide Playlists
+                    </li>
+                </button>
+            </a>
+        </div>
+        
         <div class="categories">
             <hr>
             <div>
