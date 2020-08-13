@@ -1,0 +1,261 @@
+*{
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+
+    background-color: black;
+}
+
+#container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+
+    padding-left: 20px;
+    padding-top: 20px;
+    
+    color: white;
+
+    margin-top: 3.6vw;
+    margin-left: 4.7vw;
+    
+    width: 95.3%;
+    overflow-y: scroll;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+
+    .filtering{
+        width: 100%;
+        // background-color: red;
+
+        div{
+            flex-direction: row;
+            img{
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+        }
+
+        .filterDate, .filterType{
+            // background-color:blue;
+            width: 10%;
+
+            margin-right: 40px;
+            margin-top: 20px;
+            hr{
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid white;
+                margin-top: 5px;
+                margin-bottom: 10px;
+            }
+            flex-direction: column;
+
+            button{
+                cursor: pointer;
+                border: none;
+                color: white;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    hr{
+        margin-top: 40px;
+        opacity: 50%;
+        width: 70%;
+        border: none;
+        border-bottom: 1px solid white;
+    }
+
+    .vi{
+        flex-direction: column;
+        width: 65%;
+        margin-left: 3vw;
+        margin-top: 2vw;
+    
+        .videoDetail{
+            flex-direction: row;
+    
+            &:hover{
+                cursor: pointer;
+            }
+    
+            &:focus{
+                outline: none;
+            }
+    
+            img{
+                width: 250px;
+                height: 130px;
+            }
+            
+            .videoText{
+                margin-left: 1vw;
+                flex-direction: column;
+                font-size: 1.5vw;
+    
+                div{
+                    &:active{
+                        outline: none;
+                    }
+                }
+    
+                .details{
+                    margin-top: 0.5vw;
+                    font-size: 0.9vw;
+                    color: rgb(180, 180, 180);
+    
+                    &:active{
+                        outline: none;
+                    }
+                }
+                
+                .desc{
+                    margin-top: 1vw;
+                    font-size: 0.9vw;
+                    color: rgb(180, 180, 180);
+                }
+            }
+    
+        }
+    }
+
+    .pl{
+        flex-direction: row;
+        width: 65%;
+        margin-left: 3vw;
+        margin-top: 2vw;
+
+        cursor: pointer;
+
+        img{
+            width: 250px;
+            height: 130px;
+        }
+
+        .playlistDetail{
+            margin-left: 20px;
+
+            font-size: 1em;
+
+            .pName{
+                
+                font-size: 1.2em;
+            }
+
+            .cName{
+                margin-top: 10px;
+                color: rgb(156, 156, 156);
+            }
+
+            .shortDesc{
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .c{
+        margin-left: 3vw;
+        margin-top: 2vw;
+        width: 65%;
+        flex-direction: row;
+        justify-content: space-between;
+
+
+        align-items: center;
+
+        cursor: pointer;
+
+        .chDetails{
+            flex-direction: row;
+            font-size: 1em;
+
+            img{
+                width: 120px;
+                height: 120px;
+                border-radius: 100px;
+            }
+
+            div{
+                .chName{
+                    margin-top: 20px;
+                    font-size: 1.2em;
+                }
+
+                .anotherDetail, .chDesc{
+                    color: rgb(170, 170, 170);
+                }
+
+                .anotherDetail{
+                    margin-top: 10px;
+                }
+
+                margin-left: 20px;
+                flex-direction: column;
+            }
+        }
+
+        .rightSide{
+            button{
+                background-color: rgb(202, 0, 0);
+
+                border: none;
+                border-radius: 3px;
+
+                align-items: center;
+                justify-content: center;
+                height: 2.4vw;
+                width: 7.4vw;
+                
+                color: white;
+                font-weight: bold;
+
+                font-size: 0.9vw;
+
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+
+            .alrSubscribe{
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                button{
+                    background-color: rgb(46, 46, 46);
+                    color: gray;
+                }
+
+                img{
+                    margin-left: 0.7vw;
+                    margin-right: 0.2vw;
+
+                    width: 2vw;
+                    height: 2vw;
+
+                    opacity: 50%;
+                }
+            }
+        }
+    }
+
+    img{
+        cursor: pointer;
+    }
+
+}

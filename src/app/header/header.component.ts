@@ -122,6 +122,14 @@ export class HeaderComponent implements OnInit {
     
   }
 
+  search(){
+    var keyword = document.getElementById('searchBar').value
+
+    this.router.navigate(['/search/', keyword]).then( nav => {
+      console.log(nav)
+    } )
+  }
+
   settingToggle(){
     if(this.isClicked) this.isClicked = false;
     else this.isClicked = true;

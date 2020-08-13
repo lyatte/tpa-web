@@ -1,0 +1,90 @@
+<div id="container">
+    <div class="filtering">
+        <div>
+            <img src="../../assets/filter_search.png" alt="">
+            FILTER
+        </div>
+        <div class="f">
+            <div class="filterDate">
+                UPLOAD DATE
+                <hr>
+                <button (click)="filterDate(1)">This week</button>
+                <button (click)="filterDate(2)">This month</button>
+                <button (click)="filterDate(3)">This year</button>
+            </div>
+
+            <div class="filterType">
+                TYPE
+                <hr>
+                <button (click)="filterVideo()">Video</button>
+                <button (click)="filterChannel()">Channel</button>
+                <button (click)="filterPlaylist()">Playlist</button>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="vi" *ngFor="let video of videos">
+        <div class="videoDetail" routerLink="/video/{{ video.video_id }}">
+            <img src="{{ video.video_thumbnail }}" alt="" 
+            routerLink="/video/{{ video.video_id }}">
+            <div class="videoText">
+                <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                <div class="details" routerLink="/channel/{{ video.channel_id }}"> {{ video.channel_name }} . {{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }} </div>
+                <div class="desc">{{ video.video_description }}</div>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <div class="pl" *ngFor="let p of playlist; index as i">
+        <img [src]="playlistThumbnail[i]" alt="" routerLink="/playlist/{{ p.playlist_id }}">
+        <div class="playlistDetail">
+            <div class="pName" routerLink="/playlist/{{ p.playlist_id }}">
+                {{p.playlist_title}}
+            </div>
+            <div class="cName" routerLink="/playlist/{{ p.channel_id }}">
+                {{ pChannel[i] }}
+            </div>
+            <div class="shortDesc">
+                {{ p.playlist_desc }}
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="c" *ngFor="let c of channel; index as i">
+        
+        <div class="chDetails">
+            <img src="{{ c.channel_icon }}" alt="" routerLink="/channel/{{ c.channel_id }}">
+            <div>
+                <div class="chName" routerLink="/channel/{{ c.channel_id }}"> 
+                    {{ c.channel_name }} 
+                </div>
+                <div class="anotherDetail">
+                    {{ getSubs(c.channel_subscribers) }} subscribers . {{ vidCount[i] }} videos
+                </div>
+                <div class="chDesc">
+                    {{ c.channel_description }}
+                </div>
+            </div>
+        </div>
+
+        <div class="rightSide" *ngIf="isNotSame[i]">
+            <div class="subscribeButton" *ngIf="isSubscribed[i] == false">
+                <button (click)="subscribe( c.channel_id, i )">
+                    SUBSCRIBE
+                </button>
+            </div>
+            <div class="alrSubscribe" *ngIf="isSubscribed[i]">
+                <button (click)="subscribe( c.channel_id, i )">
+                    SUBSCRIBED
+                </button>
+
+                <img src="../../assets/subscribed_logo.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>

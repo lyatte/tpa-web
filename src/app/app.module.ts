@@ -36,7 +36,7 @@ const firebaseConfig = {
     AppComponent,
     HeaderComponent,
     routingComponents,
-    DropDirective
+    DropDirective,
   ],
   imports: [
     BrowserModule,

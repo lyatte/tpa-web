@@ -14,6 +14,7 @@ import { CategoryEntertainmentComponent } from './category-page/category-enterta
 import { CategoryTravelComponent } from './category-page/category-travel/category-travel.component';
 import { PlaylistPageComponent } from './playlist-page/playlist-page.component';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
+import { SearchPageComponent } from './search-page/search-page.component';
 
 
 
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: 'category/entertainment', component: CategoryEntertainmentComponent },
   { path: 'category/travel', component: CategoryTravelComponent },
   { path: 'playlist/:id', component: PlaylistPageComponent },
-  { path: 'upload', component: UploadVideoComponent }
+  { path: 'upload', component: UploadVideoComponent },
+  { path: 'search/:keyword', component: SearchPageComponent }
 ];
 
 @NgModule({
@@ -54,4 +56,5 @@ export const routingComponents =
   CategoryEntertainmentComponent,
   CategoryTravelComponent,
   PlaylistPageComponent,
-  UploadVideoComponent]
+  UploadVideoComponent,
+  SearchPageComponent]
