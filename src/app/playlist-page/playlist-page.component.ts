@@ -1,5 +1,5 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { HeroService } from '../hero.service';
@@ -12,7 +12,7 @@ import { HeroService } from '../hero.service';
 export class PlaylistPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private apollo: Apollo, 
-    private us: HeroService) { }
+    private us: HeroService, private router: Router) { }
 
   playlistId;
 
@@ -50,6 +50,7 @@ export class PlaylistPageComponent implements OnInit {
       query: gql`
         query getPlaylistById($id: ID!){
           getPlaylistById(playlist_id: $id){
+            playlist_id,
             playlist_title,
             playlist_videos,
             playlist_views,
@@ -190,6 +191,80 @@ export class PlaylistPageComponent implements OnInit {
 
      })
 
+  }
+
+  deleteVideoPlaylist(id){
+    console.log(this.playlist.playlist_id)
+    console.log(id)
+    this.apollo.mutate( {
+      mutation: gql`
+        mutation deleteVideoPlaylist($playlist_id: ID!, $video_id: String!){
+          deleteVideoPlaylist(playlist_id: $playlist_id, video_id: $video_id)
+        }
+      `,
+      variables: {
+        playlist_id: this.playlist.playlist_id,
+        video_id: id.toString()
+      },
+      refetchQueries: [ {
+        query:gql`
+          query getPlaylistVideo($videos: String!, $flag: String!){
+            getPlaylistVideo(videos: $videos, flag: $flag ){
+              video_id,
+              video_title,
+              video,
+              video_thumbnail,
+              video_description,
+              video_views,
+              channel_name,
+              channel_icon,
+              day,
+              month,
+              year,
+              channel_id,
+            }
+          }
+         `,
+         variables: {
+            videos: this.playlist.playlist_videos,
+            flag: this.flags2.toString()
+         }
+      } ]
+    } ).subscribe( r => {
+      console.log(r)
+    } )
+  }
+
+  deletePlaylist(){
+    console.log("p id: ", this.playlist.playlist_id)
+    this.apollo.mutate( {
+      mutation: gql`
+        mutation deletePlaylist($playlist_id: ID!){
+          deletePlaylist(playlist_id: $playlist_id)
+        }
+      `,
+      variables: {
+        playlist_id: this.playlist.playlist_id
+      },
+      refetchQueries: [ {
+        query: gql`
+          query getChannelPlaylist($id: String!){
+            getChannelPlaylist(channel_id: $id){
+              playlist_id,
+              playlist_title,
+              playlist_videos
+            }
+          }
+        `,
+        variables: {
+          id: this.userLog.channel_id
+        }
+      } ]
+    } ).subscribe( r => {
+      console.log(r)
+
+      this.router.navigate([''])
+    } )
   }
 
   flags = 1;

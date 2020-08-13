@@ -3,7 +3,10 @@
         <div class="thumbnail">
             <img src="{{ thumbnail }}" alt="">
         </div>
-        <div class="title">{{ playlist.playlist_title }}</div>
+        <div class="title">
+            {{ playlist.playlist_title }}
+            <img src="../../assets/delete_icon.png" alt="" (click)="deletePlaylist()" *ngIf="isSame">
+        </div>
         <div class="infos">{{ videoCount }} video . {{ playlist.playlist_views }}x watched . Last updated {{ playlist.playlist_day }} {{ getMonth(playlist.playlist_month) }} {{ playlist.playlist_year }}</div>
         <div class="buttons">
             <button>
@@ -33,6 +36,7 @@
 
                     <img src="../../assets/subscribed_logo.png" alt="">
                 </div>
+
             </div>
         </div>
     </div>
@@ -52,22 +56,17 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="videoDetail" routerLink="/video/{{ video.video_id }}" *ngFor="let video of videos" (click)="addViews()">
-            <img src="{{ video.video_thumbnail }}" alt="" 
-            routerLink="/video/{{ video.video_id }}" (click)="addViews()">
-            <div class="videoText">
-                <div routerLink="/video/{{ video.video_id }}" (click)="addViews()">{{ video.video_title }}</div>
-                <div class="details" routerLink="/channel/{{ video.channel_id }}"> {{ video.channel_name }} . {{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }} </div>
-                <div class="desc">{{ video.video_description }}</div>
-            </div>
-        </div> -->
+
         <div class="videoSection">
             <div *ngFor="let video of videos, let i = index">
-                <div class="videoDetail" routerLink="/video/{{ video.video_id }}" *ngIf="i<(lastKey)">
+                <div class="videoDetail" *ngIf="i<(lastKey)">
                     <img src="{{ video.video_thumbnail }}" alt="" 
                     routerLink="/video/{{ video.video_id }}">
                     <div class="videoText">
-                        <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                        <div class="top">
+                            <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
+                            <img src="../../assets/delete_icon.png" alt="" (click)="deleteVideoPlaylist(video.video_id)" *ngIf="isSame">
+                        </div>
                         <div class="details" routerLink="/channel/{{ video.channel_id }}"> {{ video.channel_name }} . {{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }} </div>
                         <div class="desc">{{ video.video_description }}</div>
                     </div>
@@ -75,14 +74,6 @@
             </div>
 
         </div>
-
-        <!-- <a href="/video/{{ v.video_id }}" class="videoDetail" *ngFor="let v of videos" (click)="addViews()">
-            <img src="{{ v.video_thumbnail }}" alt="">
-            <div class="videoText">
-                <div class="vidName">{{ v.video_title }}</div>
-                <div class="vidCh">{{ v.channel_name }}</div>
-            </div>
-        </a> -->
 
         <div class="footer"></div>
     </div>

@@ -125,8 +125,8 @@ export class VideoComponentComponent implements OnInit {
 
         this.apollo.watchQuery({
           query: gql`
-            query getVideosComment($id: ID!){
-              getVideosComment(video_id: $id){
+            query getVideosComment($id: ID!, $flag: String!){
+              getVideosComment(video_id: $id, flag: $flag){
                 comment_id,
                 like,
                 dislike,
@@ -139,7 +139,7 @@ export class VideoComponentComponent implements OnInit {
               }
             }
           `, 
-          variables: { id: this.videoId }
+          variables: { id: this.videoId, flag: "1" }
         }).valueChanges.subscribe( r => { 
           this.comment = r.data.getVideosComment
 
@@ -635,21 +635,21 @@ export class VideoComponentComponent implements OnInit {
         },
         refetchQueries: [ {
           query: gql`
-            query getVideosComment($id: ID!){
-              getVideosComment(video_id: $id){
-                comment_id,
-                like,
-                dislike,
-                content,
-                reply_count,
-                day,
-                month,
-                year,
-                channel_id
-              }
+          query getVideosComment($id: ID!, $flag: String!){
+            getVideosComment(video_id: $id, flag: $flag){
+              comment_id,
+              like,
+              dislike,
+              content,
+              reply_count,
+              day,
+              month,
+              year,
+              channel_id
             }
-          `, 
-          variables: { id: this.videoId }
+          }
+        `, 
+        variables: { id: this.videoId, flag: "1" }
         } ]
       } ).subscribe( res => {
         console.log(res)
@@ -779,21 +779,21 @@ export class VideoComponentComponent implements OnInit {
       },
       refetchQueries: [ {
         query: gql`
-            query getVideosComment($id: ID!){
-              getVideosComment(video_id: $id){
-                comment_id,
-                like,
-                dislike,
-                content,
-                reply_count,
-                day,
-                month,
-                year,
-                channel_id
-              }
+          query getVideosComment($id: ID!, $flag: String!){
+            getVideosComment(video_id: $id, flag: $flag){
+              comment_id,
+              like,
+              dislike,
+              content,
+              reply_count,
+              day,
+              month,
+              year,
+              channel_id
             }
-          `, 
-          variables: { id: this.videoId }
+          }
+        `, 
+        variables: { id: this.videoId, flag: "1" }
       } ]
 
     } ).subscribe( r => {
@@ -929,6 +929,166 @@ export class VideoComponentComponent implements OnInit {
     } 
     )
 
+  }
+
+
+  filter(num){
+
+    this.comment= [];
+    this.reply = [];
+
+    if(num == 1){
+      this.apollo.watchQuery({
+        query: gql`
+          query getVideosComment($id: ID!, $flag: String!){
+            getVideosComment(video_id: $id, flag: $flag){
+              comment_id,
+              like,
+              dislike,
+              content,
+              reply_count,
+              day,
+              month,
+              year,
+              channel_id
+            }
+          }
+        `, 
+        variables: { id: this.videoId, flag: "1" }
+      }).valueChanges.subscribe( r => { 
+        this.comment = r.data.getVideosComment
+
+        this.comment_count = this.comment.length
+
+        for(let i = 0; i<this.comment.length ;i++){
+          this.apollo.watchQuery({
+            query: gql`
+              query getChannelById($id: String!){
+                getChannelById(channel_id: $id){
+                  channel_id,
+                  channel_name,
+                  channel_icon,
+                  channel_subscribers,
+                  channel_liked_video,
+                  channel_disliked_video,
+                  channel_premium
+                }
+              }
+            `, 
+            variables: { id: this.comment[i].channel_id }
+          }).valueChanges.subscribe( r => {
+            this.cthumbnail[i] = r.data.getChannelById.channel_icon
+            // console.log(this.cthumbnail[i])
+            this.ccname[i] = r.data.getChannelById.channel_name
+            this.replyc[i] = false;
+
+          })
+
+          this.apollo.watchQuery({
+            query: gql`
+              query getCommentReply($id: ID!){
+                getCommentReply(comment_id: $id){
+                  comment_id,
+                  like,
+                  dislike,
+                  content,
+                  reply_count,
+                  day,
+                  month,
+                  year,
+                  channel_id
+                }
+              }
+            `, 
+            variables: { id: this.comment[i].comment_id }
+          }).valueChanges.subscribe( r => {
+            console.log(this.comment[i].comment_id)
+            this.reply[this.comment[i].comment_id] = r.data.getCommentReply
+            console.log(this.reply[this.comment[i].comment_id])
+
+          })
+
+        }
+
+      } )
+    }else{
+      this.apollo.watchQuery({
+        query: gql`
+          query getVideosComment($id: ID!, $flag: String!){
+            getVideosComment(video_id: $id, flag: $flag){
+              comment_id,
+              like,
+              dislike,
+              content,
+              reply_count,
+              day,
+              month,
+              year,
+              channel_id
+            }
+          }
+        `, 
+        variables: { id: this.videoId, flag: "2" }
+      }).valueChanges.subscribe( r => { 
+        this.comment = r.data.getVideosComment
+
+        this.comment_count = this.comment.length
+
+        for(let i = 0; i<this.comment.length ;i++){
+          this.apollo.watchQuery({
+            query: gql`
+              query getChannelById($id: String!){
+                getChannelById(channel_id: $id){
+                  channel_id,
+                  channel_name,
+                  channel_icon,
+                  channel_subscribers,
+                  channel_liked_video,
+                  channel_disliked_video,
+                  channel_premium
+                }
+              }
+            `, 
+            variables: { id: this.comment[i].channel_id }
+          }).valueChanges.subscribe( r => {
+            this.cthumbnail[i] = r.data.getChannelById.channel_icon
+            // console.log(this.cthumbnail[i])
+            this.ccname[i] = r.data.getChannelById.channel_name
+            this.replyc[i] = false;
+
+          })
+
+          this.apollo.watchQuery({
+            query: gql`
+              query getCommentReply($id: ID!){
+                getCommentReply(comment_id: $id){
+                  comment_id,
+                  like,
+                  dislike,
+                  content,
+                  reply_count,
+                  day,
+                  month,
+                  year,
+                  channel_id
+                }
+              }
+            `, 
+            variables: { id: this.comment[i].comment_id }
+          }).valueChanges.subscribe( r => {
+            console.log(this.comment[i].comment_id)
+            this.reply[this.comment[i].comment_id] = r.data.getCommentReply
+            console.log(this.reply[this.comment[i].comment_id])
+
+          })
+
+          
+        }
+
+        
+
+      } )
+    }
   }
 
   getMonth(number):String{

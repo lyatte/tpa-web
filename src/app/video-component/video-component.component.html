@@ -95,6 +95,20 @@
                     <button (click)="commenting(1)">Comment</button>
                 </div>
 
+                <div class="filtering">
+                    <div>
+                        <img src="../../assets/filter_search.png" alt="">
+                        FILTER
+                    </div>
+                    <div class="f">
+                        <div class="filterDate">
+                            <hr>
+                            <button (click)="filter(1)">Top Liked</button>
+                            <button (click)="filter(2)">Newest</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="c-section">
                     <div *ngFor="let c of comment; index as i">
                         <div class="videoComment" *ngIf="i<(lastKey2)">
@@ -169,7 +183,7 @@
             Related Video
             <div *ngFor="let v of videos, let i = index">
                 <div routerLink="/video/{{ v.video_id }}" class="videoDetail" *ngIf="i<(lastKey)">
-                    <img src="{{ v.video_thumbnail }}" alt="">
+                    <img src="{{ v.video_thumbnail }}" alt="" routerLink="/video/{{ v.video_id }}">
                     <div class="videoText">
                         <div>{{ v.video_title }}</div>
                         <a href="/channel/{{ v.channel_id }}" class="channel"> {{ v.channel_name }} </a>
