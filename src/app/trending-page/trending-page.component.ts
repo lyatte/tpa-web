@@ -250,14 +250,13 @@ export function expand(expanded:number){
   
   if(flag == 1 && container != null){
     flag = 2;
-    container.style.marginLeft = "15.6vw";
-    container.style.width = "84.4%";
+    container.style.marginLeft = "240px";
+    // container.style.width = "84.4%";
 
   }
   else if(flag == 2 && container != null){
     flag = 1;
-    container.style.marginLeft = "4.7vw";
-    container.style.width = "95.3%";
+    container.style.marginLeft = "72px";
 
   }
 

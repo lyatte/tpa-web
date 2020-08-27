@@ -30,7 +30,7 @@ export class SearchPageComponent implements OnInit {
 
   vidCount = {};
 
-  upDate = "3";
+  upDate = "4";
 
   isNotSame = {};
   isSubscribed = {};
@@ -47,7 +47,7 @@ export class SearchPageComponent implements OnInit {
       console.log(this.keyword)
 
       if(localStorage.getItem('user') == null){
-        this.getVids("3", "3")
+        this.getVids("4", "3")
         this.getPlaylist()
         this.getChannel()
 
@@ -73,7 +73,7 @@ export class SearchPageComponent implements OnInit {
   
             console.log("User : ", this.userLog)
   
-            this.getVids("3", this.userLog.channel_premium)
+            this.getVids("4", this.userLog.channel_premium)
             this.getPlaylist()
             this.getChannel()
 
@@ -287,7 +287,7 @@ export class SearchPageComponent implements OnInit {
 
   getVids(date, premium){
     if(this.isGuest == 1){
-      var temp = 3;
+      var temp = 4;
       premium = temp.toString();
       
     }
@@ -338,7 +338,7 @@ export class SearchPageComponent implements OnInit {
       `,
       variables: {
         keyword: this.keyword,
-        uploadDate: "3"
+        uploadDate: "4"
       }
     } ).valueChanges.subscribe( r=> {
       this.playlist = r.data.getSearchPlaylist
@@ -401,7 +401,7 @@ export class SearchPageComponent implements OnInit {
       `,
       variables: {
         keyword: this.keyword,
-        uploadDate: "3"
+        uploadDate: "4"
       }
     } ).valueChanges.subscribe( r=> {
       this.channel = r.data.getSearchChannel
@@ -492,7 +492,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   filterPlaylist(){
-    this.upDate = "3";
+    this.upDate = "4";
     this.channel= [];
     this.videos = [];
     this.playlist = [];
@@ -500,7 +500,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   filterChannel(){
-    this.upDate = "3";
+    this.upDate = "4";
     this.videos = [];
     this.playlist = [];
     this.channel = [];

@@ -42,10 +42,20 @@ export class HeaderComponent implements OnInit {
   isRestrict = false;
 
   isExpand= false;
+  isExpand2 = false;
   
   temp;
 
   closed;
+
+  tempLength;
+  tempLength2;
+
+  loggedUser;
+
+  subsCh = [];
+
+  tempCh = [];
 
   constructor(private authService: SocialAuthService, 
     private router: Router,
@@ -101,6 +111,15 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  expand2(){
+    this.isExpand2 = !this.isExpand2
+    if(this.isExpand2 == true){
+      this.playlists = this.temp
+    }else{
+      this.playlists = this.closed
+    }
+  }
+
   getUser(){
     this.dummy = JSON.parse(localStorage.getItem('user'));
     this.user.setUser(this.dummy);
@@ -125,8 +144,74 @@ export class HeaderComponent implements OnInit {
 
         this.closed = this.temp.slice(0,5)
         this.playlists = this.closed
+        
+
+        this.tempLength = this.temp.length
+
+        console.log(this.tempLength)
 
         console.log(this.playlists)
+      } )
+
+      this.apollo.watchQuery( {
+        query: gql`
+          query getChannelById($channel_id: String!){
+            getChannelById(channel_id : $channel_id){
+              channel_id,
+              channel_subscribe
+            }
+          }
+        `,
+        variables: {
+          channel_id : us.id
+        }
+      }).valueChanges.subscribe( r => {
+        this.loggedUser = r.data.getChannelById
+
+        console.log(this.loggedUser)
+
+        var temp2 = this.loggedUser.channel_subscribe.split(",")
+
+        var flag = 0;
+
+        var temp3 = [];
+
+        var j = 0;
+
+        for(let i=0; i<temp2.length;i++){
+          if(temp2[i] == "") continue;
+          temp3[j] = temp2[i]
+          j++;
+          console.log("Asd")
+        }
+
+        for(let i =0; i< temp3.length;i++){
+          console.log("Test",i, temp3[i])
+          flag++;
+          this.subsCh[i] = temp3[i]
+          this.apollo.watchQuery( {
+            query: gql`
+              query getChannelById($channel_id: String!){
+                getChannelById(channel_id : $channel_id){
+                  channel_id,
+                  channel_subscribe,
+                  channel_name,
+                  channel_icon
+                }
+              }
+            `,
+            variables: {
+              channel_id : temp3[i]
+            }
+          }).valueChanges.subscribe( res => {
+            this.tempCh[i] = res.data.getChannelById
+            console.log("try: ", i, this.tempCh[i])
+            console.log(this.tempCh[i].channel_id)
+          } )
+        }
+
+        this.tempLength2 = flag
+        console.log(this.tempLength2)
       } )
 
     })

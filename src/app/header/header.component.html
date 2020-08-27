@@ -168,7 +168,7 @@
     </div>
 
     
-    <div *ngIf="show">
+    <div *ngIf="show" class="a">
         <div class="playlist" *ngFor="let p of playlists">
             <a href="/playlist/{{ p.playlist_id }}">
                 <button>
@@ -180,7 +180,7 @@
             </a>
 
         </div>
-        <div class="playlist">
+        <div class="playlist" *ngIf="tempLength > 5">
             <a (click)="expand()">
                 <button>
                     <li *ngIf="isExpand == false">
@@ -193,6 +193,33 @@
             </a>
         </div>
         
+        <hr>
+        <div class="subscribedCh" *ngFor="let s of subsCh; index as i">
+            <hr *ngIf="i == 0">
+            <a href="/channel/{{ tempCh[i].channel_id }}">
+                <button>
+                    <img src="{{ tempCh[i].channel_icon }}" alt="">
+                    <li>
+                        {{ tempCh[i].channel_name }}
+                    </li>
+                </button>
+            </a>
+            <div *ngIf="tempLength2 != i+1"></div>
+        </div>
+
+        <div class="subscribedCh" *ngIf="tempLength2 > 10">
+            <a (click)="expand()">
+                <button>
+                    <li *ngIf="isExpand == false">
+                        Show All Channel
+                    </li>
+                    <li *ngIf="isExpand == true">
+                        Hide Playlists
+                    </li>
+                </button>
+            </a>
+        </div>
+
         <div class="categories">
             <hr>
             <div>
