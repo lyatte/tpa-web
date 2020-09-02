@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
 
 import { HeroService } from '../hero.service';
+import { variable } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-home-page',
@@ -370,7 +371,6 @@ export class HomePageComponent implements OnInit {
   }
 
   createPlaylist(){
-    this.closeModalPlaylist();
 
     var modal = document.getElementById('addModal');
 
@@ -418,10 +418,27 @@ export class HomePageComponent implements OnInit {
           month: month,
           year: year,
           visibility: v
-        }
+        },
+        refetchQueries: [
+          {
+            query: gql`
+              query getChannelPlaylist($id: String!){
+                getChannelPlaylist(channel_id: $id){
+                  playlist_id,
+                  playlist_title,
+                  playlist_videos
+                }
+              }
+            `,
+            variables:{
+              id: us.id
+            }
+          }, 
+        ]
   
-      } ).subscribe( res => 
-        console.log(res) )
+      } ).subscribe( res => {
+        console.log(res) 
+      })
     } )
 
   }

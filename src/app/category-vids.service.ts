@@ -31,7 +31,9 @@ export class CategoryVidsService {
                 year,
                 channel_name,
                 channel_icon,
-                channel_id
+                channel_id,
+                video_premium,
+                video
               }
           }
       `,
@@ -49,6 +51,7 @@ export class CategoryVidsService {
   getAllTimePopular(rest,prem,cat): Observable<any>{
     this.VideoAllTime.next(null)
     this.setAllTimePopular(rest,prem,cat)
+    console.log("asd")
     return this.VideoAllTime.asObservable();
   }
 
@@ -68,7 +71,9 @@ export class CategoryVidsService {
                 year,
                 channel_name,
                 channel_icon,
-                channel_id
+                channel_id,
+                video_premium,
+                video
               }
           }
       `,
@@ -104,7 +109,9 @@ export class CategoryVidsService {
                 year,
                 channel_name,
                 channel_icon,
-                channel_id
+                channel_id,
+                video_premium,
+                video
               }
           }
       `,
@@ -140,7 +147,9 @@ export class CategoryVidsService {
                 year,
                 channel_name,
                 channel_icon,
-                channel_id
+                channel_id,
+                video_premium,
+                video
               }
           }
       `,

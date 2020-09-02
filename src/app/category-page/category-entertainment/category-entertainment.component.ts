@@ -19,6 +19,18 @@ export class CategoryEntertainmentComponent implements OnInit {
   videos2: any;
   videos3: any;
   videos4: any;
+
+  videoDuration1 = [];
+  videoDuration2 = [];
+  videoDuration3 = [];
+  videoDuration4 = [];
+
+  premiumVids1 = [];
+  premiumVids2 = [];
+  premiumVids3 = [];
+  premiumVids4 = [];
+
+  playlist;
   
   ngOnInit(): void {
     var temp = JSON.parse(localStorage.getItem('restrict'))
@@ -55,6 +67,23 @@ export class CategoryEntertainmentComponent implements OnInit {
       this.user.getUser().subscribe( us => {
         console.log(us)
         console.log(rest)
+
+        this.apollo.watchQuery( { 
+          query: gql`
+            query getChannelPlaylist($id: String!){
+              getChannelPlaylist(channel_id: $id){
+                playlist_id,
+                playlist_title,
+                playlist_videos
+              }
+            }
+          `,
+          variables: {
+            id: us.id
+          }
+        } ).valueChanges.subscribe( r => {
+          this.playlist = r.data.getChannelPlaylist
+        } )
   
         this.apollo.watchQuery( {
           query: gql`
@@ -72,21 +101,54 @@ export class CategoryEntertainmentComponent implements OnInit {
           this.vids.getAllTimePopular(rest, user.data.getChannelById.channel_premium, "Entertainment").subscribe( r => {
             console.log(r)
             this.videos1 = r;
+
+            if(this.videos1 != null){
+              for(let i = 0;i < this.videos1.length; i++){
+                if(this.videos1[i].video_premium == "true"){
+                  this.premiumVids1[i] = true;
+                }
+              }
+
+            }
           } )
       
           this.vids.getVideoWeek(rest, user.data.getChannelById.channel_premium, "Entertainment").subscribe( r => {
             console.log(r)
             this.videos2 = r;
+
+            if(this.videos2 != null){
+              for(let i = 0;i < this.videos2.length; i++){
+                if(this.videos2[i].video_premium == "true"){
+                  this.premiumVids2[i] = true;
+                }
+              }
+            }
           } )
       
           this.vids.getVideoMonth(rest, user.data.getChannelById.channel_premium, "Entertainment").subscribe( r => {
             console.log(r)
             this.videos3 = r;
+
+            if(this.videos3 != null){
+              for(let i = 0;i < this.videos3.length; i++){
+                if(this.videos3[i].video_premium == "true"){
+                  this.premiumVids3[i] = true;
+                }
+              }
+            }
           } )
   
           this.vids.getVideoRecent(rest, user.data.getChannelById.channel_premium, "Entertainment").subscribe( r => {
             console.log(r)
             this.videos4 = r;
+
+            if(this.videos4 != null){
+              for(let i = 0;i < this.videos4.length; i++){
+                if(this.videos4[i].video_premium == "true"){
+                  this.premiumVids4[i] = true;
+                }
+              }
+            }
           } )
   
         } )
@@ -114,18 +176,8 @@ export class CategoryEntertainmentComponent implements OnInit {
     var today_month = (todayDate.getMonth()+1) * 30;
     var today_year = todayDate.getFullYear() * 365;
 
-    // console.log(todayDate)
-
-    // console.log(todayDate.getMonth())
-
-    // console.log(day, month, year)
-    // console.log(today_day, todayDate.getMonth(), todayDate.getFullYear())
-
-    // console.log((today_day + today_month + today_year), date);
-
     var differences = (today_day + today_month + today_year) - date;
 
-    // console.log(differences)
 
     if(differences == 0) return "today"
     else if(differences < 7) return differences + " day ago"
@@ -134,4 +186,156 @@ export class CategoryEntertainmentComponent implements OnInit {
     else return Math.floor(differences/365) + " year ago"
   }
 
+  setDuration(flag, index, d){
+    var duration = d.target.duration
+    console.log(duration)
+    
+    var minute: number = Math.floor((duration / 60) % 60);
+    var second: number = Math.floor(duration % 60);
+
+    
+    if(second < 10){
+      if(flag == 1){
+        this.videoDuration1[index] =  minute + "." + "0" + second;
+        
+      }else if(flag == 2){
+        this.videoDuration2[index] =  minute + "." + "0" + second;
+      }else if(flag == 3){
+        this.videoDuration3[index] =  minute + "." + "0" + second;
+      }else{
+        this.videoDuration4[index] =  minute + "." + "0" + second;
+      }
+    }else{
+      if(flag == 1)
+        this.videoDuration1[index] =  minute + "." + second;
+      else if(flag == 2)
+        this.videoDuration2[index] =  minute + "." + second;
+      else if(flag == 3)
+        this.videoDuration3[index] =  minute + "." + second;
+      else
+        this.videoDuration4[index] =  minute + "." + second;
+
+    }
+
+  }
+
+  chosenVid;
+
+
+  openModalPlaylist(video_id){
+    var modal = document.getElementById('playlistModal');
+
+    modal.style.display = "block";
+
+    this.chosenVid = video_id;
+
+
+    console.log(this.chosenVid)
+  }
+
+  closeModalPlaylist(){
+    var modal = document.getElementById('playlistModal');
+
+    modal.style.display = "none";
+  }
+
+  addToPlaylist(id){
+
+    console.log(this.chosenVid, id);
+
+    this.apollo.mutate( {
+      mutation: gql`
+        mutation addVideoToPlaylist($playlist_id: ID!, $video_id: ID!){
+          addVideoToPlaylist(playlist_id: $playlist_id, video_id: $video_id)
+        }
+      `,variables:{
+        video_id: this.chosenVid,
+        playlist_id: id,
+      }
+    } ).subscribe( res => {
+      console.log(res)
+    } )
+
+
+  }
+
+  createPlaylist(){
+
+    var modal = document.getElementById('addModal');
+
+    modal.style.display = "block";
+
+  }
+
+  create(){
+    var title = document.getElementById('pName').value;
+
+    var date = new Date();
+
+    var day = date.getDay();
+    var month = date.getMonth()+1;
+    var year = date.getFullYear();
+    
+    var v = "Public";
+    
+    console.log(title)
+
+    this.user.getUser().subscribe( us => {
+      console.log(us.id)
+      this.apollo.mutate( {
+        mutation: gql`
+          mutation createPlaylist($ch_id: String!, 
+            $title: String!, $day: Int!, $month: Int!, $year: Int!,
+            $visibility: String!){
+            createPlaylist( input : {
+              channel_id: $ch_id
+              playlist_title: $title
+              playlist_day: $day
+              playlist_visibility: $visibility
+              playlist_month: $month
+              playlist_year: $year
+              playlist_views: 0
+              playlist_videos: ""
+              playlist_desc: ""
+            }) { playlist_title }
+          }
+        `,
+        variables: {
+          ch_id: us.id,
+          title: title,
+          day: day,
+          month: month,
+          year: year,
+          visibility: v
+        },
+        refetchQueries: [
+          {
+            query: gql`
+              query getChannelPlaylist($id: String!){
+                getChannelPlaylist(channel_id: $id){
+                  playlist_id,
+                  playlist_title,
+                  playlist_videos
+                }
+              }
+            `,
+            variables:{
+              id: us.id
+            }
+          }, 
+        ]
+  
+      } ).subscribe( res => {
+        console.log(res) 
+      })
+    } )
+
+  }
+
+  close(){
+    
+    var modal = document.getElementById('addModal');
+
+    modal.style.display = "none";
+  }
 }
