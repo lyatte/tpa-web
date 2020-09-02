@@ -20,7 +20,7 @@
         routerLink="/upload" *ngIf="loggedIn">
         <img class="img4" src="../../assets/notification_logo.png" alt="" *ngIf="loggedIn">
         <img class="img5" src="../../assets/three_dots_logo.png" alt="" *ngIf="!loggedIn"
-        (click)="settingToggle()">
+        (click)="settingToggle(0)">
         <div class="signInButton">
             <button type="submit" *ngIf="!loggedIn" (click)="signIn()">
                 <img class="userLogo" src="../../assets/user_logo.png" alt="">
@@ -28,7 +28,7 @@
             </button>
 
             <img class="signInLogo" src="{{ photoUrl }}" alt="" 
-            *ngIf="loggedIn" (click)="signOut()" routerLink="/">
+            *ngIf="loggedIn" (click)="settingToggle(1)">
         </div>
     </div>
 </header>
@@ -63,8 +63,62 @@
     </div>
 </div>
 
-<div id="settingModal" *ngIf="isClicked">
-    <div id="modal-content2" [style.height]="flag==3 ? '192px' : '162px'">
+<div id="settingModal" *ngIf="isClicked" [style.right]="rightTemp == 1? '1.16%' : '8.7%'">
+    <div id="modal-content2">
+        <div *ngIf="logged" class="def">
+
+            <div class="my-channel">
+                <img [src]="photoUrl" alt="">
+                <div>
+                    {{ loggedUser.channel_name }}
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="change-acc" (click)="signOut()">
+                <img src="../../assets/change_account.png" alt="">
+                <div>
+                    Switch Account
+                </div>
+            </div>
+
+            <div class="view-premium" routerLink="/membership" (click)="closeSetting()">
+                <img src="../../assets/membership_icon.png" alt="">
+                <div>
+                    View Premium Membership
+                </div>
+            </div>
+
+            <div class="view-channel" routerLink="/channel/{{loggedUser.channel_id}}" (click)="closeSetting()">
+                <img src="../../assets/my_channel_logo.png" alt="">
+                <div>
+                    My Channel
+                </div>
+            </div>
+
+            <div class="location" (click)="choose(1)">
+                <img src="../../assets/website_logo.png" alt="">
+                <div>
+                    Location: {{location}}
+                </div>
+            </div>
+            <div class="keyboard" (click)="choose(2)">
+                <img src="../../assets/keyboard_icon.png" alt="">
+                <div>
+                    Keyboard shortcuts
+                </div>
+            </div>
+    
+            <hr>
+    
+            <div class="restrict" (click)="choose(3)">
+                Restricted Mode: {{restrict}}
+            </div>
+
+        </div>
+
+
         <div *ngIf="isDefault" class="def">
             <div class="location" (click)="choose(1)">
                 <img src="../../assets/website_logo.png" alt="">

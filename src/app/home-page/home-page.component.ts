@@ -18,7 +18,7 @@ export class HomePageComponent implements OnInit {
 
   videos: any;
 
-  videoDuration;
+  videoDuration = [];
 
   playlist;
 
@@ -27,6 +27,8 @@ export class HomePageComponent implements OnInit {
   observer: any;
 
   us;
+
+  premVids = [];
 
   ngOnInit(): void {
 
@@ -75,6 +77,7 @@ export class HomePageComponent implements OnInit {
                     month,
                     year,
                     channel_id,
+                    video_premium
                   }
                 }
               `,
@@ -89,6 +92,13 @@ export class HomePageComponent implements OnInit {
               this.videos = r.data.getVideoHomePage
       
               console.log(this.videos)
+
+              for(let i=0;i<this.videos.length;i++){
+                console.log("asdasdasdasd", this.videos[i].video_premium)
+                if(this.videos[i].video_premium == "true"){
+                  this.premVids[i] = true;
+                }
+              }
       
               this.observer = new IntersectionObserver((entry) => {
                 if(entry[0].isIntersecting){
@@ -126,6 +136,7 @@ export class HomePageComponent implements OnInit {
                     month,
                     year,
                     channel_id,
+                    video_premium
                   }
                 }
               `,
@@ -137,6 +148,13 @@ export class HomePageComponent implements OnInit {
             } ).valueChanges.subscribe( r => {
               console.log(r.data.getVideoHomePage)
               this.videos = r.data.getVideoHomePage
+
+              for(let i=0;i<this.videos.length;i++){
+                console.log("asdasdasdasd", this.videos[i].video_premium)
+                if(this.videos[i].video_premium == "true"){
+                  this.premVids[i] = true;
+                }
+              }
       
               this.observer = new IntersectionObserver((entry) => {
                 if(entry[0].isIntersecting){
@@ -176,7 +194,7 @@ export class HomePageComponent implements OnInit {
                   day,
                   month,
                   year,
-                  channel_id,
+                  channel_id
                 }
               }
             `,
@@ -228,6 +246,7 @@ export class HomePageComponent implements OnInit {
                   month,
                   year,
                   channel_id,
+                  video_premium
                 }
               }
             `,
@@ -294,16 +313,18 @@ export class HomePageComponent implements OnInit {
     if(number<1000000000) return (number/1000000).toFixed(1) + " m";
   }
 
-  setDuration(duration): String{
+  setDuration(index, d){
+    var duration = d.target.duration
+    console.log(duration)
     
     var minute: number = Math.floor((duration / 60) % 60);
     var second: number = Math.floor(duration % 60);
 
     
     if(second < 10){
-      return minute + ":" + "0" + second;
+      this.videoDuration[index] =  minute + "." + "0" + second;
     }else{
-      return minute + ":" + second;
+      this.videoDuration[index] =  minute + "." + second;
     }
 
   }

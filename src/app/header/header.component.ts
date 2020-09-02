@@ -4,7 +4,7 @@ import { expand } from '../trending-page/trending-page.component';
 import { SocialAuthService } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
 import { Router } from '@angular/router';
-import { Apollo } from 'apollo-angular';
+import { Apollo, SelectPipe } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { HeroService } from '../hero.service';
@@ -28,6 +28,8 @@ export class HeaderComponent implements OnInit {
   dummy;
 
   playlists;
+
+  userLogged;
 
   subscription: Subscription;
 
@@ -70,6 +72,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.show = false;
     expanded = 'sideBar';
+
+    // this.user.setUser(null);
 
     if(localStorage.getItem('user') == null){
       this.user.setUser(null);
@@ -158,7 +162,8 @@ export class HeaderComponent implements OnInit {
           query getChannelById($channel_id: String!){
             getChannelById(channel_id : $channel_id){
               channel_id,
-              channel_subscribe
+              channel_subscribe,
+              channel_name
             }
           }
         `,
@@ -221,6 +226,7 @@ export class HeaderComponent implements OnInit {
     
 
     this.loggedIn = true;
+    this.logged = true;
     
   }
 
@@ -232,19 +238,51 @@ export class HeaderComponent implements OnInit {
     } )
   }
 
-  settingToggle(){
-    if(this.isClicked) this.isClicked = false;
-    else this.isClicked = true;
+  
+  rightTemp;
 
-    this.isDefault = true;
+  settingToggle(num){
+    this.isClicked = !this.isClicked;
+    this.flag = 0;
+    console.log(this.flag)
 
-    this.flag=0;
+    if(!this.logged){
+      this.logged = true;
+    }
+
+    if(num == 1){
+      this.rightTemp = 1;
+      this.isDefault = false;
+      
+    }else{
+      this.rightTemp = 0;
+      this.isDefault = true;
+    }
+    
   }
 
   flag;
 
+  logged;
+
+  logChoose(num){
+    this.logged = !this.logged;
+
+    if(num == 1){
+
+    }
+  }
+  
+  closeSetting(){
+    this.isClicked = false;
+  }
+
   choose(num){
-    this.isDefault = !this.isDefault
+    if(!this.loggedIn){
+      this.isDefault = !this.isDefault
+    }else{
+      this.logged = !this.logged;
+    }
 
     if(num==0) this.flag=0;
 

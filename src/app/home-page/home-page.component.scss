@@ -78,11 +78,41 @@
                 height: 12vw;
 
                 .duration{
+                    width: 40px;
                     position: absolute;
-                    bottom: 0vw;
-                    left: 17.8vw;
+                    bottom: 10px;
+                    right: 10px;
 
-                    background-color: transparent;
+                    background-color: black;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 12px;
+                    padding: 0 2px;
+                    border-radius: 2px;
+                    opacity: 80%;
+                }
+
+                .premium-vid{
+                    width: 65px;
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+
+                    background-color: rgb(48, 129, 235);
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 12px;
+                    padding: 2px 2px;
+                    border-radius: 2px;
+
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+
+                    img{
+                        width: 10px;
+                        height: 10px;
+                        margin-right: 3px;
+                        background-color: rgb(48, 129, 235);
+                    }
                 }
             }
     

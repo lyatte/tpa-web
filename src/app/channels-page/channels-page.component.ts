@@ -321,6 +321,11 @@ export class ChannelsPageComponent implements OnInit {
         
         this.videoCount[i] = temp.length-1
 
+        if(temp[0]==""){
+          this.playlistThumbnail[i] = "../../assets/no_image.png"
+          continue;
+        }
+
         this.apollo.watchQuery( {
           query: gql`
             query getVideoById($video_id: Int!){

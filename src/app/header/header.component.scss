@@ -248,7 +248,7 @@ header{
     // display: block;
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%;
@@ -420,15 +420,6 @@ header{
     }
 }
 
-@keyframes downs{
-    0%{
-        height: 0;
-    }
-    100%{
-        height: 162px;
-    }
-}
-
 @keyframes fading{
     0%{
         opacity: 0%;
@@ -441,11 +432,13 @@ header{
 #settingModal{
     background-color: rgb(27, 27, 27);
     position: fixed;
-    right: 8.7%;
+    // right: 8.7%;
 
     z-index: 1;
 
-    top: 7.3%;
+    // height: 55px;
+
+    top: 55px;
 
     border: 1px solid rgb(104, 104, 104);
     border-top: none;
@@ -457,7 +450,6 @@ header{
 
     color: white;
 
-    animation: downs 0.6s;
 
     img{
         width: 23px;
@@ -485,7 +477,9 @@ header{
             
             width: 100%;
 
-            .location, .keyboard, .restrict{
+            .location, .keyboard, .restrict, 
+            .my-channel, .view-channel, .change-acc,
+            .view-premium{
                 flex-direction: row;
                 justify-content: start;
     
@@ -521,6 +515,55 @@ header{
                     }
                 }
             }
+
+            .change-acc{
+                img{
+                    width: 25px;
+                }
+                div{
+                    margin-left: 12px;
+                }
+            }
+
+            .view-premium{
+                padding-left: 10px;
+                img{
+                    width: 35px;
+                    height: 35px;
+
+                }
+                div{
+                    margin-left: 7px;
+                }
+            }
+
+            .my-channel{
+                margin-top: 7px;
+                padding-left: 8px;
+                img{
+                    width: 40px;
+                    height: 40px;
+                    opacity: 1;
+                    border-radius: 20px;
+                }
+                &:hover{
+                    background-color: rgb(27, 27, 27);
+                    img{
+                        background-color: rgb(27, 27, 27);
+                    }
+                    cursor: unset;
+                }
+
+                &:active{
+                    background-color: rgb(27, 27, 27);
+                    img{
+                        background-color: rgb(27, 27, 27);
+                    }
+                }
+
+                
+            }
+
             .location{
                 margin-top: 8px;
             }

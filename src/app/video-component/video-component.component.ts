@@ -19,7 +19,7 @@ export class VideoComponentComponent implements OnInit {
 
   video;
 
-  videos;
+  videos = {};
 
   channel;
 
@@ -33,7 +33,7 @@ export class VideoComponentComponent implements OnInit {
 
   comment_count = 0;
 
-  playlist;
+  playlist = {};
 
   comment = {};
 
@@ -930,8 +930,8 @@ export class VideoComponentComponent implements OnInit {
 
   filter(num){
 
-    this.comment= [];
-    this.reply = [];
+    this.comment= {};
+    this.reply = {};
 
     if(num == 1){
       this.apollo.watchQuery({

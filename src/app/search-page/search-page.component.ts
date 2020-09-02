@@ -347,6 +347,12 @@ export class SearchPageComponent implements OnInit {
       for(let i =0 ;i<this.playlist.length;i++){
         var temp = this.playlist[i].playlist_videos.split(",")
 
+        console.log(temp[0])
+        if(temp[0]==""){
+          this.playlistThumbnail[i] = "../../assets/no_image.png"
+          continue;
+        }
+
         this.apollo.watchQuery( {
           query: gql`
             query getVideoById($video_id: Int!){
