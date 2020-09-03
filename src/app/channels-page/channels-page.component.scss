@@ -25,7 +25,7 @@
     margin-top: 55px;
     margin-left: 72px;
     
-    width: 95.3%;
+    // width: 95.3%;
 
     overflow-y: scroll;
 
@@ -177,11 +177,10 @@
 
         flex-wrap: wrap;
 
-        // background-color: green;
 
         .footer{
             // background-color: red;
-            width: 100vw;
+            width: 100%;
             height: 40px;
         }
 
@@ -228,7 +227,7 @@
         flex-direction: column;
 
 
-        background-color: blue;
+        // background-color: blue;
 
         a{
             text-decoration: none;
@@ -238,7 +237,7 @@
         width: 280px;
         // height: 300px;
         
-        margin-right: 20px;
+        margin-right: 40px;
 
         margin-top: 20px;
 
@@ -248,7 +247,7 @@
 
             font-weight: normal;
 
-            height: 160px;
+            height: 140px;
 
             .duration{
                 width: 40px;
@@ -377,7 +376,7 @@
 
     .homeContent{
         width: 100%;
-        padding-left: 60px;
+        padding-left: 5vw;
         padding-top: 20px;
 
         // background-color: red;
@@ -399,10 +398,8 @@
             background-color: red;
             margin-right: 30px;
             width: 230px;
+            // height: ;
 
-            .image{
-                height: 9vw;
-            }
         }
 
         .next{
@@ -511,10 +508,23 @@
         flex-direction: column;
 
         hr{
+            width: 90%;
             border: none;
             border-bottom: 1px solid white;
             opacity: 50%;
             margin-top: 10px;
+        }
+    }
+
+    @keyframes popup {
+        0%{
+            overflow-y: hidden;
+            transform: scale(0.9);
+            opacity: 50%;
+        }
+        50%{
+            transform: scale(1);
+            opacity: 100%;
         }
     }
 
@@ -528,45 +538,58 @@
         top: 0;
         width: 100%;
         height: 100%;
-        overflow: auto;
         background-color: rgba(0,0,0,0.4);
      
         
         
         .modal-content{
-            background-color: black;
+            background-color: rgb(61, 61, 61);
             margin: 15% auto;
             padding: 20px;
             width: 50%;
-
-            border: 1px solid gray;
-            border-radius: 10px;
+            
+            animation: popup 1s;
 
             align-items: center;
             justify-content: center;
 
-            flex-direction: column;
+            // opacity: 70%;
 
-            .thumbnail{
-                background-color: red;
-                margin-top: 2vw;
-                font-size: 1vw;
+            input{
+                color: white;
+            }
+            
 
-                div{
-                    width: 20vw;
-                    flex-direction: column;
-                    justify-content: start;
-                    input{
-                        margin-top: 1.7vw;
+            button{
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(61, 61, 61); 
+                color: white;
 
-                        &:active{
-                            outline: none;
-                        }
+                border: none;
+
+                width: 15vw;
+                height: 3vw;
+
+                cursor: pointer;
+
+                &:hover{
+                    background-color: rgb(43, 43, 43); 
+
+                    img, li{
+                        background-color: rgb(43, 43, 43); 
                     }
-                    img{
-                        width: 10vw;
-                        height: 5vw;
-                    }
+                }
+
+                img{
+                    width: 3vw;
+                    height: 3vw;
+                    background-color: rgb(61, 61, 61);
+                }
+
+                li{
+                    background-color: rgb(61, 61, 61);
                 }
             }
 

@@ -20,8 +20,8 @@
     
     color: white;
 
-    margin-top: 3.6vw;
-    margin-left: 4.7vw;
+    margin-top: 55px;
+    margin-left: 72px;
     
     width: 95.3%;
     overflow-y: hidden;
@@ -231,6 +231,15 @@
                 }
             }
 
+            @keyframes fading{
+                0%{
+                    opacity: 20%;
+                }
+                100%{
+                    opacity: 100%;
+                }
+            }
+
             .addToPlaylist{
                 @extend h3;
                 margin-top: 2vw;
@@ -262,6 +271,7 @@
                         cursor: pointer;
 
                         &:hover{
+                            animation: fading 1s;
                             background-color: rgb(92, 92, 92);
 
                             img{

@@ -31,25 +31,7 @@ export class TrendingPageComponent implements OnInit {
 
   ngOnInit(): void {
     
-    
-
-    this.user.getUser().subscribe( us => {
-      this.apollo.watchQuery( { 
-        query: gql`
-          query getChannelPlaylist($id: String!){
-            getChannelPlaylist(channel_id: $id){
-              playlist_id,
-              playlist_title,
-              playlist_videos
-            }
-          }
-        `,
-        variables: {
-          id: us.id
-        }
-      } ).valueChanges.subscribe( r => {
-        this.playlist = r.data.getChannelPlaylist
-      } )
+    if(localStorage.getItem('user') == null){
 
       this.apollo.watchQuery({
         query: gql`
@@ -72,69 +54,115 @@ export class TrendingPageComponent implements OnInit {
         `,
       }).valueChanges.subscribe(result => {
         this.vid = result.data.getVideoOrderedByViews
-  
 
-        if(us!=null){
-          console.log("there's user")
-          this.apollo.watchQuery({
-            query: gql`
-              query getChannelById($id: String!){
-                getChannelById(channel_id: $id){
-                  channel_premium,
-                  channel_id
-                }
+        var temps = [];
+        for(let i = 0;i<this.vid.length;i++){
+          console.log("no user!")
+          if(this.vid[i].video_premium == "false"){
+            temps.push(this.vid[i])
+          }
+        }
+  
+        this.videos = temps.slice(0,20)
+      })
+
+
+    }else{
+
+      this.user.getUser().subscribe( us => {
+        this.apollo.watchQuery( { 
+          query: gql`
+            query getChannelPlaylist($id: String!){
+              getChannelPlaylist(channel_id: $id){
+                playlist_id,
+                playlist_title,
+                playlist_videos
               }
-            `,
-            variables: {
-              id: us.id
             }
-          }).valueChanges.subscribe( ch => {
-              this.channel = ch.data.getChannelById
+          `,
+          variables: {
+            id: us.id
+          }
+        } ).valueChanges.subscribe( r => {
+          this.playlist = r.data.getChannelPlaylist
+        } )
   
-              if(this.channel.channel_premium == "1" || 
-              this.channel.channel_premium == "2"){
-                console.log("this channel prem")
-                this.videos = this.vid.slice(0,20)
-  
-                for(let i = 0;i<this.videos.length;i++){
-                  if(this.videos[i].video_premium == "true"){
-                    console.log("true");
-                    this.premVids[i] = true;
-                  }
-                }
-              }else{
-                console.log("this channel not prem")
-                var temps;
-                for(let i = 0;i<this.vid.length;i++){
-                  if(this.vid[i].video_premium == "false"){
-                    temps.push(this.vid[i])
-                  }
-                }
-  
-                this.videos = temps.slice(0,20)
-              }
-          })
-  
-          
-          
-        }else{
-          var temps;
-          for(let i = 0;i<this.vid.length;i++){
-            if(this.vid[i].video_premium == "false"){
-              temps.push(this.vid[i])
+        this.apollo.watchQuery({
+          query: gql`
+          {
+            getVideoOrderedByViews{
+              video_id,
+              video_title,
+              video,
+              video_thumbnail,
+              video_description,
+              video_views,
+              channel_name,
+              day,
+              month,
+              year,
+              channel_id,
+              video_premium
             }
           }
+          `,
+        }).valueChanges.subscribe(result => {
+          this.vid = result.data.getVideoOrderedByViews
+    
   
-          this.videos = temps.slice(0,20)
-        }
-      })
-      
+            console.log("there's user")
+            this.apollo.watchQuery({
+              query: gql`
+                query getChannelById($id: String!){
+                  getChannelById(channel_id: $id){
+                    channel_premium,
+                    channel_id
+                  }
+                }
+              `,
+              variables: {
+                id: us.id
+              }
+            }).valueChanges.subscribe( ch => {
+                this.channel = ch.data.getChannelById
+    
+                if(this.channel.channel_premium == "1" || 
+                this.channel.channel_premium == "2"){
+                  console.log("this channel prem")
+                  this.videos = this.vid.slice(0,20)
+    
+                  for(let i = 0;i<this.videos.length;i++){
+                    if(this.videos[i].video_premium == "true"){
+                      console.log("true");
+                      this.premVids[i] = true;
+                    }
+                  }
+                }else{
+                  console.log("this channel not prem")
+                  var temps;
+                  for(let i = 0;i<this.vid.length;i++){
+                    if(this.vid[i].video_premium == "false"){
+                      temps.push(this.vid[i])
+                    }
+                  }
+    
+                  this.videos = temps.slice(0,20)
+                }
+            })
+    
+            
+            
+          
+        })
+        
+  
+        
+        
+  
+  
+      } )
+    }
 
-      
-      
-
-
-    } )
 
     
     

@@ -57,6 +57,8 @@ export class ChannelsPageComponent implements OnInit {
   videoDuration2 = [];
   videoDuration3 = [];
 
+  chPlaylist = [];
+
 
 
   ngOnInit(): void {
@@ -138,6 +140,24 @@ export class ChannelsPageComponent implements OnInit {
         }else{
           this.isUser = true;
           this.us.getUser().subscribe( user => {
+
+            this.apollo.watchQuery( { 
+              query: gql`
+                query getChannelPlaylist($id: String!){
+                  getChannelPlaylist(channel_id: $id){
+                    playlist_id,
+                    playlist_title,
+                    playlist_videos
+                  }
+                }
+              `,
+              variables: {
+                id: user.id
+              }
+            } ).valueChanges.subscribe( r => {
+              this.chPlaylist = r.data.getChannelPlaylist
+            } )
+
             this.apollo.watchQuery({
               query: gql`
                 query getChannelById($channel_id: String!){
@@ -208,6 +228,7 @@ export class ChannelsPageComponent implements OnInit {
                   month,
                   year,
                   channel_id,
+                  video_premium
                 }
             }
         `,
@@ -217,6 +238,25 @@ export class ChannelsPageComponent implements OnInit {
         }
       } ).valueChanges.subscribe( r => {
         this.videos = r.data.getChannelVideoMostPopular
+
+        var tempVid
+        if(this.userLog.channel_premium != "1" && 
+        this.userLog.channel_premium != "2" && 
+        !this.isSame){
+          for(let i=0;i<this.videos.length;i++){
+            if(this.videos[i].video_premium == "false"){
+              tempVid.push(this.videos[i])
+            }
+          }
+        }else{
+          tempVid = this.videos;
+
+          for(let i=0;i<tempVid.length;i++){
+            if(tempVid[i].video_premium == "true"){
+              this.premVids3[i] = true
+            }
+          }
+        }
       } )
     }else if(num == 2){
       this.apollo.watchQuery( {
@@ -237,6 +277,7 @@ export class ChannelsPageComponent implements OnInit {
                   month,
                   year,
                   channel_id,
+                  video_premium
                 }
             }
         `,
@@ -247,6 +288,25 @@ export class ChannelsPageComponent implements OnInit {
         }
       } ).valueChanges.subscribe( r => {
         this.videos = r.data.getChannelVideoDate
+
+        var tempVid
+        if(this.userLog.channel_premium != "1" && 
+        this.userLog.channel_premium != "2" && 
+        !this.isSame){
+          for(let i=0;i<this.videos.length;i++){
+            if(this.videos[i].video_premium == "false"){
+              tempVid.push(this.videos[i])
+            }
+          }
+        }else{
+          tempVid = this.videos;
+
+          for(let i=0;i<tempVid.length;i++){
+            if(tempVid[i].video_premium == "true"){
+              this.premVids3[i] = true
+            }
+          }
+        }
       } )
     }else{
       this.apollo.watchQuery( {
@@ -267,6 +327,7 @@ export class ChannelsPageComponent implements OnInit {
                   month,
                   year,
                   channel_id,
+                  video_premium
                 }
             }
         `,
@@ -277,6 +338,26 @@ export class ChannelsPageComponent implements OnInit {
         }
       } ).valueChanges.subscribe( r => {
         this.videos = r.data.getChannelVideoDate
+
+        var tempVid
+        if(this.userLog.channel_premium != "1" && 
+        this.userLog.channel_premium != "2" && 
+        !this.isSame){
+          for(let i=0;i<this.videos.length;i++){
+            if(this.videos[i].video_premium == "false"){
+              tempVid.push(this.videos[i])
+            }
+          }
+        }else{
+          tempVid = this.videos;
+
+          for(let i=0;i<tempVid.length;i++){
+            console.log("Hehehe")
+            if(tempVid[i].video_premium == "true"){
+              this.premVids3[i] = true
+            }
+          }
+        }
       } )
     }
   }
@@ -903,100 +984,124 @@ export class ChannelsPageComponent implements OnInit {
     }
   }
 
-  // openModalPlaylist(video_id){
-  //   var modal = document.getElementById('playlistModal');
-
-  //   modal.style.display = "block";
-  // }
-
-  // closeModalPlaylist(){
-  //   var modal = document.getElementById('playlistModal');
-
-  //   modal.style.display = "none";
-  // }
-
-  // addToPlaylist(id){
-
-  //   console.log(this.chosenVid, id);
-
-  //   this.apollo.mutate( {
-  //     mutation: gql`
-  //       mutation addVideoToPlaylist($playlist_id: ID!, $video_id: ID!){
-  //         addVideoToPlaylist(playlist_id: $playlist_id, video_id: $video_id)
-  //       }
-  //     `,variables:{
-  //       video_id: this.chosenVid,
-  //       playlist_id: id,
-  //     }
-  //   } ).subscribe( res => {
-  //     console.log(res)
-  //   } )
+  chosenVid;
 
 
-  // }
+  openModalPlaylist(video_id){
+    var modal = document.getElementById('playlistModal');
 
-  // createPlaylist(){
-  //   this.closeModalPlaylist();
+    modal.style.display = "block";
 
-  //   var modal = document.getElementById('addModal');
+    this.chosenVid = video_id;
 
-  //   modal.style.display = "block";
 
-  // }
+    console.log(this.chosenVid)
+  }
 
-  // create(){
-  //   var title = document.getElementById('pName').value;
+  closeModalPlaylist(){
+    var modal = document.getElementById('playlistModal');
 
-  //   var date = new Date();
+    modal.style.display = "none";
+  }
 
-  //   var day = date.getDay();
-  //   var month = date.getMonth()+1;
-  //   var year = date.getFullYear();
+  addToPlaylist(id){
+
+    console.log(this.chosenVid, id);
+
+    this.apollo.mutate( {
+      mutation: gql`
+        mutation addVideoToPlaylist($playlist_id: ID!, $video_id: ID!){
+          addVideoToPlaylist(playlist_id: $playlist_id, video_id: $video_id)
+        }
+      `,variables:{
+        video_id: this.chosenVid,
+        playlist_id: id,
+      }
+    } ).subscribe( res => {
+      console.log(res)
+    } )
+
+
+  }
+
+  createPlaylist(){
+
+    var modal = document.getElementById('addModal');
+
+    modal.style.display = "block";
+
+  }
+
+  create(){
+    var title = document.getElementById('pName').value;
+
+    var date = new Date();
+
+    var day = date.getDay();
+    var month = date.getMonth()+1;
+    var year = date.getFullYear();
     
-  //   var v = "Public";
+    var v = "Public";
     
-  //   console.log(title)
+    console.log(title)
 
-  //   this.user.getUser().subscribe( us => {
-  //     console.log(us.id)
-  //     this.apollo.mutate( {
-  //       mutation: gql`
-  //         mutation createPlaylist($ch_id: String!, 
-  //           $title: String!, $day: Int!, $month: Int!, $year: Int!,
-  //           $visibility: String!){
-  //           createPlaylist( input : {
-  //             channel_id: $ch_id
-  //             playlist_title: $title
-  //             playlist_day: $day
-  //             playlist_visibility: $visibility
-  //             playlist_month: $month
-  //             playlist_year: $year
-  //             playlist_views: 0
-  //             playlist_videos: ""
-  //             playlist_desc: ""
-  //           }) { playlist_title }
-  //         }
-  //       `,
-  //       variables: {
-  //         ch_id: us.id,
-  //         title: title,
-  //         day: day,
-  //         month: month,
-  //         year: year,
-  //         visibility: v
-  //       }
+    this.us.getUser().subscribe( us => {
+      console.log(us.id)
+      this.apollo.mutate( {
+        mutation: gql`
+          mutation createPlaylist($ch_id: String!, 
+            $title: String!, $day: Int!, $month: Int!, $year: Int!,
+            $visibility: String!){
+            createPlaylist( input : {
+              channel_id: $ch_id
+              playlist_title: $title
+              playlist_day: $day
+              playlist_visibility: $visibility
+              playlist_month: $month
+              playlist_year: $year
+              playlist_views: 0
+              playlist_videos: ""
+              playlist_desc: ""
+            }) { playlist_title }
+          }
+        `,
+        variables: {
+          ch_id: us.id,
+          title: title,
+          day: day,
+          month: month,
+          year: year,
+          visibility: v
+        },
+        refetchQueries: [
+          {
+            query: gql`
+              query getChannelPlaylist($id: String!){
+                getChannelPlaylist(channel_id: $id){
+                  playlist_id,
+                  playlist_title,
+                  playlist_videos
+                }
+              }
+            `,
+            variables:{
+              id: us.id
+            }
+          }, 
+        ]
   
-  //     } ).subscribe( res => 
-  //       console.log(res) )
-  //   } )
+      } ).subscribe( res => {
+        console.log(res) 
+      })
+    } )
 
-  // }
+  }
 
-  // close(){
+  close(){
     
-  //   var modal = document.getElementById('addModal');
+    var modal = document.getElementById('addModal');
 
-  //   modal.style.display = "none";
-  // }
+    modal.style.display = "none";
+  }
 
 }

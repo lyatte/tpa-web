@@ -850,7 +850,6 @@ export class VideoComponentComponent implements OnInit {
   }
 
   createPlaylist(){
-    this.closeModalPlaylist();
 
     var modal = document.getElementById('addModal');
 

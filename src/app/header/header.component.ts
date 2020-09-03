@@ -77,6 +77,10 @@ export class HeaderComponent implements OnInit {
 
     if(localStorage.getItem('user') == null){
       this.user.setUser(null);
+      this.loggedIn = false;
+      this.logged = false;
+      this.isDefault = true;
+      console.log("hereeeeeeeeesss")
     }
     else{
       this.getUser();
@@ -246,7 +250,7 @@ export class HeaderComponent implements OnInit {
     this.flag = 0;
     console.log(this.flag)
 
-    if(!this.logged){
+    if(!this.logged && localStorage.getItem('user') != null){
       this.logged = true;
     }
 

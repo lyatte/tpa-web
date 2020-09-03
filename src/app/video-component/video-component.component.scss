@@ -24,8 +24,8 @@
 
     color: white;
 
-    margin-top: 3.6vw;
-    margin-left: 4.7vw;
+    margin-top: 55px;
+    margin-left: 72px;
 
     padding-top: 1.7vw;
 
@@ -467,6 +467,18 @@
         }
     }
 
+    @keyframes popup {
+        0%{
+            overflow-y: hidden;
+            transform: scale(0.9);
+            opacity: 50%;
+        }
+        50%{
+            transform: scale(1);
+            opacity: 100%;
+        }
+    }
+
     .modal {
         align-items: center;
         justify-content: center;
@@ -490,6 +502,8 @@
 
             align-items: center;
             justify-content: center;
+
+            animation: popup 1s;
 
             // opacity: 70%;
 
