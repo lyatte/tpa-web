@@ -52,17 +52,28 @@
     </div>
     <hr>
 
-    <div class="trendingVideo" *ngFor="let video of videos">
+    <div class="trendingVideo" *ngFor="let video of videos, let i = index">
         <div class="videoDetail">
-            <img src="{{ video.video_thumbnail }}" alt="" 
-            routerLink="/video/{{ video.video_id }}">
+            <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(i, $event)"></video>
+            <a href="/video/{{ video.video_id }}">
+                <div class="image">
+                    <img src="{{ video.video_thumbnail }}" alt="">
+                    
+                    <div class="premium-vid" *ngIf="premVids[i]">
+                        <img src="../../assets/premium_icon.jpg" alt="">
+                        Premium
+                    </div>
+                    <div class="duration">{{ videoDuration[i] }}</div>
+                </div>
+            </a>
+            
             <div class="videoText">
                 <div class="top">
                     <div routerLink="/video/{{ video.video_id }}">{{ video.video_title }}</div>
                     <img src="../../assets/three_dots_logo.png" alt="" (click)="openModalPlaylist(video.video_id)">
                 </div>
                 <div class="details" routerLink="/channel/{{ video.channel_id }}"> {{ video.channel_name }} . {{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }} </div>
-                <div class="desc">{{ video.video_description }}</div>
+                <div class="desc">{{ getShortDesc(video.video_description) }}</div>
             </div>
         </div>
 

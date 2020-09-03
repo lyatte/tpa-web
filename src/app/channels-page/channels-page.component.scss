@@ -22,8 +22,8 @@
     
     color: white;
 
-    margin-top: 3.6vw;
-    margin-left: 4.7vw;
+    margin-top: 55px;
+    margin-left: 72px;
     
     width: 95.3%;
 
@@ -228,34 +228,64 @@
         flex-direction: column;
 
 
-        // background-color: blue;
-
-        width: 300px;
-        
-        margin-right: 50px;
-
-        margin-top: 1vw;
+        background-color: blue;
 
         a{
             text-decoration: none;
             color: white;
         }
 
+        width: 280px;
+        // height: 300px;
+        
+        margin-right: 20px;
+
+        margin-top: 20px;
+
         .image{
             position: relative;
             text-align: center;
 
             font-weight: normal;
-            font-size: 1vw;
 
-            height: 12vw;
+            height: 160px;
 
             .duration{
+                width: 40px;
                 position: absolute;
-                bottom: 0vw;
-                left: 17.8vw;
+                bottom: 10px;
+                right: 10px;
 
-                background-color: transparent;
+                background-color: black;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 12px;
+                padding: 0 2px;
+                border-radius: 2px;
+                opacity: 80%;
+            }
+
+            .premium-vid{
+                width: 65px;
+                position: absolute;
+                top: 10px;
+                left: 10px;
+
+                background-color: rgb(48, 129, 235);
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 12px;
+                padding: 2px 2px;
+                border-radius: 2px;
+
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                img{
+                    width: 10px;
+                    height: 10px;
+                    margin-right: 3px;
+                    background-color: rgb(48, 129, 235);
+                }
             }
         }
 
@@ -275,33 +305,27 @@
         .videos{
             // margin-top: 0.7vw;
             flex-direction: row;
-            font-size: 1vw;
+            font-size: 15px;
 
             align-items: start;
             justify-content: start;
 
             width: 100%;
 
-            // background-color: red;
-
-            // a{
-            //     background-color: blue;
-            // }
-
             .ch{
-                margin-top: 0.7vw;
+                margin-top: 5px;
             }
 
 
             img{
-                width: 2.5vw;
-                height: 2.5vw;
-                border-radius: 1.7vw;
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
             }
 
             .channelName{
-                margin-top: 0.5vw;
-                font-size: 0.8vw;
+                margin-top: 10px;
+                font-size: 12px;
                 color: rgb(180, 180, 180);
 
                 &:hover{
@@ -314,11 +338,9 @@
             }
             
             .videoText{
-                margin-top: 1vw;
+                margin-top: 5px;
                 flex-direction: column;
-                margin-left: 1vw;
-
-                // background-color: white;
+                margin-left: 15px;
 
                 width: 100%;
 
@@ -339,14 +361,14 @@
 
                     img{
                         padding: 0;
-                        width: 0.5vw;
-                        height: 1.1vw;
+                        width: 9px;
+                        height: 18px;
                     }
                 }
             }
 
             .details{
-                font-size: 0.8vw;
+                font-size: 12px;
                 color: rgb(180, 180, 180);
             }
         }

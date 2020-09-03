@@ -49,6 +49,15 @@ export class ChannelsPageComponent implements OnInit {
 
   pRandom = [];
 
+  premVids1 = [];
+  premVids2 = [];
+  premVids3 = [];
+
+  videoDuration1 = [];
+  videoDuration2 = [];
+  videoDuration3 = [];
+
+
 
   ngOnInit(): void {
 
@@ -402,6 +411,7 @@ export class ChannelsPageComponent implements OnInit {
               month,
               year,
               channel_id,
+              video_premium
             }
           }
         `,
@@ -414,6 +424,12 @@ export class ChannelsPageComponent implements OnInit {
         vid = r.data.getChannelRandomVideo
 
         this.vRandom = vid.slice(0,5);
+
+        for(let i=0;i<this.vRandom.length;i++){
+          if(this.vRandom[i].video_premium == "true"){
+            this.premVids2[i] = true;
+          }
+        }
         console.log(this.vRandom)
       } )
     }else{
@@ -433,6 +449,7 @@ export class ChannelsPageComponent implements OnInit {
               month,
               year,
               channel_id,
+              video_premium
             }
           }
         `,
@@ -444,7 +461,26 @@ export class ChannelsPageComponent implements OnInit {
         var vid;
         vid = r.data.getChannelRandomVideo
 
-        this.vRandom = vid.slice(0,5);
+        var tempVid = [];
+        if(this.userLog.channel_premium != "1" && 
+        this.userLog.channel_premium != "2"){
+          
+          for(let i=0;i<vid.length;i++){
+            if(vid[i].video_premium == "false"){
+              tempVid.push(vid[i])
+            }
+          }
+        }else{
+          tempVid = vid;
+
+          for(let i=0;i<tempVid.length;i++){
+            if(tempVid[i].video_premium == "true"){
+              this.premVids2[i] = true
+            }
+          }
+        }
+
+        this.vRandom = tempVid.slice(0,5);
         console.log(this.vRandom)
       } )
     }
@@ -468,6 +504,7 @@ export class ChannelsPageComponent implements OnInit {
               month,
               year,
               channel_id,
+              video_premium
             }
           }
         `,
@@ -480,6 +517,13 @@ export class ChannelsPageComponent implements OnInit {
         vid = r.data.getChannelVideoRecent
 
         this.vRecent = vid.slice(0,5);
+
+        for(let i=0;i<this.vRecent.length;i++){
+          if(this.vRecent[i].video_premium == "true"){
+            console.log("prem vids ",i," is true")
+            this.premVids1[i] = true;
+          }
+        }
         console.log(this.vRecent)
       } )
     }else{
@@ -499,6 +543,7 @@ export class ChannelsPageComponent implements OnInit {
               month,
               year,
               channel_id,
+              video_premium
             }
           }
         `,
@@ -509,6 +554,26 @@ export class ChannelsPageComponent implements OnInit {
       } ).valueChanges.subscribe( r => {
         var vid;
         vid = r.data.getChannelVideoRecent
+
+        var tempVid = [];
+        if(this.userLog.channel_premium != "1" && 
+        this.userLog.channel_premium != "2"){
+          
+          for(let i=0;i<vid.length;i++){
+            if(vid[i].video_premium == "false"){
+              tempVid.push(vid[i])
+            }
+          }
+        }else{
+          tempVid = vid;
+
+          for(let i=0;i<tempVid.length;i++){
+            if(tempVid[i].video_premium == "true"){
+              console.log("prem vids ",i," is true")
+              this.premVids1[i] = true
+            }
+          }
+        }
 
         this.vRecent = vid.slice(0,5);
         console.log(this.vRecent)
@@ -599,6 +664,7 @@ export class ChannelsPageComponent implements OnInit {
               month,
               year,
               channel_id,
+              video_premium
             }
           }
         `,
@@ -673,6 +739,36 @@ export class ChannelsPageComponent implements OnInit {
         this.observer.observe(document.querySelector(".footer"))
       } )
     }
+  }
+
+
+  setDuration(flag, index, d){
+    var duration = d.target.duration
+    console.log(duration)
+    
+    var minute: number = Math.floor((duration / 60) % 60);
+    var second: number = Math.floor(duration % 60);
+
+    
+    if(second < 10){
+      if(flag == 1){
+        this.videoDuration1[index] =  minute + "." + "0" + second;
+        
+      }else if(flag == 2){
+        this.videoDuration2[index] =  minute + "." + "0" + second;
+      }else{
+        this.videoDuration3[index] =  minute + "." + "0" + second;
+      }
+    }else{
+      if(flag == 1)
+        this.videoDuration1[index] =  minute + "." + second;
+      else if(flag == 2)
+        this.videoDuration2[index] =  minute + "." + second;
+      else 
+        this.videoDuration3[index] =  minute + "." + second;
+
+    }
+
   }
 
   contentExpand(x: number){

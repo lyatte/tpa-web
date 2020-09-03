@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
 import { HeroService } from '../hero.service';
+import { templateJitUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-trending-page',
@@ -18,35 +19,19 @@ export class TrendingPageComponent implements OnInit {
 
   videos;
 
-
+  channel;
+  
   playlist;
 
+  videoDuration = [];
+
+  premVids = [];
+
+  vid = [];
+
   ngOnInit(): void {
-    this.apollo.watchQuery({
-      query: gql`
-      {
-        getVideoOrderedByViews{
-          video_id,
-          video_title,
-          video,
-          video_thumbnail,
-          video_description,
-          video_views,
-          channel_name,
-          day,
-          month,
-          year,
-          channel_id
-        }
-      }
-      `,
-    }).valueChanges.subscribe(result => {
-      var vid = result.data.getVideoOrderedByViews
-      
-
-
-      this.videos = vid.slice(0,20);
-    });
+    
+    
 
     this.user.getUser().subscribe( us => {
       this.apollo.watchQuery( { 
@@ -65,6 +50,90 @@ export class TrendingPageComponent implements OnInit {
       } ).valueChanges.subscribe( r => {
         this.playlist = r.data.getChannelPlaylist
       } )
+
+      this.apollo.watchQuery({
+        query: gql`
+        {
+          getVideoOrderedByViews{
+            video_id,
+            video_title,
+            video,
+            video_thumbnail,
+            video_description,
+            video_views,
+            channel_name,
+            day,
+            month,
+            year,
+            channel_id,
+            video_premium
+          }
+        }
+        `,
+      }).valueChanges.subscribe(result => {
+        this.vid = result.data.getVideoOrderedByViews
+  
+
+        if(us!=null){
+          console.log("there's user")
+          this.apollo.watchQuery({
+            query: gql`
+              query getChannelById($id: String!){
+                getChannelById(channel_id: $id){
+                  channel_premium,
+                  channel_id
+                }
+              }
+            `,
+            variables: {
+              id: us.id
+            }
+          }).valueChanges.subscribe( ch => {
+              this.channel = ch.data.getChannelById
+  
+              if(this.channel.channel_premium == "1" || 
+              this.channel.channel_premium == "2"){
+                console.log("this channel prem")
+                this.videos = this.vid.slice(0,20)
+  
+                for(let i = 0;i<this.videos.length;i++){
+                  if(this.videos[i].video_premium == "true"){
+                    console.log("true");
+                    this.premVids[i] = true;
+                  }
+                }
+              }else{
+                console.log("this channel not prem")
+                var temps;
+                for(let i = 0;i<this.vid.length;i++){
+                  if(this.vid[i].video_premium == "false"){
+                    temps.push(this.vid[i])
+                  }
+                }
+  
+                this.videos = temps.slice(0,20)
+              }
+          })
+  
+          
+          
+        }else{
+          var temps;
+          for(let i = 0;i<this.vid.length;i++){
+            if(this.vid[i].video_premium == "false"){
+              temps.push(this.vid[i])
+            }
+          }
+  
+          this.videos = temps.slice(0,20)
+        }
+      })
+      
+
+      
+      
+
+
     } )
 
     
@@ -111,7 +180,6 @@ export class TrendingPageComponent implements OnInit {
   }
 
   createPlaylist(){
-    this.closeModalPlaylist();
 
     var modal = document.getElementById('addModal');
 
@@ -181,6 +249,14 @@ export class TrendingPageComponent implements OnInit {
 
   }
 
+  getShortDesc(desc){
+    var tempDesc;
+
+    if(desc.length > 150){
+      return desc.slice(0,150) + "...";
+    }else return desc
+  }
+
   close(){
     
     var modal = document.getElementById('addModal');
@@ -214,18 +290,7 @@ export class TrendingPageComponent implements OnInit {
     var today_month = (todayDate.getMonth()+1) * 30;
     var today_year = todayDate.getFullYear() * 365;
 
-    // console.log(todayDate)
-
-    // console.log(todayDate.getMonth())
-
-    // console.log(day, month, year)
-    // console.log(today_day, todayDate.getMonth(), todayDate.getFullYear())
-
-    // console.log((today_day + today_month + today_year), date);
-
     var differences = (today_day + today_month + today_year) - date;
-
-    // console.log(differences)
 
     if(differences == 0) return "today"
     else if(differences < 7) return differences + " day ago"
@@ -233,7 +298,31 @@ export class TrendingPageComponent implements OnInit {
     else if(differences < 365) return Math.floor(differences / 30) + " month ago"
     else return Math.floor(differences/365) + " year ago"
   }
+
+
+
+  setDuration(index, d){
+    var duration = d.target.duration
+    console.log(duration)
+    
+    var minute: number = Math.floor((duration / 60) % 60);
+    var second: number = Math.floor(duration % 60);
+
+    
+    if(second < 10){
+      this.videoDuration[index] =  minute + "." + "0" + second;
+    }else{
+      this.videoDuration[index] =  minute + "." + second;
+    }
+
+  }
+
+
+
 }
+
+
+
 var flag = 1;
 
 export function expand(expanded:number){
@@ -259,5 +348,7 @@ export function expand(expanded:number){
     container.style.marginLeft = "72px";
 
   }
+
+  
 
 }

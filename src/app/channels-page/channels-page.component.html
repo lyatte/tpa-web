@@ -69,13 +69,19 @@
         Recently Uploaded
         <hr>
         <div class="recentlyUploaded">
-            <div *ngFor="let video of vRecent">
+            <div *ngFor="let video of vRecent, let i = index">
                 <!-- " *ngIf="i<(lastKey)" -->
                 <div class="videoDetail">
+                    <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(1, i, $event)"></video>
                     <a href="/video/{{ video.video_id }}">
                         <div class="image">
                             <img src="{{ video.video_thumbnail }}" alt="">
-                            <!-- <div class="duration">{{ videoDuration }}</div> -->
+                            
+                            <div class="premium-vid" *ngIf="premVids1[i]">
+                                <img src="../../assets/premium_icon.jpg" alt="">
+                                Premium
+                            </div>
+                            <div class="duration">{{ videoDuration1[i] }}</div>
                         </div>
                     </a>
                     <div class="videos">
@@ -105,15 +111,21 @@
         Video
         <hr>
         <div class="randomVideo">
-            <div *ngFor="let video of vRandom">
+            <div *ngFor="let video of vRandom, let i = index">
                 <!-- " *ngIf="i<(lastKey)" -->
                 <div class="videoDetail">
-                    <a href="/video/{{ video.video_id }}">
-                        <div class="image">
-                            <img src="{{ video.video_thumbnail }}" alt="">
-                            <!-- <div class="duration">{{ videoDuration }}</div> -->
-                        </div>
-                    </a>
+                    <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(2, i, $event)"></video>
+                        <a href="/video/{{ video.video_id }}">
+                            <div class="image">
+                                <img src="{{ video.video_thumbnail }}" alt="">
+                                
+                                <div class="premium-vid" *ngIf="premVids2[i]">
+                                    <img src="../../assets/premium_icon.jpg" alt="">
+                                    Premium
+                                </div>
+                                <div class="duration">{{ videoDuration2[i] }}</div>
+                            </div>
+                        </a>
                     <div class="videos">
                         <a href="/channel/{{ video.channel_id }}" class="ch">
                             <img src="{{ video.channel_icon }}" alt="">
@@ -175,10 +187,16 @@
 
         <div *ngFor="let video of videos, let i = index">
             <div class="videoDetail" *ngIf="i<(lastKey)">
+                <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(3, i, $event)"></video>
                 <a href="/video/{{ video.video_id }}">
                     <div class="image">
                         <img src="{{ video.video_thumbnail }}" alt="">
-                        <!-- <div class="duration">{{ videoDuration }}</div> -->
+                        
+                        <div class="premium-vid" *ngIf="premVids3[i]">
+                            <img src="../../assets/premium_icon.jpg" alt="">
+                            Premium
+                        </div>
+                        <div class="duration">{{ videoDuration3[i] }}</div>
                     </div>
                 </a>
                 <div class="videos">

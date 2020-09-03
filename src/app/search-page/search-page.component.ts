@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { HeroService } from '../hero.service';
+import { templateJitUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-search-page',
@@ -39,6 +40,9 @@ export class SearchPageComponent implements OnInit {
 
   p;
 
+  videoDuration = [];
+
+  premVids = [];
   
 
   ngOnInit(): void {
@@ -145,7 +149,6 @@ export class SearchPageComponent implements OnInit {
   }
 
   createPlaylist(){
-    this.closeModalPlaylist();
 
     var modal = document.getElementById('addModal');
 
@@ -220,6 +223,22 @@ export class SearchPageComponent implements OnInit {
     var modal = document.getElementById('addModal');
 
     modal.style.display = "none";
+  }
+
+  setDuration(index, d){
+    var duration = d.target.duration
+    console.log(duration)
+    
+    var minute: number = Math.floor((duration / 60) % 60);
+    var second: number = Math.floor(duration % 60);
+
+    
+    if(second < 10){
+      this.videoDuration[index] =  minute + "." + "0" + second;
+    }else{
+      this.videoDuration[index] =  minute + "." + second;
+    }
+
   }
 
 
@@ -307,7 +326,8 @@ export class SearchPageComponent implements OnInit {
             day,
             month,
             year,
-            channel_id
+            channel_id,
+            video_premium
           }
         }
       `,
@@ -318,6 +338,13 @@ export class SearchPageComponent implements OnInit {
       }
     } ).valueChanges.subscribe( r=> {
       this.videos = r.data.getSearchVideo
+
+      for(let i=0;i<this.videos.length;i++){
+        console.log("asdasdasdasd", this.videos[i].video_premium)
+        if(this.videos[i].video_premium == "true"){
+          this.premVids[i] = true;
+        }
+      }
 
       console.log(this.videos)
     } )
@@ -479,6 +506,14 @@ export class SearchPageComponent implements OnInit {
     if(number<1000) return number;
     if(number<100000) return (number/1000).toFixed(1) + " k";
     if(number<1000000000) return (number/1000000).toFixed(1) + " m";
+  }
+
+  getShortDesc(desc){
+    var tempDesc;
+
+    if(desc.length > 150){
+      return desc.slice(0,150) + "...";
+    }else return desc
   }
 
   filterDate(num){
