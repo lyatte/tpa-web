@@ -29,17 +29,22 @@
     <div class="vi" *ngFor="let video of videos, let i = index">
         <div class="videoDetail">
             <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(i, $event)"></video>
-            <a href="/video/{{ video.video_id }}">
-                <div class="image">
-                    <img src="{{ video.video_thumbnail }}" alt="">
-                    
-                    <div class="premium-vid" *ngIf="premVids[i]">
-                        <img src="../../assets/premium_icon.jpg" alt="">
-                        Premium
-                    </div>
-                    <div class="duration">{{ videoDuration[i] }}</div>
+
+            <div class="image">
+                <img src="{{ video.video_thumbnail }}" routerLink="/video/{{ video.video_id }}" alt="">
+
+                <div class="queue" (click)="addToQueue(video.video_id)">
+                    <img src="../../assets/add_to_queue.png" alt="">
+                    Add To Queue
                 </div>
-            </a>
+                
+                <div class="premium-vid" *ngIf="premVids[i]">
+                    <img src="../../assets/premium_icon.jpg" alt="">
+                    Premium
+                </div>
+                <div class="duration">{{ videoDuration[i] }}</div>
+            </div>
+
 
             <div class="videoText">
                 <div class="top">

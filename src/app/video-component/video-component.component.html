@@ -40,7 +40,7 @@
                             SHARE
                         </button>
     
-                        <button class="addPlaylistButton" (click)="openModalPlaylist()">
+                        <button class="addPlaylistButton" (click)="openModalPlaylist(video.video_id)">
                             <img src="../../assets/add_playlist_icon.png" alt="">
                             SAVE
                         </button>
@@ -182,10 +182,27 @@
         <div class="relatedVideo">
             Related Video
             <div *ngFor="let v of videos, let i = index">
-                <div routerLink="/video/{{ v.video_id }}" class="videoDetail" *ngIf="i<(lastKey)">
-                    <img src="{{ v.video_thumbnail }}" alt="" routerLink="/video/{{ v.video_id }}">
+                <div class="videoDetail" *ngIf="i<(lastKey)">
+                    <video style="display: none;" src="{{ v.video }}" (loadedmetadata)="setDuration(i, $event)"></video>
+                    <div class="image">
+                        <img src="{{ v.video_thumbnail }}" alt="" routerLink="/video/{{ v.video_id }}">
+
+                        <div class="queue" (click)="addToQueue(v.video_id)">
+                            <img src="../../assets/add_to_queue.png" alt="">
+                            Add To Queue
+                        </div>
+                        
+                        <div class="premium-vid" *ngIf="premVids[i]">
+                            <img src="../../assets/premium_icon.jpg" alt="">
+                            Premium
+                        </div>
+                        <div class="duration">{{ videoDuration[i] }}</div>
+                    </div>
                     <div class="videoText">
-                        <div>{{ v.video_title }}</div>
+                        <div class="top">
+                            <div routerLink="/video/{{ v.video_id }}">{{ v.video_title }}</div>
+                            <img src="../../assets/three_dots_logo.png" alt="" (click)="openModalPlaylist(v.video_id)">
+                        </div>
                         <a href="/channel/{{ v.channel_id }}" class="channel"> {{ v.channel_name }} </a>
                         <div class="details">{{ getViews(v.video_views) }} views . {{ v.day }} {{ getMonth(v.month) }} {{ v.year }}</div>
                     </div>

@@ -19,9 +19,13 @@
                 <div class="videoSection">
                     <div class="videoDetail" *ngFor="let video of videos1, let i = index">
                         <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(1, i, $event)"></video>
-                        <a href="/video/{{ video.video_id }}">
                         <div class="image">
-                            <img src="{{ video.video_thumbnail }}" alt="">
+                            <img src="{{ video.video_thumbnail }}" routerLink="/video/{{ video.video_id }}" alt="">
+
+                            <div class="queue" (click)="addToQueue(video.video_id)">
+                                <img src="../../assets/add_to_queue.png" alt="">
+                                Add To Queue
+                            </div>
                             
                             <div class="premium-vid" *ngIf="premiumVids1[i]">
                                 <img src="../../assets/premium_icon.jpg" alt="">
@@ -29,24 +33,24 @@
                             </div>
                             <div class="duration"> {{ videoDuration1[i] }}</div>
                         </div>
-                    </a>
-                    <div class="videos">
-                        <a href="/channel/{{ video.channel_id }}" class="ch">
-                            <img src="{{ video.channel_icon }}" alt="">
-                        </a>
-                        <div class="videoText">
-                            <div class="topText">
-                                <a href="/video/{{ video.video_id }}">
-                                    <div>{{ video.video_title }}</div>
-                                </a>
-                                <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
-                            </div>
-                            <a href="/channel/{{ video.channel_id }}">
-                                <div class="channelName">{{ video.channel_name }}</div>
+
+                        <div class="videos">
+                            <a href="/channel/{{ video.channel_id }}" class="ch">
+                                <img src="{{ video.channel_icon }}" alt="">
                             </a>
-                            <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            <div class="videoText">
+                                <div class="topText">
+                                    <a href="/video/{{ video.video_id }}">
+                                        <div>{{ video.video_title }}</div>
+                                    </a>
+                                    <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
+                                </div>
+                                <a href="/channel/{{ video.channel_id }}">
+                                    <div class="channelName">{{ video.channel_name }}</div>
+                                </a>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -63,9 +67,14 @@
                 <div class="videoSection">
                     <div class="videoDetail" *ngFor="let video of videos2, let i = index">
                         <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(2, i, $event)"></video>
-                    <a href="/video/{{ video.video_id }}">
+
                         <div class="image">
-                            <img src="{{ video.video_thumbnail }}" alt="">
+                            <img src="{{ video.video_thumbnail }}" routerLink="/video/{{ video.video_id }}" alt="">
+
+                            <div class="queue" (click)="addToQueue(video.video_id)">
+                                <img src="../../assets/add_to_queue.png" alt="">
+                                Add To Queue
+                            </div>
                             
                             <div class="premium-vid" *ngIf="premiumVids2[i]">
                                 <img src="../../assets/premium_icon.jpg" alt="">
@@ -73,24 +82,24 @@
                             </div>
                             <div class="duration">{{ videoDuration2[i] }}</div>
                         </div>
-                    </a>
-                    <div class="videos">
-                        <a href="/channel/{{ video.channel_id }}" class="ch">
-                            <img src="{{ video.channel_icon }}" alt="">
-                        </a>
-                        <div class="videoText">
-                            <div class="topText">
-                                <a href="/video/{{ video.video_id }}">
-                                    <div>{{ video.video_title }}</div>
-                                </a>
-                                <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
-                            </div>
-                            <a href="/channel/{{ video.channel_id }}">
-                                <div class="channelName">{{ video.channel_name }}</div>
+
+                        <div class="videos">
+                            <a href="/channel/{{ video.channel_id }}" class="ch">
+                                <img src="{{ video.channel_icon }}" alt="">
                             </a>
-                            <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            <div class="videoText">
+                                <div class="topText">
+                                    <a href="/video/{{ video.video_id }}">
+                                        <div>{{ video.video_title }}</div>
+                                    </a>
+                                    <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
+                                </div>
+                                <a href="/channel/{{ video.channel_id }}">
+                                    <div class="channelName">{{ video.channel_name }}</div>
+                                </a>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -106,9 +115,14 @@
                 <div class="videoSection">
                     <div class="videoDetail" *ngFor="let video of videos3, let i = index">
                         <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(3, i, $event)"></video>
-                    <a href="/video/{{ video.video_id }}">
+
                         <div class="image">
-                            <img src="{{ video.video_thumbnail }}" alt="">
+                            <img src="{{ video.video_thumbnail }}" routerLink="/video/{{ video.video_id }}" alt="">
+
+                            <div class="queue" (click)="addToQueue(video.video_id)">
+                                <img src="../../assets/add_to_queue.png" alt="">
+                                Add To Queue
+                            </div>
                             
                             <div class="premium-vid" *ngIf="premiumVids3[i]">
                                 <img src="../../assets/premium_icon.jpg" alt="">
@@ -116,24 +130,24 @@
                             </div>
                             <div class="duration">{{ videoDuration3[i] }}</div>
                         </div>
-                    </a>
-                    <div class="videos">
-                        <a href="/channel/{{ video.channel_id }}" class="ch">
-                            <img src="{{ video.channel_icon }}" alt="">
-                        </a>
-                        <div class="videoText">
-                            <div class="topText">
-                                <a href="/video/{{ video.video_id }}">
-                                    <div>{{ video.video_title }}</div>
-                                </a>
-                                <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
-                            </div>
-                            <a href="/channel/{{ video.channel_id }}">
-                                <div class="channelName">{{ video.channel_name }}</div>
+
+                        <div class="videos">
+                            <a href="/channel/{{ video.channel_id }}" class="ch">
+                                <img src="{{ video.channel_icon }}" alt="">
                             </a>
-                            <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            <div class="videoText">
+                                <div class="topText">
+                                    <a href="/video/{{ video.video_id }}">
+                                        <div>{{ video.video_title }}</div>
+                                    </a>
+                                    <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
+                                </div>
+                                <a href="/channel/{{ video.channel_id }}">
+                                    <div class="channelName">{{ video.channel_name }}</div>
+                                </a>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -149,9 +163,14 @@
                 <div class="videoSection">
                     <div class="videoDetail" *ngFor="let video of videos4, let i = index">
                         <video style="display: none;" src="{{ video.video }}" (loadedmetadata)="setDuration(4, i, $event)"></video>
-                        <a href="/video/{{ video.video_id }}">
+
                         <div class="image">
-                            <img src="{{ video.video_thumbnail }}" alt="">
+                            <img src="{{ video.video_thumbnail }}" routerLink="/video/{{ video.video_id }}" alt="">
+
+                            <div class="queue" (click)="addToQueue(video.video_id)">
+                                <img src="../../assets/add_to_queue.png" alt="">
+                                Add To Queue
+                            </div>
                             
                             <div class="premium-vid" *ngIf="premiumVids4[i]">
                                 <img src="../../assets/premium_icon.jpg" alt="">
@@ -159,24 +178,24 @@
                             </div>
                             <div class="duration">{{ videoDuration4[i] }}</div>
                         </div>
-                    </a>
-                    <div class="videos">
-                        <a href="/channel/{{ video.channel_id }}" class="ch">
-                            <img src="{{ video.channel_icon }}" alt="">
-                        </a>
-                        <div class="videoText">
-                            <div class="topText">
-                                <a href="/video/{{ video.video_id }}">
-                                    <div>{{ video.video_title }}</div>
-                                </a>
-                                <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
-                            </div>
-                            <a href="/channel/{{ video.channel_id }}">
-                                <div class="channelName">{{ video.channel_name }}</div>
+
+                        <div class="videos">
+                            <a href="/channel/{{ video.channel_id }}" class="ch">
+                                <img src="{{ video.channel_icon }}" alt="">
                             </a>
-                            <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            <div class="videoText">
+                                <div class="topText">
+                                    <a href="/video/{{ video.video_id }}">
+                                        <div>{{ video.video_title }}</div>
+                                    </a>
+                                    <img src="../../assets/three_dots_logo.png" alt="" id="addButton"  (click)="openModalPlaylist( video.video_id )">
+                                </div>
+                                <a href="/channel/{{ video.channel_id }}">
+                                    <div class="channelName">{{ video.channel_name }}</div>
+                                </a>
+                                <div class="details">{{ getViews(video.video_views) }} views . {{ getDay(video.day, video.month, video.year) }}</div>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>

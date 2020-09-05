@@ -17,7 +17,7 @@ export class VideoComponentComponent implements OnInit {
   constructor(private route: ActivatedRoute, private apollo: Apollo,
     private user: HeroService) { }
 
-  video;
+  video = {};
 
   videos = {};
 
@@ -35,7 +35,7 @@ export class VideoComponentComponent implements OnInit {
 
   playlist = {};
 
-  comment = {};
+  comment = [];
 
   cthumbnail = {};
 
@@ -55,6 +55,10 @@ export class VideoComponentComponent implements OnInit {
   observer:any;
 
   isLoaded = false;
+
+  videoDuration = {};
+
+  premVids = {};
 
 
   ngOnInit(): void {
@@ -383,7 +387,8 @@ export class VideoComponentComponent implements OnInit {
                           channel_id,
                           day,
                           month,
-                          year
+                          year,
+                          video_premium
                         }
                       }
                   
@@ -401,6 +406,13 @@ export class VideoComponentComponent implements OnInit {
                   this.isLoaded = true;
 
                   console.log(this.videos.length)
+
+                  for(let i = 0;i<this.videos.length;i++){
+                    if(this.videos[i].video_premium == "true"){
+                      console.log("true");
+                      this.premVids[i] = true;
+                    }
+                  }
 
                   this.observer = new IntersectionObserver((entry) => {
                     if(entry[0].isIntersecting){
@@ -448,6 +460,22 @@ export class VideoComponentComponent implements OnInit {
 
     
 
+
+  }
+
+  setDuration(index, d){
+    var duration = d.target.duration
+    console.log(duration)
+    
+    var minute: number = Math.floor((duration / 60) % 60);
+    var second: number = Math.floor(duration % 60);
+
+    
+    if(second < 10){
+      this.videoDuration[index] =  minute + "." + "0" + second;
+    }else{
+      this.videoDuration[index] =  minute + "." + second;
+    }
 
   }
 
@@ -797,8 +825,30 @@ export class VideoComponentComponent implements OnInit {
     } )
   }
 
+  addToQueue(video_id){
+    var temp = JSON.parse(sessionStorage.getItem("queueStorage"));
 
-  openModalPlaylist(){
+    var vid = [];
+
+    if (temp == null){
+      vid.push(video_id)
+    }
+    else{
+      for(let i = 0; i<temp.length; i++){
+        vid.push(temp[i])
+      }
+
+      vid.push(video_id)
+    }
+
+    sessionStorage.setItem("queueStorage",JSON.stringify(vid));
+    console.log(JSON.parse(sessionStorage.getItem("queueStorage")))
+
+  }
+
+
+  openModalPlaylist(v_id){
+    this.chosenVid = v_id;
     this.apollo.watchQuery( { 
       query: gql`
         query getChannelPlaylist($id: String!){
@@ -828,9 +878,9 @@ export class VideoComponentComponent implements OnInit {
     modal.style.display = "none";
   }
 
-  addToPlaylist(id){
+  chosenVid;
 
-    console.log(id);
+  addToPlaylist(id){
 
     this.apollo.mutate( {
       mutation: gql`
@@ -838,7 +888,7 @@ export class VideoComponentComponent implements OnInit {
           addVideoToPlaylist(playlist_id: $playlist_id, video_id: $video_id)
         }
       `,variables:{
-        video_id: this.video.video_id,
+        video_id: this.chosenVid,
         playlist_id: id,
       }
     } ).subscribe( res => {
@@ -1138,6 +1188,9 @@ export class VideoComponentComponent implements OnInit {
   }
 
   getViewInFormat(number){
+    if (number < 1000){
+      return number
+    }
     var parts = number.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");

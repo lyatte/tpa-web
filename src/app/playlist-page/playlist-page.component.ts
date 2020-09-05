@@ -241,6 +241,27 @@ export class PlaylistPageComponent implements OnInit {
 
   }
 
+  addToQueue(video_id){
+    var temp = JSON.parse(sessionStorage.getItem("queueStorage"));
+
+    var vid = [];
+
+    if (temp == null){
+      vid.push(video_id)
+    }
+    else{
+      for(let i = 0; i<temp.length; i++){
+        vid.push(temp[i])
+      }
+
+      vid.push(video_id)
+    }
+
+    sessionStorage.setItem("queueStorage",JSON.stringify(vid));
+    console.log(JSON.parse(sessionStorage.getItem("queueStorage")))
+
+  }
+
   getShortDesc(desc){
     var tempDesc;
 
