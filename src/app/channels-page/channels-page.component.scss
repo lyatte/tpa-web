@@ -652,4 +652,16 @@
             }
         }
     }
+
+    #editModal{
+        #bgImage{
+            width: 700px;
+            height: 200px;
+        }
+        #thumbnailImg{
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+        }
+    }
 }

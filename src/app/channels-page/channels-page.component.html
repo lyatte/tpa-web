@@ -287,8 +287,8 @@
             <span class="close" (click)="closeEditModal()">&times;</span>
             <div class="thumbnail">
                 <div>
-                    <img [src]="bg" id="thumbnailImg">
-                    <input type="file" id="file" (change)="chooseThumbnail($event)" accept="image/*">
+                    <img [src]="bg" id="bgImage">
+                    <input type="file" id="file" (change)="chooseBg($event)" accept="image/*">
                 </div>
             </div>
 
@@ -298,6 +298,8 @@
                     <input type="file" id="file" (change)="chooseThumbnail($event)" accept="image/*">
                 </div>
             </div>
+
+            <button (click)="updateImg()">Edit</button>
         </div>
     </div>
 

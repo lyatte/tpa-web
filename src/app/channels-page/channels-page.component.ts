@@ -4,6 +4,9 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { HeroService } from '../hero.service';
 
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { AngularFirestore } from '@angular/fire/firestore';
+
 @Component({
   selector: 'app-channels-page',
   templateUrl: './channels-page.component.html',
@@ -13,7 +16,10 @@ export class ChannelsPageComponent implements OnInit {
 
   channel;
 
-  constructor(private route: ActivatedRoute, private apollo: Apollo,
+  constructor(private storage: AngularFireStorage, 
+    private db: AngularFirestore, 
+    private route: ActivatedRoute, 
+    private apollo: Apollo,
     private us: HeroService) { }
   
   c = {};
@@ -31,7 +37,7 @@ export class ChannelsPageComponent implements OnInit {
   bg;
   icon;
 
-  playlist:[];
+  playlist= [];
 
   playlistThumbnail = {};
 
@@ -416,7 +422,8 @@ export class ChannelsPageComponent implements OnInit {
           getChannelPlaylist(channel_id: $channel_id){
             playlist_id,
             playlist_title,
-            playlist_videos
+            playlist_videos,
+            playlist_visibility
           }
         }
       `,
@@ -424,9 +431,25 @@ export class ChannelsPageComponent implements OnInit {
         channel_id: this.channel.channel_id
       }
     } ).valueChanges.subscribe( r => {
-      this.playlist = r.data.getChannelPlaylist
+      
 
+
+      // this.playlist
       // console.log(this.playlist)
+
+      if(!this.isSame){
+        var tempPlaylist = r.data.getChannelPlaylist
+        for(let i=0;i<tempPlaylist.length;i++){
+          if(tempPlaylist[i].playlist_visibility != "Private"){
+            this.playlist.push(tempPlaylist[i]);
+          }
+        }
+      }else{
+        console.log("isSame")
+        this.playlist = r.data.getChannelPlaylist
+        console.log(this.playlist)
+      }
+        
       for(let i =0 ;i<this.playlist.length;i++){
         var temp = this.playlist[i].playlist_videos.split(",")
         
@@ -466,6 +489,25 @@ export class ChannelsPageComponent implements OnInit {
   }
 
   thumbnail;
+  bgImage;
+
+  task: AngularFireUploadTask;
+  task2: AngularFireUploadTask;
+
+  chooseBg(event: EventTarget){
+    let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
+    let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
+    let files: FileList = target.files;
+    this.bgImage = files[0];
+
+    var bgImage = document.getElementById('bgImage');
+    bgImage.src = URL.createObjectURL(this.bgImage);
+    bgImage.onload = function(){
+      URL.revokeObjectURL(bgImage.src)
+    }
+
+    
+  }
 
   chooseThumbnail(event: EventTarget){
     let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
@@ -479,6 +521,98 @@ export class ChannelsPageComponent implements OnInit {
       URL.revokeObjectURL(thumbnailImg.src)
     }
 
+
+  }
+
+  urlTh = "";
+  urlBg = "";
+
+  updateImg(){
+    
+    if(typeof this.thumbnail == "undefined"){
+    }else{
+      const path = `${Date.now()}_${this.thumbnail.name}`;
+  
+      const ref = this.storage.ref(path);
+  
+      // Upload to the storage
+      this.task = this.storage.upload(path, this.thumbnail);
+  
+      this.task.then(
+        (res) => ref.getDownloadURL().subscribe(data => {
+          this.urlTh = data
+          console.log(this.urlTh)
+
+          this.updateChImg(2)
+        }
+        )
+      )
+
+    }
+    
+    if(typeof this.bgImage == "undefined"){
+
+    }else{
+      const path = `${Date.now()}_${this.bgImage.name}`;
+  
+      const ref = this.storage.ref(path);
+  
+      // Upload to the storage
+      this.task2 = this.storage.upload(path, this.bgImage);
+  
+      this.task2.then(
+        (res) => ref.getDownloadURL().subscribe(data => {
+          this.urlBg = data
+          console.log(this.urlBg)
+
+          this.updateChImg(1)
+        }
+        )
+      )
+    }
+
+  }
+
+  updateChImg(number){
+
+    console.log(this.urlBg, this.urlTh, number)
+    this.apollo.mutate( {
+      mutation: gql`
+        mutation updateChannelImage($channel_id: String!,
+          $bg: String!, $icon: String!, $flag: String!){
+          updateChannelImage( channel_id: $channel_id, 
+          bg: $bg,
+          icon: $icon,
+          flag: $flag )
+        }
+      `,
+      variables: {
+        bg: this.urlBg,
+        icon: this.urlTh,
+        flag: number
+      },
+      refetchQueries: [ {
+        query: gql`
+          query getChannelById($channel_id: String!){
+            getChannelById(channel_id: $channel_id){
+              channel_id,
+              channel_name,
+              channel_background,
+              channel_icon,
+              channel_subscribers,
+              channel_description,
+              channel_join_date_day,
+              channel_join_date_month,
+              channel_join_date_year,
+              channel_premium
+            }
+          }
+        `, variables: { channel_id: this.id }
+        }
+      ]
+    } ).subscribe( r => {
+      console.log(r)
+    } )
   }
 
   closeEditModal(){
