@@ -232,7 +232,6 @@
                     </li>
                 </button>
             </a>
-
         </div>
         <div class="playlist" *ngIf="tempLength > 5">
             <a (click)="expand()">
@@ -262,13 +261,13 @@
         </div>
 
         <div class="subscribedCh" *ngIf="tempLength2 > 10">
-            <a (click)="expand()">
+            <a (click)="expand2()">
                 <button>
-                    <li *ngIf="isExpand == false">
+                    <li *ngIf="isExpand2 == false">
                         Show All Channel
                     </li>
-                    <li *ngIf="isExpand == true">
-                        Hide Playlists
+                    <li *ngIf="isExpand2 == true">
+                        Hide Channel
                     </li>
                 </button>
             </a>
