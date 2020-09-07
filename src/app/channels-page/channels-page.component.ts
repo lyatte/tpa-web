@@ -66,6 +66,8 @@ export class ChannelsPageComponent implements OnInit {
   chPlaylist = [];
 
 
+  editMode = [];
+
 
   ngOnInit(): void {
 
@@ -74,6 +76,8 @@ export class ChannelsPageComponent implements OnInit {
     this.c[1] = true;
 
     var channelId;
+
+    this.editMode[1] = false
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       channelId = params.get('id');
@@ -576,20 +580,20 @@ export class ChannelsPageComponent implements OnInit {
   updateChImg(number){
 
     console.log(this.urlBg, this.urlTh, number)
+
+    console.log(this.id, number.toString())
+
     this.apollo.mutate( {
       mutation: gql`
-        mutation updateChannelImage($channel_id: String!,
-          $bg: String!, $icon: String!, $flag: String!){
-          updateChannelImage( channel_id: $channel_id, 
-          bg: $bg,
-          icon: $icon,
-          flag: $flag )
+        mutation updateChannelImage ($channel_id: String!, $bg: String!, $icon: String!, $flag: String!){
+          updateChannelImage( channel_id: $channel_id, bg: $bg, icon: $icon, flag: $flag )
         }
       `,
       variables: {
+        channel_id: this.id,
         bg: this.urlBg,
         icon: this.urlTh,
-        flag: number
+        flag: number.toString()
       },
       refetchQueries: [ {
         query: gql`
@@ -613,6 +617,52 @@ export class ChannelsPageComponent implements OnInit {
     } ).subscribe( r => {
       console.log(r)
     } )
+  }
+
+  editing(num){
+    if(num == 1){
+      this.editMode[1] = !this.editMode[1]
+      
+      if(!this.editMode[1]) this.updateDesc()
+    }
+  }
+
+  updateDesc(){
+    var newdescs = document.getElementById('new-desc').value;
+
+    // console.log(newdescs.value)
+    
+    this.apollo.mutate ( {
+      mutation: gql`
+        mutation updateChannelDesc($channel_id: String!, $desc: String!){
+          updateChannelDesc(channel_id: $channel_id, desc: $desc)
+        }
+      `,variables: {
+        channel_id: this.id,
+        desc: newdescs
+      },
+      refetchQueries: [ {
+        query: gql`
+          query getChannelById($channel_id: String!){
+            getChannelById(channel_id: $channel_id){
+              channel_id,
+              channel_name,
+              channel_background,
+              channel_icon,
+              channel_subscribers,
+              channel_description,
+              channel_join_date_day,
+              channel_join_date_month,
+              channel_join_date_year,
+              channel_premium
+            }
+          }
+        `, variables: { channel_id: this.id }
+        }
+      ]
+    } ).subscribe( r => {
+      console.log(r)
+    })
   }
 
   closeEditModal(){

@@ -60,6 +60,12 @@ export class VideoComponentComponent implements OnInit {
 
   premVids = {};
 
+  isPremiumUser = false;
+
+  isPremiumVid = false;
+
+  show = true;
+
 
   ngOnInit(): void {
 
@@ -69,6 +75,13 @@ export class VideoComponentComponent implements OnInit {
     this.videoId = +this.route.snapshot.paramMap.get('id');
 
     console.log(this.videoId)
+
+
+    if(localStorage.getItem('user') == null) {
+      this.isPremiumUser = false;
+    }
+
+    this.isPremiumUser = true;
 
 
     this.apollo.mutate({
@@ -99,6 +112,7 @@ export class VideoComponentComponent implements OnInit {
               day,
               month,
               year,
+              video_premium
             }
           }
         `, 
@@ -106,6 +120,14 @@ export class VideoComponentComponent implements OnInit {
       }).valueChanges.subscribe(result => {
         this.video = result.data.getVideoById
         this.channelId = this.video.channel_id
+
+        if(this.video.video_premium == "false"){
+          this.isPremiumVid = false
+        }else{
+          this.isPremiumVid = true
+        }
+
+        this.hotkeys()
 
         this.apollo.watchQuery({
           query: gql`
@@ -205,6 +227,11 @@ export class VideoComponentComponent implements OnInit {
         } )
 
         if(localStorage.getItem('user') == null){
+
+
+          if(this.isPremiumVid = true) this.show = false
+          else this.show = true
+
           console.log("s")
     
           var loc = this.video.video_region
@@ -319,6 +346,21 @@ export class VideoComponentComponent implements OnInit {
               }).valueChanges.subscribe( r => {
       
                 this.userLog = r.data.getChannelById
+
+                console.log(this.userLog.channel_premium)
+
+                if(this.userLog.channel_premium == "1" || this.userLog.channel_premium == "2"){
+                  this.isPremiumUser = true;
+                }else{
+                  this.isPremiumUser = false
+                }
+
+                if(this.isPremiumUser){
+                  this.show = true
+                }else{
+                  if(this.isPremiumVid = false) this.show = true
+                  else this.show = false
+                }
 
                 if(this.userLog.channel_id == this.channelId){
                   this.isNotSame = false;
@@ -846,7 +888,64 @@ export class VideoComponentComponent implements OnInit {
 
   }
 
+  hotkeys(){
+    var vid = (document.getElementsByTagName('mat-video')[0] as HTMLVideoElement).querySelector('video');
+    var audio = vid;
+    
+    document.onkeydown = function(event) {
+      switch (event.keyCode) {
 
+        case 38:
+          event.preventDefault();
+          var audio_volume = (audio).volume;
+
+          if (audio_volume != 1) {
+            try {
+                var x = audio_volume + 0.02;
+                audio.volume = x;
+
+              }
+            catch(err) {
+                audio.volume = 1;
+            }
+          } 
+
+        break;
+
+        case 40:
+          event.preventDefault();
+          audio_volume = audio.volume;
+
+          if (audio_volume != 0) {
+            try {
+              var x = audio_volume - 0.02;
+              audio.volume = x;
+
+            }
+            catch(err) {
+                audio.volume = 0;
+            }
+          }
+
+        break;
+
+        case 74:
+          event.preventDefault();
+          audio.currentTime -= 10;
+        break;
+
+        case 76:
+          event.preventDefault();
+          audio.currentTime += 10;
+        break;
+
+        case 75:
+          event.preventDefault();
+          vid.paused ? vid.play() : vid.pause()
+      }
+    }
+  }
+  
   openModalPlaylist(v_id){
     this.chosenVid = v_id;
     this.apollo.watchQuery( { 

@@ -259,11 +259,25 @@
 
     <div class="aboutContent" *ngIf="c[6]">
         <div class="desc">
-            Description
-            <div class="d">
+            <div class="desc-top">
+                Description
+                <img src="../../assets/edit_logo.png" alt="" (click)="editing(1)" *ngIf="isSame">
+            </div>
+            <div class="d" *ngIf="!editMode[1]">
                 {{ channel.channel_description }}
             </div>
+            <div class="new-d" *ngIf="editMode[1]">
+                <textarea id="new-desc"  style="resize: none;"> {{ channel.channel_description }} </textarea>
+            </div>
             <hr>
+            <div class="link-section">
+                <div class="shareableLink">
+                    <a href="http://facebook.com">Facebook</a>
+                    <a href="http://twitter.com">Twitter</a>
+                </div>
+
+                <img src="../../assets/edit_logo.png" alt="" *ngIf="isSame">
+            </div>
         </div>
 
         <div class="stats">

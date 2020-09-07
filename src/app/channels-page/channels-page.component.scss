@@ -525,6 +525,42 @@
         flex-direction: row;
         justify-content: space-between;
 
+        .desc-top{
+            flex-direction: row;
+            justify-content: space-between;
+
+            img{
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .link-section{
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 10px;
+            .shareableLink{
+                flex-direction: row;
+                a{
+                    margin-right: 15px;
+                    font-size: 14px;
+                    text-decoration: none;
+                    color: rgb(91, 121, 255);
+                }
+            }
+
+            img{
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .new-d{
+            textarea{
+                color: white;
+            }
+        }
+
         .desc, .stats{
             font-size: 1.2em;
 

@@ -4,10 +4,12 @@
     <div class="s">
         <div class="mainVideo" *ngIf="video">
             <mat-video class="video" [src]="video.video" 
-            [preload]="true" [keyboard]="true" autoplay="true">
-    
+            [preload]="true" [keyboard]="true" autoplay="true" 
+            *ngIf="show">
+            
             </mat-video>
-    
+            <div class="not-prem" *ngIf="!show">This is premium content.</div>
+        
             <div class="videoDetail">
                 <div class="videoName">
                     {{ video.video_title }}
