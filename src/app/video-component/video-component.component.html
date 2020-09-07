@@ -180,39 +180,61 @@
     
             </div>
         </div>
-    
-        <div class="relatedVideo">
-            Related Video
-            <div *ngFor="let v of videos, let i = index">
-                <div class="videoDetail" *ngIf="i<(lastKey)">
-                    <video style="display: none;" src="{{ v.video }}" (loadedmetadata)="setDuration(i, $event)"></video>
-                    <div class="image">
-                        <img src="{{ v.video_thumbnail }}" alt="" routerLink="/video/{{ v.video_id }}">
+        
+        <div class="right-sides-vid">
 
-                        <div class="queue" (click)="addToQueue(v.video_id)">
-                            <img src="../../assets/add_to_queue.png" alt="">
-                            Add To Queue
+            <div class="queues" *ngIf="queueExists">
+                Queue
+                <div *ngFor="let q of queues, let i = index">
+                    <div class="videoDetail">
+                        <div class="image">
+                            <img src="{{ q.video_thumbnail }}" alt="" routerLink="/video/{{ q.video_id }}">
                         </div>
-                        
-                        <div class="premium-vid" *ngIf="premVids[i]">
-                            <img src="../../assets/premium_icon.jpg" alt="">
-                            Premium
+                        <div class="videoText">
+                            <div class="top">
+                                <div>{{ q.video_title }}</div>
+                            </div>
+                            <div class="channel"> {{ q.channel_name }} 
+                            </div>
                         </div>
-                        <div class="duration">{{ videoDuration[i] }}</div>
-                    </div>
-                    <div class="videoText">
-                        <div class="top">
-                            <div routerLink="/video/{{ v.video_id }}">{{ v.video_title }}</div>
-                            <img src="../../assets/three_dots_logo.png" alt="" (click)="openModalPlaylist(v.video_id)">
-                        </div>
-                        <a href="/channel/{{ v.channel_id }}" class="channel"> {{ v.channel_name }} </a>
-                        <div class="details">{{ getViews(v.video_views) }} views . {{ v.day }} {{ getMonth(v.month) }} {{ v.year }}</div>
                     </div>
                 </div>
             </div>
 
-            <div class="bottom"></div>
+            <div class="relatedVideo">
+                Related Video
+                <div *ngFor="let v of videos, let i = index">
+                    <div class="videoDetail" *ngIf="i<(lastKey)">
+                        <video style="display: none;" src="{{ v.video }}" (loadedmetadata)="setDuration(i, $event)"></video>
+                        <div class="image">
+                            <img src="{{ v.video_thumbnail }}" alt="" routerLink="/video/{{ v.video_id }}">
+    
+                            <div class="queue" (click)="addToQueue(v.video_id)">
+                                <img src="../../assets/add_to_queue.png" alt="">
+                                Add To Queue
+                            </div>
+                            
+                            <div class="premium-vid" *ngIf="premVids[i]">
+                                <img src="../../assets/premium_icon.jpg" alt="">
+                                Premium
+                            </div>
+                            <div class="duration">{{ videoDuration[i] }}</div>
+                        </div>
+                        <div class="videoText">
+                            <div class="top">
+                                <div routerLink="/video/{{ v.video_id }}">{{ v.video_title }}</div>
+                                <img src="../../assets/three_dots_logo.png" alt="" (click)="openModalPlaylist(v.video_id)">
+                            </div>
+                            <a href="/channel/{{ v.channel_id }}" class="channel"> {{ v.channel_name }} </a>
+                            <div class="details">{{ getViews(v.video_views) }} views . {{ v.day }} {{ getMonth(v.month) }} {{ v.year }}</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="bottom"></div>
+            </div>
         </div>
+
     </div>
 
     

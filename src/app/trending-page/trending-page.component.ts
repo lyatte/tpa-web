@@ -17,7 +17,7 @@ export class TrendingPageComponent implements OnInit {
 
   views;
 
-  videos;
+  videos = [];
 
   channel;
   
@@ -139,7 +139,7 @@ export class TrendingPageComponent implements OnInit {
                   }
                 }else{
                   console.log("this channel not prem")
-                  var temps;
+                  var temps = [];
                   for(let i = 0;i<this.vid.length;i++){
                     if(this.vid[i].video_premium == "false"){
                       temps.push(this.vid[i])

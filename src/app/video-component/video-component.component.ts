@@ -66,8 +66,52 @@ export class VideoComponentComponent implements OnInit {
 
   show = true;
 
+  queues = [];
+
+  queueExists = false;
+
 
   ngOnInit(): void {
+
+    var q = JSON.parse(sessionStorage.getItem("queueStorage"))
+    console.log(q)
+
+    this.queueExists = false;
+
+    if( q != null){
+      this.queueExists = true;
+
+      for(let i = 0; i<q.length; i++){
+        this.apollo.watchQuery({
+          query: gql`
+            query getVideoById($id: Int!){
+              getVideoById(video_id: $id){
+                video_id,
+                video_title,
+                video,
+                video_thumbnail,
+                video_description,
+                video_views,
+                video_like,
+                video_dislike,
+                channel_id,
+                video_category,
+                video_region,
+                day,
+                month,
+                year,
+                video_premium
+              }
+            }
+          `, 
+          variables: { id: q[i] }
+        }).valueChanges.subscribe( r => {
+          this.queues.push(r.data.getVideoById)
+        } )
+      }
+    }
+
+
 
     this.lastKey = 18;
     this.lastKey2 = 7;
@@ -80,8 +124,6 @@ export class VideoComponentComponent implements OnInit {
     if(localStorage.getItem('user') == null) {
       this.isPremiumUser = false;
     }
-
-    this.isPremiumUser = true;
 
 
     this.apollo.mutate({
@@ -317,7 +359,6 @@ export class VideoComponentComponent implements OnInit {
             
           });
         }
-
         else{
           this.user.getUser().subscribe( r => {
 
@@ -358,9 +399,15 @@ export class VideoComponentComponent implements OnInit {
                 if(this.isPremiumUser){
                   this.show = true
                 }else{
-                  if(this.isPremiumVid = false) this.show = true
+                  console.log(this.isPremiumVid)
+                  if(this.isPremiumVid == false) {
+                    this.show = true
+                    console.log(this.show)
+                  }
                   else this.show = false
                 }
+                console.log(this.isPremiumUser, this.isPremiumVid)
+                console.log(this.show)
 
                 if(this.userLog.channel_id == this.channelId){
                   this.isNotSame = false;

@@ -99,7 +99,7 @@
             flex-direction: row;
             color: black;
             width: 45%;
-            height: 40%;
+            // height: 40%;
 
             background-color: white;
 
@@ -109,7 +109,7 @@
             .annual{
                 align-items: center;
                 background-color: white;
-                width: 40%;
+                width: 200px;
                 
                 border: 1px solid black;
 
@@ -126,11 +126,11 @@
                 .nominal{
                     margin-top: 2vw;
                     background-color: white;
-                    font-size: 2.2vw;
+                    font-size: 25px;
                     font-weight: bold;
                 }
 
-                font-size: 0.9vw;
+                font-size: 11px;
 
                 .cancel{
                     margin-top: 1vw;
@@ -143,7 +143,7 @@
             .month{
                 align-items: center;
                 background-color: white;
-                width: 40%;
+                width: 200px;
                 
                 border: 1px solid black;
                 @extend .annual;
@@ -154,8 +154,9 @@
                 border: none;
                 background-color: red;
                 color: white;
-                width: 8vw;
-                height: 1.8vw;
+                width: 150px;
+                height: 40px;
+                font-size: 14px;
                 justify-content: center;
                 align-items: center;
                 border-radius: 3px;
@@ -167,7 +168,17 @@
             }
 
         }
-    
+        @keyframes popup {
+            0%{
+                overflow-y: hidden;
+                transform: scale(0.9);
+                opacity: 50%;
+            }
+            50%{
+                transform: scale(1);
+                opacity: 100%;
+            }
+        }
 
         .modal {
             align-items: center;
@@ -190,7 +201,8 @@
                 padding: 20px;
                 width: 30%;
 
-    
+                animation: popup 1s;
+
                 align-items: center;
                 justify-content: center;
 
